@@ -185,8 +185,8 @@ ALTER TABLE alumnos
 
 ALTER TABLE cursos
 
-  ADD CONSTRAINT uk_nombre
-  UNIQUE KEY (nombre);
+  ADD CONSTRAINT uk_nombre_curso
+  UNIQUE KEY (nombre, curso);
 
 
 -- restricciones de cursan
