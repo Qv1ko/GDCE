@@ -54,3 +54,5 @@
 - Creación de la estructura básica de la documentación.
 - Corrección de dimensiones del DAFO.
 - Desarrollo adicional de gráficos para la página de inicio.
+- Implementación de la libreria de 2amigos "chartjs".
+- Modificación de la interfaz en Figma.
