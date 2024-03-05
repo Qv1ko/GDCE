@@ -14,7 +14,7 @@ use Yii;
  * @property string $estado_matricula
  * @property int|null $id_portatil
  *
- * @property Cursan[] $cursans
+ * @property Cursan[] $cursan
  * @property Cursos[] $cursos
  * @property Portatiles $portatil
  */
@@ -61,11 +61,11 @@ class Alumnos extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Cursans]].
+     * Gets query for [[Cursan]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCursans()
+    public function getCursan()
     {
         return $this->hasMany(Cursan::class, ['id_alumno' => 'id_alumno']);
     }

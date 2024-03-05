@@ -72,4 +72,31 @@ class Cursan extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Cursos::class, ['id_curso' => 'id_curso']);
     }
+
+    /**
+     * Devuelve el año académico actual "aaaa/aa".
+     * Si la fecha actual está después de septiembre, el año actual y el siguiente se consideran como el año académico actual.
+     * Si la fecha actual está antes de septiembre, el año anterior y el actual se consideran como el año académico actual.
+     * 
+     * @return string El año académico actual en el formato "aaaa/aa".
+     */
+    public function getCursoActual() {
+        
+        // Año actual
+        $anoActual = date('Y');
+        
+        // Verificar si la fecha actual está después de septiembre
+        if (date('n') > 8) {
+            // Si es después de septiembre, el año actual y el siguiente se consideran como el año académico actual
+            $cursoEscolarActual = $anoActual . '/' . substr($anoActual, 2, 2);
+        } else {
+            // Si es antes de septiembre, el año anterior y el actual se consideran como el año académico actual
+            $cursoEscolarActual = ($anoActual - 1) . '/' . substr($anoActual, 2, 2);
+        }
+        
+        // Devolver el año académico actual
+        return $cursoEscolarActual;
+
+    }
+
 }

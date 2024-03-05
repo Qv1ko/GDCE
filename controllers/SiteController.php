@@ -7,8 +7,15 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Almacenes;
+use app\models\Alumnos;
+use app\models\Cargadores;
+use app\models\Cursan;
+use app\models\Cursos;
+use app\models\Portatiles;
 
 class SiteController extends Controller
 {
@@ -59,9 +66,30 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-        return $this->render('index');
+    public function actionIndex() {
+
+        $portatiles_disponibles = Portatiles::find()->where('estado = "Disponible"')->count();
+        $portatiles_no_disponibles = Portatiles::find()->where('estado = "No disponible"')->count();
+        $portatiles_averiados = Portatiles::find()->where('estado = "Averiado"')->count();
+        $cargadores_disponibles = Cargadores::find()->where('estado = "Disponible"')->count();
+        $cargadores_no_disponibles = Cargadores::find()->where('estado = "No disponible"')->count();
+        $cargadores_averiados = Cargadores::find()->where('estado = "Averiado"')->count();
+        $curso_actual = Cursan::getCursoActual();
+        $uso_ciclo = Alumnos::find()->select(['cursos.nombre', 'COUNT(*) AS cantidad'])->joinWith('cursan')->joinWith('cursan.curso')->where(['cursan.curso_academico' => $curso_actual])->groupBy('cursos.nombre')->asArray()->all();
+        $almacenes = Almacenes::find()->select(['id_almacen', 'aula', 'capacidad'])->distinct();
+    
+
+        return $this->render('index', [
+            'portatiles_disponibles' => $portatiles_disponibles,
+            'portatiles_no_disponibles' => $portatiles_no_disponibles,
+            'portatiles_averiados' => $portatiles_averiados,
+            'cargadores_disponibles' => $cargadores_disponibles,
+            'cargadores_no_disponibles' => $cargadores_no_disponibles,
+            'cargadores_averiados' => $cargadores_averiados,
+            'uso_ciclo' => $uso_ciclo,
+            'almacenes' => $almacenes,
+        ]);
+
     }
 
     /**
