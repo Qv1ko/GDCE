@@ -1,11 +1,19 @@
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: #E3E3E3;
+}
+
 main > .container {
-    padding: 70px 15px 20px;
+    padding: 128px 0px 32px;
+    /*margin: 0;*/
 }
 
 .footer {
-    background-color: #f5f5f5;
-    font-size: .9em;
+    background-color: #4040FF;
+    color: #E3E3E3 !important;
+    font-size: 20px;
     height: 60px;
+    font-family: "Roboto", sans-serif;
 }
 
 .footer > .container {
@@ -16,6 +24,11 @@ main > .container {
 .not-set {
     color: #c55;
     font-style: italic;
+}
+
+.navbar-nav {
+    font-family: "Roboto", sans-serif;
+    font-style: bold;
 }
 
 /* add sorting icons to gridview sort links */
@@ -61,7 +74,11 @@ a.desc:after {
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
     padding-top: 7px;
-    color: rgba(255, 255, 255, 0.5);
+    color: #E3E3E3;
+}
+
+.navbar {
+    background-color: #4040FF;
 }
 
 @media(max-width:767px) {
@@ -73,12 +90,46 @@ a.desc:after {
     }
 }
 
+.nav-link {
+    text-decoration: none;
+    color: #E3E3E3 !important;
+    font-weight: bold;
+}
+
+.nav-link.active, .nav-link:focus, .nav-link:hover {
+    text-decoration: none;
+    color: #99FF33 !important;
+    font-weight: bold;
+}
+
+.nav > li > form > button.logout {
+    text-decoration: none;
+    color: #E3E3E3;
+    font-weight: bold;
+}
+
 .nav > li > form > button.logout:focus,
 .nav > li > form > button.logout:hover {
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.75);
+    color: #99FF33;
+    font-weight: bold;
 }
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+.github-icon,
+.gitlab-icon {
+    fill: #E3E3E3; /* Cambia el color al que desees cuando hagas hover */
+}
+
+.github-icon:hover,
+.gitlab-icon:hover {
+    fill: #99FF33; /* Cambia el color al que desees cuando hagas hover */
+}
+
+.footer-icon {
+    margin-right: 8px; /* Agrega margen a la derecha de cada ícono */
+    margin-left: 8px; /* Agrega margen a la derecha de cada ícono */
 }
