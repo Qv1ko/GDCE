@@ -22,45 +22,43 @@
         <div class="row col-lg-12">
             
             <div class="col-lg-6">
-                <?= ChartJs::widget([
-                    'type' => 'pie',
-                    'options' => [
-                        'height' => 480,
-                        'width' => 480
-                    ],
-                    'data' => [
-                        'labels' => ['Disponibles', 'No disponibles', 'Averiados'],
-                        'datasets' => [[
-                            'label' => "Número de portatiles",
-                            'backgroundColor' => ['#4E5AE3', '#44B86B', '#E8685C'],
-                            'borderColor' => '#000000',
-                            'data' => [$portatiles_disponibles, $portatiles_no_disponibles, $portatiles_averiados]
-                        ]]
-                    ]
-                ]); ?>
+                <canvas id="graficoEstado" width="400" height="400"></canvas>
+
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                    var ctx = document.getElementById('graficoEstado').getContext('2d');
+                    var graficoEstado = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['Disponibles', 'No disponibles', 'Averiados'],
+                            datasets: [{
+                                label: 'Portátiles',
+                                backgroundColor: ['#00F377', '#ECE3FF', '#FF0033'],
+                                borderColor: '#000000',
+                                data: [<?=$portatiles_disponibles?>, <?=$portatiles_no_disponibles?>, <?=$portatiles_averiados?>]
+                            }, {
+                                label: 'Cargadores',
+                                backgroundColor: ['#00F377', '#ECE3FF', '#FF0033'],
+                                borderColor: '#000000',
+                                data: [<?=$cargadores_disponibles?>, <?=$cargadores_no_disponibles?>, <?=$cargadores_averiados?>]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+                </script>
             </div>
+
+            
+        </div>
+
+        <div class="row col-lg-12">
 
             <div class="col-lg-6">
-                <?= ChartJs::widget([
-                    'type' => 'pie',
-                    'options' => [
-                        'height' => 480,
-                        'width' => 480
-                    ],
-                    'data' => [
-                        'labels' => ['Disponibles', 'No disponibles', 'Averiados'],
-                        'datasets' => [[
-                            'label' => "Número de cargadores",
-                            'backgroundColor' => ['#4E5AE3', '#44B86B', '#E8685C'],
-                            'borderColor' => '#000000',
-                            'data' => [$cargadores_disponibles, $cargadores_no_disponibles, $cargadores_averiados]
-                        ]]
-                    ]
-                ]); ?>
-            </div>
 
-        </div>
-        <div class="row col-lg-12">
+            </div>
 
             <div class="col-lg-6">
                 <?= ChartJs::widget([
@@ -135,6 +133,44 @@
 
                 <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div> -->
+        </div>
+
+        <div class="row col-lg-12">
+            <div class="col-lg-6">
+                <?= ChartJs::widget([
+                    'type' => 'radar',
+                    'options' => [
+                        'height' => 400,
+                        'width' => 400
+                    ],
+                    'data' => [
+                        'labels' => ["Almacen 1", "Almacen 2", "Almacen 3", "Almacen 4", "Almacen 5", "Almacen 6", "Almacen 7"],
+                        'datasets' => [
+                            [
+                                'label' => "Capacidad máxima",
+                                'backgroundColor' => "#FF003316",
+                                'borderColor' => "#FF0033",
+                                'pointBackgroundColor' => "#FF0033",
+                                'pointBorderColor' => "#E3E3E3",
+                                'pointHoverBackgroundColor' => "#E3E3E3",
+                                'pointHoverBorderColor' => "#FF0033",
+                                'data' => [65, 59, 90, 81, 56, 55, 40]
+                            ], [
+                                'label' => "Capacidad ocupada actual",
+                                'backgroundColor' => "#4040FF16",
+                                'borderColor' => "#4040FF",
+                                'pointBackgroundColor' => "#4040FF",
+                                'pointBorderColor' => "#E3E3E3",
+                                'pointHoverBackgroundColor' => "#E3E3E3",
+                                'pointHoverBorderColor' => "#4040FF",
+                                'data' => [28, 48, 40, 19, 28, 27, 28]
+                            ]
+                        ]
+                    ]
+                ]);
+                ?>
+            </div>
+
         </div>
 
     </div>
