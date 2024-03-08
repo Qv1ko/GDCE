@@ -49,33 +49,27 @@
                 'class' => 'container-fluid',
             ],
         ]);
+        $menuItems = [
+            ['label' => 'INICIO', 'url' => ['/site/index']],
+            // ['label' => 'ABOUT', 'url' => ['/site/about']],
+            // ['label' => 'CONTACT', 'url' => ['/site/contact']],
+        ];
+        if (Yii::$app->user->isGuest) {
+            $menuItems[] = ['label' => 'INICIAR SESIÓN', 'url' => ['/site/login']];
+        } else {
+            $menuItems[] = ['label' => 'PORTATILES', 'url' => ['/portatiles/index']];
+            $menuItems[] = ['label' => 'APLICACIONES', 'url' => ['/aplicaciones/index']];
+            $menuItems[] = ['label' => 'CARGADORES', 'url' => ['/cargadores/index']];
+            $menuItems[] = ['label' => 'CARGAN', 'url' => ['/cargan/index']];
+            $menuItems[] = ['label' => 'ALMACENES', 'url' => ['/almacenes/index']];
+            $menuItems[] = ['label' => 'ALUMNOS', 'url' => ['/alumnos/index']];
+            $menuItems[] = ['label' => 'CURSOS', 'url' => ['/cursos/index']];
+            $menuItems[] = ['label' => 'CURSAN', 'url' => ['/cursan/index']];
+            $menuItems[] = ['label' => 'CERRAR SESIÓN (' . strtoupper(Yii::$app->user->identity->username) . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+        }
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav ml-auto'],
-            'items' => [
-                ['label' => 'INICIO', 'url' => ['/site/index']],
-                ['label' => 'PORTATILES', 'url' => ['/portatiles/index']],
-                ['label' => 'APLICACIONES', 'url' => ['/aplicaciones/index']],
-                ['label' => 'CARGADORES', 'url' => ['/cargadores/index']],
-                ['label' => 'CARGAN', 'url' => ['/cargan/index']],
-                ['label' => 'ALMACENES', 'url' => ['/almacenes/index']],
-                ['label' => 'ALUMNOS', 'url' => ['/alumnos/index']],
-                ['label' => 'CURSOS', 'url' => ['/cursos/index']],
-                ['label' => 'CURSAN', 'url' => ['/cursan/index']],
-                // ['label' => 'ABOUT', 'url' => ['/site/about']],
-                // ['label' => 'CONTACT', 'url' => ['/site/contact']],
-                Yii::$app->user->isGuest ? (
-                    ['label' => 'INICIAR SESIÓN', 'url' => ['/site/login']]
-                ) : (
-                    '<li>'
-                    . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
-                    . Html::submitButton(
-                        'CERRAR SESIÓN (' . strtoupper(Yii::$app->user->identity->username) . ')',
-                        ['class' => 'btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-                )
-            ],
+            'items' => $menuItems,
         ]);
         NavBar::end();
         ?>
