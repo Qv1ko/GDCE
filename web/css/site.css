@@ -133,3 +133,8 @@ a.desc:after {
     margin-right: 8px; /* Agrega margen a la derecha de cada ícono */
     margin-left: 8px; /* Agrega margen a la derecha de cada ícono */
 }
+
+hr {
+    border: 1px solid #4040FF32;
+    margin: 64px;
+}

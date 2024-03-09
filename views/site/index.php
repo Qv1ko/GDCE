@@ -54,6 +54,8 @@
             
         </div>
 
+        <hr>
+
         <div class="row col-lg-12">
 
             <div class="col-lg-6">
@@ -134,6 +136,8 @@
                 <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
             </div> -->
         </div>
+
+        <hr>
 
         <div class="row col-lg-12">
             <div class="col-lg-6">
