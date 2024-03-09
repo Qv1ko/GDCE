@@ -67,6 +67,10 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex() {
+        return $this->render('index');
+    }
+
+    public function actionGraficos() {
 
         $portatiles_disponibles = Portatiles::find()->where('estado = "Disponible"')->count();
         $portatiles_no_disponibles = Portatiles::find()->where('estado = "No disponible"')->count();
@@ -79,7 +83,7 @@ class SiteController extends Controller
         $almacenes = Almacenes::find()->select(['id_almacen', 'aula', 'capacidad'])->distinct();
     
 
-        return $this->render('index', [
+        return $this->render('graficos', [
             'portatiles_disponibles' => $portatiles_disponibles,
             'portatiles_no_disponibles' => $portatiles_no_disponibles,
             'portatiles_averiados' => $portatiles_averiados,
