@@ -40,15 +40,15 @@
 - Ajustes en los colores debido a problemas de contexto en su elección.
 
 **28/02/2024**
-- Desarrollo de gráficos para la página de inicio.
+- Desarrollo del grafico de "estado de portatiles" para la página de inicio.
 - Modificación de la estructura de la base de datos para hacer tanto el nombre como el año del curso como clave única.
 - Cambio del color principal por ser demasiado oscuro.
 
 **29/02/2024**
-- Desarrollo adicional de gráficos para la página de inicio.
+- Desarrollo del grafico de "estado de cargadores" para la página de inicio.
 
 **02/03/2024**
-- Continuación del desarrollo de gráficos para la página de inicio.
+- Desarrollo del grafico de "uso por cursos" para la página de inicio.
 
 **03/03/2024**
 - Creación de la estructura básica de la documentación.
@@ -56,3 +56,33 @@
 - Desarrollo adicional de gráficos para la página de inicio.
 - Implementación de la libreria de 2amigos "chartjs".
 - Modificación de la interfaz en Figma.
+
+**04/03/2024**
+- Configuración de las páginas y del logotipo en el header.
+- Configuración del favicon.
+
+**05/03/2024**
+- Reestructuración de los elementos del footer.
+- Cambio en la alineación del header.
+- Búsqueda de información sobre FontAwesome y su widget para Yii2.
+
+**06/03/2024**
+- Configuración de los colores del header.
+- Configuración de iconos en el footer con enlaces.
+- Cambio de logotipo debido a problemas de visibilidad.
+- Cambio de favicon y corrección de la ruta para que se visualice en todas las páginas.
+
+**07/03/2024**
+- Configuración de los graficos de tipo pie
+- Cambio de la configuración del grafico pie de PHP a JavaScript, ya que los labels no se muestran correctamente en este tipo de gráfico.
+- Gráfico de los almacenes añadido.
+
+**08/03/2024**
+- Cambio en la visualización de los items del header para diferenciar el acceso entre usuarios invitados y registrados.
+
+**09/03/2024**
+- Añadida una separación entre las secciones de los gráficos.
+- Página de inicio cambiada y los gráficos trasladados a otra página, dejando la página de inicio para la sección de QR, que es la parte principal de la aplicación.
+
+**10/03/2024**
+- Desarrollo de una redirección a la página de inicio cuando el usuario sea invitado.
