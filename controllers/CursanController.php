@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Cursan;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -38,6 +39,11 @@ class CursanController extends Controller
      */
     public function actionIndex()
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => Cursan::find(),
             /*
@@ -65,6 +71,11 @@ class CursanController extends Controller
      */
     public function actionView($id_cursa)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id_cursa),
         ]);
@@ -77,6 +88,11 @@ class CursanController extends Controller
      */
     public function actionCreate()
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = new Cursan();
 
         if ($this->request->isPost) {
@@ -101,6 +117,11 @@ class CursanController extends Controller
      */
     public function actionUpdate($id_cursa)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = $this->findModel($id_cursa);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -121,6 +142,11 @@ class CursanController extends Controller
      */
     public function actionDelete($id_cursa)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $this->findModel($id_cursa)->delete();
 
         return $this->redirect(['index']);
@@ -135,6 +161,11 @@ class CursanController extends Controller
      */
     protected function findModel($id_cursa)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         if (($model = Cursan::findOne(['id_cursa' => $id_cursa])) !== null) {
             return $model;
         }

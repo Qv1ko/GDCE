@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Cargadores;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -38,6 +39,11 @@ class CargadoresController extends Controller
      */
     public function actionIndex()
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => Cargadores::find(),
             /*
@@ -65,6 +71,11 @@ class CargadoresController extends Controller
      */
     public function actionView($id_cargador)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id_cargador),
         ]);
@@ -77,6 +88,11 @@ class CargadoresController extends Controller
      */
     public function actionCreate()
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = new Cargadores();
 
         if ($this->request->isPost) {
@@ -101,6 +117,11 @@ class CargadoresController extends Controller
      */
     public function actionUpdate($id_cargador)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = $this->findModel($id_cargador);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -121,6 +142,11 @@ class CargadoresController extends Controller
      */
     public function actionDelete($id_cargador)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $this->findModel($id_cargador)->delete();
 
         return $this->redirect(['index']);
@@ -135,6 +161,11 @@ class CargadoresController extends Controller
      */
     protected function findModel($id_cargador)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         if (($model = Cargadores::findOne(['id_cargador' => $id_cargador])) !== null) {
             return $model;
         }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Almacenes;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -38,6 +39,11 @@ class AlmacenesController extends Controller
      */
     public function actionIndex()
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => Almacenes::find(),
             /*
@@ -65,6 +71,11 @@ class AlmacenesController extends Controller
      */
     public function actionView($id_almacen)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id_almacen),
         ]);
@@ -77,6 +88,11 @@ class AlmacenesController extends Controller
      */
     public function actionCreate()
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = new Almacenes();
 
         if ($this->request->isPost) {
@@ -101,6 +117,11 @@ class AlmacenesController extends Controller
      */
     public function actionUpdate($id_almacen)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = $this->findModel($id_almacen);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -121,6 +142,11 @@ class AlmacenesController extends Controller
      */
     public function actionDelete($id_almacen)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $this->findModel($id_almacen)->delete();
 
         return $this->redirect(['index']);
@@ -135,6 +161,11 @@ class AlmacenesController extends Controller
      */
     protected function findModel($id_almacen)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         if (($model = Almacenes::findOne(['id_almacen' => $id_almacen])) !== null) {
             return $model;
         }

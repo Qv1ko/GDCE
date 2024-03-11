@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Cargan;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -38,6 +39,11 @@ class CarganController extends Controller
      */
     public function actionIndex()
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => Cargan::find(),
             /*
@@ -65,6 +71,11 @@ class CarganController extends Controller
      */
     public function actionView($id_carga)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id_carga),
         ]);
@@ -77,6 +88,11 @@ class CarganController extends Controller
      */
     public function actionCreate()
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = new Cargan();
 
         if ($this->request->isPost) {
@@ -101,6 +117,11 @@ class CarganController extends Controller
      */
     public function actionUpdate($id_carga)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = $this->findModel($id_carga);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -121,6 +142,11 @@ class CarganController extends Controller
      */
     public function actionDelete($id_carga)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $this->findModel($id_carga)->delete();
 
         return $this->redirect(['index']);
@@ -135,6 +161,11 @@ class CarganController extends Controller
      */
     protected function findModel($id_carga)
     {
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         if (($model = Cargan::findOne(['id_carga' => $id_carga])) !== null) {
             return $model;
         }

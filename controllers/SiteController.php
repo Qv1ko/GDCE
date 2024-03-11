@@ -72,6 +72,10 @@ class SiteController extends Controller
 
     public function actionGraficos() {
 
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $portatiles_disponibles = Portatiles::find()->where('estado = "Disponible"')->count();
         $portatiles_no_disponibles = Portatiles::find()->where('estado = "No disponible"')->count();
         $portatiles_averiados = Portatiles::find()->where('estado = "Averiado"')->count();
