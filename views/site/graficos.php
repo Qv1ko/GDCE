@@ -60,45 +60,57 @@
             <h1 class="col-12">Capacidad de los almacenes</h1>
 
             <div class="col-lg-5">
-                <?= ChartJs::widget([
-                    'type' => 'radar',
-                    'options' => [
-                        'height' => 400,
-                        'width' => 400
-                    ],
-                    'data' => [
-                        'labels' => array_column($almacenes, 'almacen'),
-                        'datasets' => [
-                            [
-                                'label' => "Capacidad máxima",
-                                'backgroundColor' => "#FF003316",
-                                'borderColor' => "#FF0033",
-                                'pointBackgroundColor' => "#FF0033",
-                                'pointBorderColor' => "#E3E3E3",
-                                'pointHoverBackgroundColor' => "#E3E3E3",
-                                'pointHoverBorderColor' => "#FF0033",
-                                'data' => array_column($almacenes, 'capacidad')
-                            ], [
-                                'label' => "Capacidad ocupada actual",
-                                'backgroundColor' => "#4040FF16",
-                                'borderColor' => "#4040FF",
-                                'pointBackgroundColor' => "#4040FF",
-                                'pointBorderColor' => "#E3E3E3",
-                                'pointHoverBackgroundColor' => "#E3E3E3",
-                                'pointHoverBorderColor' => "#4040FF",
-                                'data' => array_column($almacenes, 'dispositivos')
-                            ]
-                        ]
-                    ]
-                ]);
-                ?>
+                <canvas id="graficoAlmacenes" width="400" height="400"></canvas>
 
-                <div class="col-lg-7">
-                
-                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                    var ctx = document.getElementById('graficoAlmacenes').getContext('2d');
+                    var almacenes = <?php echo json_encode(array_map(function($item) { return $item['almacen']; }, $almacenes)); ?>;
+                    var capacidad = <?php echo json_encode(array_map(function($item) { return $item['capacidad']; }, $almacenes)); ?>;
+                    var dispositivos = <?php echo json_encode(array_map(function($item) { return $item['dispositivos']; }, $almacenes)); ?>;
+
+                    var graficoAlmacenes = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: almacenes,
+                            datasets: [{
+                                label: 'Capacidad máxima',
+                                data: capacidad,
+                                backgroundColor: 'rgba(255, 0, 51, 0.086)',
+                                borderColor: '#FF0033',
+                                pointBackgroundColor: '#FF0033',
+                                pointBorderColor: '#E3E3E3',
+                                pointHoverBackgroundColor: '#E3E3E3',
+                                pointHoverBorderColor: '#FF0033'
+                            }, {
+                                label: 'Capacidad ocupada actual',
+                                data: dispositivos,
+                                backgroundColor: 'rgba(64, 64, 255, 0.086)',
+                                borderColor: '#4040FF',
+                                pointBackgroundColor: '#4040FF',
+                                pointBorderColor: '#E3E3E3',
+                                pointHoverBackgroundColor: '#E3E3E3',
+                                pointHoverBorderColor: '#4040FF'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                </script>
             </div>
 
+            <div class="col-lg-7">
+
             </div>
+
+        </div>
 
         <hr>
 
@@ -128,30 +140,6 @@
                     ]
                 ]); ?>
             </div>
-
-            <!-- <div class="col-lg-6">
-                 ChartJs::widget([
-                    'type' => 'radar',
-                    'options' => [
-                        'height' => 800,
-                        'width' => 800
-                    ],
-                    'data' => [
-                        'labels' => $arrayColumn($almacen, 'aula'),
-                        'datasets' => [[
-                            'label' => "Almacenamiento máximo",
-                            'backgroundColor' => ['#4E5AE3', '#44B86B', '#E8685C'],
-                            'borderColor' => '#000000',
-                            'data' => arrayColumn($usoCiclo, 'cantidad')
-                        ], [
-                            'label' => "Almacenamiento actual",
-                            'backgroundColor' => ['#4E5AE3', '#44B86B', '#E8685C'],
-                            'borderColor' => '#000000',
-                            'data' => arrayColumn($usoCiclo, 'cantidad')
-                        ]]
-                    ]
-                ]); 
-            </div> -->
         </div>
 
     </div>

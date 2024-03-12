@@ -84,9 +84,7 @@ class SiteController extends Controller
         $cargadoresAveriados = Cargadores::find()->where('estado = "Averiado"')->count();
         $cursoActual = Cursan::getCursoActual();
         $almacenes = Almacenes::find()->select(['CONCAT("Almacén ", almacenes.aula) AS almacen', 'almacenes.capacidad', 'COALESCE(portatiles.count, 0) + COALESCE(cargadores.count, 0) AS dispositivos'])->leftJoin(['portatiles' => (new \yii\db\Query())->select(['id_almacen', 'COUNT(*) AS count'])->from('Portatiles')->groupBy('id_almacen')], 'almacenes.id_almacen = portatiles.id_almacen')->leftJoin(['cargadores' => (new \yii\db\Query())->select(['id_almacen', 'COUNT(*) AS count'])->from('Cargadores')->groupBy('id_almacen')], 'almacenes.id_almacen = cargadores.id_almacen')->asArray()->all();
-
         $usoCiclo = Alumnos::find()->select(['cursos.nombre', 'COUNT(*) AS cantidad'])->joinWith('cursan')->joinWith('cursan.curso')->where(['cursan.curso_academico' => $cursoActual])->groupBy('cursos.nombre')->asArray()->all();
-    
 
         return $this->render('graficos', [
             'portatilesDisponibles' => $portatilesDisponibles,
@@ -96,7 +94,6 @@ class SiteController extends Controller
             'cargadoresNoDisponibles' => $cargadoresNoDisponibles,
             'cargadoresAveriados' => $cargadoresAveriados,
             'almacenes' => $almacenes,
-
             'usoCiclo' => $usoCiclo,
         ]);
 
