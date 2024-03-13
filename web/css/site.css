@@ -119,19 +119,23 @@ a.desc:after {
     outline: none;
 }
 
-.github-icon,
-.gitlab-icon {
+.default-icon {
     fill: #E3E3E3; /* Cambia el color al que desees cuando hagas hover */
 }
 
-.github-icon:hover,
-.gitlab-icon:hover {
+.default-icon:hover {
     fill: #99FF33; /* Cambia el color al que desees cuando hagas hover */
 }
 
 .footer-icon {
     margin-right: 8px; /* Agrega margen a la derecha de cada ícono */
     margin-left: 8px; /* Agrega margen a la derecha de cada ícono */
+}
+
+h1 {
+    color: #4040FF;
+    font-weight: bold;
+    text-align: center;
 }
 
 hr {
