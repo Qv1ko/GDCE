@@ -142,3 +142,36 @@ hr {
     border: 1px solid #4040FF32;
     margin: 64px;
 }
+
+.qr-scanner-container {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    margin-bottom: 20px;
+}
+.qr-scanner {
+    width: 100%;
+    height: 100%;
+}
+.qr-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.qr-overlay::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+

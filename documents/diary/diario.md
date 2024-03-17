@@ -86,3 +86,21 @@
 
 **10/03/2024**
 - Desarrollo de una redirección a la página de inicio cuando el usuario sea invitado.
+
+**11/03/2024**
+- Cambio en las redirecciones pasando de usar una cadena con la ruta a una variable.
+- Reestructuración de la página de gráficos y títulos añadidos.
+- Cambio de la interfaz del inicio de sesión.
+- Desarrollo del gráfico de la capacidad de los almacenes.
+
+**12/03/2024**
+- Cambio en la gráfica de la capacidad de los almacenes debido a un error en el widget, ya que los labels y el valor mínimo del gráfico se representaba incorrectamente.
+- Cancelado el gráfico de uso anual debido a la falta de implementación en la base de datos.
+
+**13/03/2024**
+- Búsqueda de información para desarrollar el lector de códigos QR.
+- Búsqueda de ejemplos de dashboards para cambiar la página de gráficos.
+- Cambio en la página de gestión de portátiles.
+
+**14/03/2024**
+- Desarrollo de una nueva interfaz en Figma.

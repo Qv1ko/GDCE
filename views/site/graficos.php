@@ -4,7 +4,7 @@
 
     use dosamigos\chartjs\ChartJs;
 
-    $this->title = 'Inicio';
+    $this->title = 'Panel';
 
 ?>
 

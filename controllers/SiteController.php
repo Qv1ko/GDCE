@@ -16,6 +16,9 @@ use app\models\Cargadores;
 use app\models\Cursan;
 use app\models\Cursos;
 use app\models\Portatiles;
+use Zxing\QrReader;
+use yii\bootstrap\Modal;
+use yii\helpers\Html;
 
 class SiteController extends Controller
 {

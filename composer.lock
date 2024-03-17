@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8795eab98d7f1ed8578d04ec25ea25fb",
+    "content-hash": "aee89cbc1adf05837f97cc3f846f4c89",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -490,6 +490,54 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "odaialali/yii2-qrcode-reader",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/odai-alali/yii2-qrcode-reader.git",
+                "reference": "961000881aad895132f7145f8782c66e24db6b6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/odai-alali/yii2-qrcode-reader/zipball/961000881aad895132f7145f8782c66e24db6b6e",
+                "reference": "961000881aad895132f7145f8782c66e24db6b6e",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "odaialali\\qrcodereader\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Odai Alali",
+                    "email": "odai.alali@gmail.com"
+                }
+            ],
+            "description": "Yii2 widget for reading qr code using laptop or phone camera",
+            "keywords": [
+                "extension",
+                "javascript",
+                "qrcode",
+                "reader",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/odai-alali/yii2-qrcode-reader/issues",
+                "source": "https://github.com/odai-alali/yii2-qrcode-reader/tree/master"
+            },
+            "time": "2017-05-05T09:17:38+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2329,20 +2377,21 @@
         },
         {
             "name": "phar-io/manifest",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/manifest.git",
-                "reference": "97803eca37d319dfa7826cc2437fc020857acb53"
+                "reference": "54750ef60c58e43759730615a392c31c80e23176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/manifest/zipball/97803eca37d319dfa7826cc2437fc020857acb53",
-                "reference": "97803eca37d319dfa7826cc2437fc020857acb53",
+                "url": "https://api.github.com/repos/phar-io/manifest/zipball/54750ef60c58e43759730615a392c31c80e23176",
+                "reference": "54750ef60c58e43759730615a392c31c80e23176",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
+                "ext-libxml": "*",
                 "ext-phar": "*",
                 "ext-xmlwriter": "*",
                 "phar-io/version": "^3.0.1",
@@ -2383,9 +2432,15 @@
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
             "support": {
                 "issues": "https://github.com/phar-io/manifest/issues",
-                "source": "https://github.com/phar-io/manifest/tree/2.0.3"
+                "source": "https://github.com/phar-io/manifest/tree/2.0.4"
             },
-            "time": "2021-07-20T11:28:43+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/theseer",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-03T12:33:53+00:00"
         },
         {
             "name": "phar-io/version",
@@ -2778,16 +2833,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.36",
+            "version": "8.5.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9652df58e06a681429d8cfdaec3c43d6de581d5a"
+                "reference": "fce30f306cee78be33ba00c8f9a853f41db0491b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9652df58e06a681429d8cfdaec3c43d6de581d5a",
-                "reference": "9652df58e06a681429d8cfdaec3c43d6de581d5a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fce30f306cee78be33ba00c8f9a853f41db0491b",
+                "reference": "fce30f306cee78be33ba00c8f9a853f41db0491b",
                 "shasum": ""
             },
             "require": {
@@ -2856,7 +2911,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/8.5.36"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/8.5.37"
             },
             "funding": [
                 {
@@ -2872,7 +2927,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-01T16:52:15+00:00"
+            "time": "2024-03-06T06:27:42+00:00"
         },
         {
             "name": "psr/container",
@@ -4987,16 +5042,16 @@
         },
         {
             "name": "theseer/tokenizer",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theseer/tokenizer.git",
-                "reference": "b2ad5003ca10d4ee50a12da31de12a5774ba6b96"
+                "reference": "737eda637ed5e28c3413cb1ebe8bb52cbf1ca7a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/b2ad5003ca10d4ee50a12da31de12a5774ba6b96",
-                "reference": "b2ad5003ca10d4ee50a12da31de12a5774ba6b96",
+                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/737eda637ed5e28c3413cb1ebe8bb52cbf1ca7a2",
+                "reference": "737eda637ed5e28c3413cb1ebe8bb52cbf1ca7a2",
                 "shasum": ""
             },
             "require": {
@@ -5025,7 +5080,7 @@
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "support": {
                 "issues": "https://github.com/theseer/tokenizer/issues",
-                "source": "https://github.com/theseer/tokenizer/tree/1.2.2"
+                "source": "https://github.com/theseer/tokenizer/tree/1.2.3"
             },
             "funding": [
                 {
@@ -5033,7 +5088,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-20T00:12:19+00:00"
+            "time": "2024-03-03T12:36:25+00:00"
         },
         {
             "name": "yiisoft/yii2-debug",
@@ -5297,7 +5352,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "odaialali/yii2-qrcode-reader": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
