@@ -104,3 +104,20 @@
 
 **14/03/2024**
 - Desarrollo de una nueva interfaz en Figma.
+
+**21/03/2024**
+- Desarrollo de la documentación de la tipografía.
+
+**22/03/2024**
+- Desarrollo de la vista "Portatil", que permitirá al usuario ver la información del portátil que escaneó.
+
+**23/03/2024**
+- Desarrollo de la vista de "Portatil".
+- Implementación de nuevos iconos para la aplicación.
+- Desarrollo de un estilo de caja para visualizar la información sobre los portátiles.
+
+**24/03/2024**
+- Búsqueda de información para implementar un desplegable.
+- Modificaciones en las columnas del grid en la página de Almacenes.
+- Documentación de la tipografía añadida a la documentación final.
+- Búsqueda de información y ejemplos para implementar un lector de código QR.
