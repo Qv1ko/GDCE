@@ -1,32 +1,30 @@
 <?php
 
-use app\models\Almacenes;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+    use app\models\Almacenes;
+    use yii\helpers\Html;
+    use yii\helpers\Url;
+    use yii\grid\ActionColumn;
+    use yii\grid\GridView;
 
-/** @var yii\web\View $this */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+    /** @var yii\web\View $this */
+    /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Almacenes';
-$this->params['breadcrumbs'][] = $this->title;
+    $this->title = 'Almacenes';
+
 ?>
+
 <div class="almacenes-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode(strtoupper($this->title)) ?></h1>
 
     <p>
         <?= Html::a('Create Almacenes', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id_almacen',
+            //'id_almacen',
             'aula',
             'capacidad',
             [
@@ -37,6 +35,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
 
 </div>

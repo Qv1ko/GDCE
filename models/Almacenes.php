@@ -14,21 +14,19 @@ use Yii;
  * @property Cargadores[] $cargadores
  * @property Portatiles[] $portatiles
  */
-class Almacenes extends \yii\db\ActiveRecord
-{
+class Almacenes extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'almacenes';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['aula'], 'required'],
             [['capacidad'], 'integer'],
@@ -40,10 +38,9 @@ class Almacenes extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id_almacen' => 'Id Almacen',
+            'id_almacen' => 'ID Almacén',
             'aula' => 'Aula',
             'capacidad' => 'Capacidad',
         ];
@@ -54,8 +51,7 @@ class Almacenes extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCargadores()
-    {
+    public function getCargadores() {
         return $this->hasMany(Cargadores::class, ['id_almacen' => 'id_almacen']);
     }
 
@@ -64,8 +60,8 @@ class Almacenes extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPortatiles()
-    {
+    public function getPortatiles() {
         return $this->hasMany(Portatiles::class, ['id_almacen' => 'id_almacen']);
     }
+
 }
