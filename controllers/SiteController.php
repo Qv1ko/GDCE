@@ -13,11 +13,13 @@ use app\models\ContactForm;
 use app\models\Almacenes;
 use app\models\Alumnos;
 use app\models\Cargadores;
+use app\models\Cargan;
 use app\models\Cursan;
 use app\models\Cursos;
 use app\models\Portatiles;
 use Zxing\QrReader;
 use yii\bootstrap\Modal;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 class SiteController extends Controller
@@ -71,6 +73,25 @@ class SiteController extends Controller
      */
     public function actionIndex() {
         return $this->render('index');
+    }
+
+    public function actionPortatil($portatil) {
+
+        $estado = Portatiles::find()->select('estado')->distinct()->where(['codigo' => $portatil])->scalar();
+        $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $portatil])->scalar();
+        $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $portatil])->scalar();
+        $alumnoTurnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'portatiles.codigo' => $portatil])->scalar();
+        $alumnoTurnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'portatiles.codigo' => $portatil])->scalar();
+
+        return $this->render('portatil', [
+            'codigo' => $portatil,
+            'estado' => $estado,
+            'cargador' => $cargador,
+            'almacen' => $almacen,
+            'alumnoManana' => $alumnoTurnoManana,
+            'alumnoTarde' => $alumnoTurnoTarde,
+        ]);
+
     }
 
     public function actionGraficos() {

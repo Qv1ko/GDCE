@@ -119,11 +119,11 @@ a.desc:after {
     outline: none;
 }
 
-.default-icon {
+.button-icon {
     fill: #E3E3E3; /* Cambia el color al que desees cuando hagas hover */
 }
 
-.default-icon:hover {
+.button-icon:hover {
     fill: #99FF33; /* Cambia el color al que desees cuando hagas hover */
 }
 
@@ -132,15 +132,35 @@ a.desc:after {
     margin-left: 8px; /* Agrega margen a la derecha de cada ícono */
 }
 
+.icon {
+    margin-right: 8px;
+}
+
 h1 {
     color: #4040FF;
     font-weight: bold;
     text-align: center;
+    margin: 0;
+}
+
+p {
+    font-size: 24px;
+    color: #333333;
+    margin: 0;
 }
 
 hr {
     border: 1px solid #4040FF32;
     margin: 64px;
+}
+
+.caja {
+    border: 2px solid #4040FF32;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #4040FF24;
+    margin-top: 24px;
+    margin-bottom: 24px;
 }
 
 .qr-scanner-container {
