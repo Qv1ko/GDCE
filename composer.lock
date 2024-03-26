@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aee89cbc1adf05837f97cc3f846f4c89",
+    "content-hash": "269df22ef1569c1c2babc2f6089995fa",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -92,7 +92,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -478,6 +478,52 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.17.0"
             },
             "time": "2023-11-17T15:01:25+00:00"
+        },
+        {
+            "name": "mdq/yii2-instascan-widget",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mariodro/yii2-instascan-widget.git",
+                "reference": "9255c38c615079c692cd72876b38b5db59e811fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mariodro/yii2-instascan-widget/zipball/9255c38c615079c692cd72876b38b5db59e811fa",
+                "reference": "9255c38c615079c692cd72876b38b5db59e811fa",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "mdq\\instascan\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mario Droguett",
+                    "email": "mariodro@hotmail.com"
+                }
+            ],
+            "description": "Yii2 widget for reading qr code using instascan pluggin",
+            "keywords": [
+                "extension",
+                "instascan",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/mariodro/yii2-instascan-widget/issues",
+                "source": "https://github.com/mariodro/yii2-instascan-widget/tree/master"
+            },
+            "time": "2019-02-22T19:17:04+00:00"
         },
         {
             "name": "npm-asset/bootstrap",
@@ -5353,7 +5399,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "odaialali/yii2-qrcode-reader": 20
+        "odaialali/yii2-qrcode-reader": 20,
+        "mdq/yii2-instascan-widget": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

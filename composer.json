@@ -19,7 +19,8 @@
         "yiisoft/yii2-bootstrap4": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "2amigos/yii2-chartjs-widget" : "~2.0",
-        "odaialali/yii2-qrcode-reader": "dev-master"
+        "odaialali/yii2-qrcode-reader": "dev-master",
+        "mdq/yii2-instascan-widget": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
