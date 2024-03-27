@@ -132,10 +132,6 @@ a.desc:after {
     margin-left: 8px; /* Agrega margen a la derecha de cada ícono */
 }
 
-.icon {
-    margin-right: 8px;
-}
-
 h1 {
     color: #4040FF;
     font-weight: bold;
@@ -163,35 +159,15 @@ hr {
     margin-bottom: 24px;
 }
 
-.qr-scanner-container {
-    width: 300px;
-    height: 300px;
-    position: relative;
-    margin-bottom: 20px;
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.qr-scanner {
-    width: 100%;
-    height: 100%;
+#reader {
+    width: 600px;
 }
-.qr-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+#result {
+    text-align: center;
+    font-size: 1.5rem;
 }
-.qr-overlay::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
-    border: 2px solid #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
-    z-index: 1;
-}
-
