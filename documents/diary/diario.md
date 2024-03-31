@@ -121,3 +121,30 @@
 - Modificaciones en las columnas del grid en la página de Almacenes.
 - Documentación de la tipografía añadida a la documentación final.
 - Búsqueda de información y ejemplos para implementar un lector de código QR.
+
+**25/03/2024**
+- Pruebas en la implementación de la librería html5-qrcode utilizando código JavaScript para la función de escaneo de códigos QR.
+
+**26/03/2024**
+- Añadido un bloque de búsqueda de portátiles en la página de inicio.
+- Rediseño completo de la página de inicio para mejorar su apariencia y funcionalidad.
+
+**27/03/2024**
+- Cambio de los estilos de los iconos a estilos en línea.
+- Modificación de la estructura del buscador de portátiles debido a problemas de responsividad.
+
+**28/03/2024**
+- Cambio de la estructura de la página de inicio añadiendo contenido.
+- Configuración de SSL para el localhost con el fin de probar el lector de códigos QR desde dispositivos móviles.
+
+**29/03/2024**
+- Configuración de SSL y DNS personalizado para la aplicación web.
+- Realización de pruebas exitosas del lector de códigos QR en dispositivos web y móviles.
+- Cambio en la interfaz de la página de inicio para adaptarla al lector de QR.
+
+**30/03/2024**
+- Fusión del lector de códigos QR con el buscador en la página de inicio.
+- Problemas relacionados con la recarga de la página y la solicitud de permisos de cámara al escanear un código QR con un patrón incorrecto.
+
+**31/03/2024**
+- Añadida una columna con checkbox a la página de gestión de almacenes.
