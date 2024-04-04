@@ -12,13 +12,12 @@ use yii\filters\VerbFilter;
 /**
  * AlmacenesController implements the CRUD actions for Almacenes model.
  */
-class AlmacenesController extends Controller
-{
+class AlmacenesController extends Controller {
+
     /**
      * @inheritDoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return array_merge(
             parent::behaviors(),
             [
@@ -37,8 +36,7 @@ class AlmacenesController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -46,21 +44,20 @@ class AlmacenesController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => Almacenes::find(),
-            /*
             'pagination' => [
-                'pageSize' => 50
+                'pageSize' => 24
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'id_almacen' => SORT_DESC,
+                    'aula' => SORT_ASC,
                 ]
             ],
-            */
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+
     }
 
     /**
@@ -69,8 +66,7 @@ class AlmacenesController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_almacen)
-    {
+    public function actionView($id_almacen) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -79,6 +75,7 @@ class AlmacenesController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id_almacen),
         ]);
+
     }
 
     /**
@@ -86,8 +83,7 @@ class AlmacenesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -106,6 +102,7 @@ class AlmacenesController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -115,8 +112,7 @@ class AlmacenesController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_almacen)
-    {
+    public function actionUpdate($id_almacen) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -131,6 +127,7 @@ class AlmacenesController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -140,8 +137,7 @@ class AlmacenesController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_almacen)
-    {
+    public function actionDelete($id_almacen) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -150,6 +146,7 @@ class AlmacenesController extends Controller
         $this->findModel($id_almacen)->delete();
 
         return $this->redirect(['index']);
+
     }
 
     /**
@@ -159,8 +156,7 @@ class AlmacenesController extends Controller
      * @return Almacenes the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_almacen)
-    {
+    protected function findModel($id_almacen) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -171,5 +167,7 @@ class AlmacenesController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+
     }
+
 }
