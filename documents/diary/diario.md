@@ -148,3 +148,30 @@
 
 **31/03/2024**
 - Añadida una columna con checkbox a la página de gestión de almacenes.
+
+**01/04/2024**
+- Columna de checkboxes eliminada de la página de gestión de almacenes, para evitar que el usuario elimine toda la información por error.
+- Añadido buscador en la página de gestión de almacenes.
+- Botones de la columna derecha de la página de gestión de almacenes modificados.
+- Código de la página de inicio comentado.
+- Refactorización del código de la página de inicio y cambios en las clases de Bootstrap para hacer un código limpio y estructurado.
+- Cambio en los estilos del lector de códigos QR.
+- Pruebas con los estilos del footer para mejorar su responsabilidad en dispositivos móviles.
+
+**02/04/2024**
+- Mejorando la responsividad en la página de inicio.
+- Botón de crear almacenes movido a la parte inferior de la página junto con dos botones de importar y exportar añadidos.
+- Añadidos iconos para las funciones principales del CRUD.
+
+**03/04/2024**
+- Desarrollando la función para cambiar el estado de un portátil dependiendo de la hora del día y su ocupación.
+
+**04/04/2024**
+- Configuración de disposición de las columnas y su contenido en las páginas de gestión de portátiles, cargadores y almacenes.
+- Implementación de un botón para listar las aplicaciones de cada portátil en la página de gestión de portátiles.
+
+**05/04/2024**
+- Implementación de un botón de exportación para la página de gestión de almacenes.
+
+**07/04/2024**
+- Unión del código de la página de creación de almacenes en la página index para implementar un popup al pulsar el botón de crear almacén.
