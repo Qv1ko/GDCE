@@ -1,18 +1,16 @@
 body {
     font-family: "Roboto", sans-serif;
-    background-color: #E3E3E3;
+    background-color: #e3e3e3;
 }
 
 main > .container {
-    padding: 128px 0px 32px;
-    /*margin: 0;*/
+    padding: 96px 0px 32px;
 }
 
 .footer {
-    background-color: #4040FF;
-    color: #E3E3E3 !important;
-    font-size: 20px;
-    height: 60px;
+    background-color: #4040ff;
+    color: #e3e3e3 !important;
+    font-size: 24px;
     font-family: "Roboto", sans-serif;
 }
 
@@ -31,9 +29,8 @@ main > .container {
     font-style: bold;
 }
 
-/* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
-    content: '';
+    content: "";
     left: 3px;
     display: inline-block;
     width: 0;
@@ -71,47 +68,36 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
-/* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
     padding-top: 7px;
-    color: #E3E3E3;
+    color: #e3e3e3;
 }
 
 .navbar {
-    background-color: #4040FF;
-}
-
-@media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
-        text-align: left;
-        width: 100%;
-        padding: 10px 0;
-    }
+    background-color: #4040ff;
 }
 
 .nav-link {
     text-decoration: none;
-    color: #E3E3E3 !important;
+    color: #e3e3e3 !important;
     font-weight: bold;
 }
 
 .nav-link.active, .nav-link:focus, .nav-link:hover {
     text-decoration: none;
-    color: #99FF33 !important;
+    color: #99ff33 !important;
     font-weight: bold;
 }
 
 .nav > li > form > button.logout {
     text-decoration: none;
-    color: #E3E3E3;
+    color: #e3e3e3;
     font-weight: bold;
 }
 
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+.nav > li > form > button.logout:focus, .nav > li > form > button.logout:hover {
     text-decoration: none;
-    color: #99FF33;
+    color: #99ff33;
     font-weight: bold;
 }
 
@@ -120,23 +106,22 @@ a.desc:after {
 }
 
 .button-icon {
-    fill: #E3E3E3; /* Cambia el color al que desees cuando hagas hover */
+    fill: #e3e3e3;
 }
 
 .button-icon:hover {
-    fill: #99FF33; /* Cambia el color al que desees cuando hagas hover */
+    fill: #99ff33;
 }
 
 .footer-icon {
-    margin-right: 8px; /* Agrega margen a la derecha de cada ícono */
-    margin-left: 8px; /* Agrega margen a la derecha de cada ícono */
+    margin-right: 8px;
+    margin-left: 8px;
 }
 
-h1 {
-    color: #4040FF;
+h1, h2, h3 {
+    color: #4040ff;
     font-weight: bold;
     text-align: center;
-    margin: 0;
 }
 
 p {
@@ -146,30 +131,64 @@ p {
 }
 
 hr {
-    border: 1px solid #4040FF32;
-    margin: 64px;
+    border: 1px solid #4040ff32;
+    margin: 32px;
 }
 
+.row {
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+/* Estilos para cajas - página de portatil */
 .caja {
-    border: 2px solid #4040FF32;
+    border: 2px solid #4040ff32;
     border-radius: 8px;
     padding: 8px;
-    background-color: #4040FF24;
+    background-color: #4040ff24;
     margin-top: 24px;
     margin-bottom: 24px;
-}
-
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #reader {
     width: 400px;
 }
 
-#result {
-    text-align: center;
-    font-size: 1.5rem;
+/* Estilos para tamaños de pantalla pequeños */
+@media (max-width: 767px) {
+
+    main > .container {
+        padding: 96px 0px 32px;
+    }
+
+    .nav li > form > button.logout {
+        display: block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    h1 {
+        padding: 16px;
+        margin: 0;
+    }
+
+    h2 {
+        padding: 8px;
+        margin: 0;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    hr {
+        margin: 16px;
+    }
+
+    .row {
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+  
 }
