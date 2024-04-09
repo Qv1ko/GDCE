@@ -154,6 +154,14 @@ hr {
     width: 400px;
 }
 
+.square {
+    max-width: auto;
+    background-color: #e3e3e3;
+    box-shadow: 0 4px 8px #33333332;
+    padding: 16px;
+    border-radius: 8px;
+}
+
 /* Estilos para tamaños de pantalla pequeños */
 @media (max-width: 767px) {
 
