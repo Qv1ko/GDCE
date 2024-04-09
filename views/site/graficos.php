@@ -44,7 +44,12 @@
                         },
                         options: {
                             responsive: true,
-                            maintainAspectRatio: false
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                }
+                            }
                         }
                     });
                 </script>
@@ -96,6 +101,11 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                }
+                            },
                             scales: {
                                 r: {
                                     beginAtZero: true
@@ -123,22 +133,64 @@
             </div>
 
             <div class="col-lg-4">
-                <?= ChartJs::widget([
-                    'type' => 'pie',
-                    'options' => [
-                        'height' => 800,
-                        'width' => 800
-                    ],
-                    'data' => [
-                        'labels' => array_column($usoCiclo, 'nombre'),
-                        'datasets' => [[
-                            'label' => "Alumnos usando pórtatiles",
-                            'backgroundColor' => ['#4E5AE3', '#44B86B', '#E8685C'],
-                            'borderColor' => '#000000',
-                            'data' => array_column($usoCiclo, 'cantidad')
-                        ]]
-                    ]
-                ]); ?>
+                <canvas id="graficoAlumnos" width="400" height="400"></canvas>
+
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+
+                    var ctx = document.getElementById('graficoAlumnos').getContext('2d');
+                    var nombres = <?php echo json_encode(array_column($usoCiclo, 'nombre')); ?>;
+                    var cantidades = <?php echo json_encode(array_column($usoCiclo, 'cantidad')); ?>;
+                    var gradientColors = generateGradientColors('#4040ff', '#99FF33', nombres.length);
+
+                    var graficoEstado = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: nombres,
+                            datasets: [{
+                                label: 'Alumnos usando pórtatiles',
+                                backgroundColor: gradientColors,
+                                borderColor: '#000000',
+                                data: cantidades
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false,
+                                }
+                            }
+                        }
+                    });
+
+                    // Colores degradados
+                    function generateGradientColors(startColor, endColor, numColors) {
+                        var start = hexToRgb(startColor);
+                        var end = hexToRgb(endColor);
+                        var colors = [];
+
+                        for (var i = 0; i < numColors; i++) {
+                            var r = Math.round(start.r + i * (end.r - start.r) / (numColors - 1));
+                            var g = Math.round(start.g + i * (end.g - start.g) / (numColors - 1));
+                            var b = Math.round(start.b + i * (end.b - start.b) / (numColors - 1));
+                            colors.push('rgb(' + r + ',' + g + ',' + b + ')');
+                        }
+
+                        return colors;
+                    }
+
+                    // Hexadecimal a RGB
+                    function hexToRgb(hex) {
+                        var bigint = parseInt(hex.slice(1), 16);
+                        var r = (bigint >> 16) & 255;
+                        var g = (bigint >> 8) & 255;
+                        var b = bigint & 255;
+                        return { r: r, g: g, b: b };
+                    }
+
+                </script>
             </div>
         </div>
 
