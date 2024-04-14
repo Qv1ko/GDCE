@@ -124,6 +124,10 @@ h1, h2, h3 {
     text-align: center;
 }
 
+.site-graficos h2 {
+    font-size: 16px;
+}
+
 p {
     font-size: 24px;
     color: #333333;
@@ -138,6 +142,11 @@ hr {
 .row {
     padding-top: 32px;
     padding-bottom: 32px;
+}
+
+.site-graficos .row {
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
 
 /* Estilos para cajas - página de portatil */
@@ -160,6 +169,7 @@ hr {
     box-shadow: 0 4px 8px #33333332;
     padding: 16px;
     border-radius: 8px;
+    text-align: center;
 }
 
 /* Estilos para tamaños de pantalla pequeños */

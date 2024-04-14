@@ -1,73 +1,87 @@
 <?php
 
-    /** @var yii\web\View $this */
+/** @var yii\web\View $this */
 
-    use dosamigos\chartjs\ChartJs;
+use dosamigos\chartjs\ChartJs;
 
-    $this->title = 'Panel';
+$this->title = 'Panel';
 
-    $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \yii\web\View::POS_HEAD]);
+$this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
-<div class="site-index">
+<div class="site-graficos">
 
     <div class="container">
         <div class="row">
+
             <div class="col-md-3">
-                <div class="square">
-                    <p>texto</p>
+                <div class="square d-flex flex-column justify-content-between" style="height:200px;">
+                    <h2>PORTÁTILES DISPONIBLES</h2>
+                    <p style="font-size:64px;"><?= $portatilesDisponibles ?></p>
+                    <p style="color: <?= $porcentajePortatilesDisponibles < 10 ? 'red' : $porcentajePortatilesDisponibles < 25 ? 'yellow' : 'green' ?>;"><?= $porcentajePortatilesDisponibles ?>%</p>
                 </div>
             </div>
+
             <div class="col-md-3">
-                <div class="square">
-                    <p>texto</p>
+                <div class="square d-flex flex-column justify-content-between" style="height:200px;">
+                    <h2>CARGADORES DISPONIBLES</h2>
+                    <p style="font-size:64px;"><?= $cargadoresDisponibles ?></p>
+                    <p style="color: <?= $porcentajeCargadoresDisponibles < 10 ? 'red' : $porcentajeCargadoresDisponibles < 25 ? 'yellow' : 'green' ?>;"><?= $porcentajeCargadoresDisponibles ?>%</p>
                 </div>
             </div>
+
             <div class="col-md-3">
-                <div class="square">
-                    <p>texto</p>
+                <div class="square d-flex flex-column justify-content-between" style="height:200px;">
+                    <h2>DISPOSITIVOS AVERIADOS</h2>
+                    <p><span style="font-size:32px;"><?= $portatilesAveriados ?></span> portátiles</p>
+                    <p><span style="font-size:32px;"><?= $cargadoresAveriados ?></span> cargadores</p>
                 </div>
             </div>
+
             <div class="col-md-3">
-                <div class="square">
-                    <canvas id="graficoEstado" ></canvas>
+                <div class="square" style="height:200px;">
+                    <canvas id="graficoEstado"></canvas>
                 </div>
             </div>
+
         </div>
     </div>
 
     <div class="container">
         <div class="row">
+
             <div class="col-md-6">
                 <div class="square">
-                    <canvas id="graficoAlmacenes"></canvas>
+                    <canvas id="graficoAlmacenes" style="height:400px;"></canvas>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="square">
-                    <canvas id="graficoCiclos"></canvas>
+                    <canvas id="graficoCiclos" style="height:400px;"></canvas>
                 </div>
             </div>
+
         </div>
     </div>
 
     <script>
+
         var ctx = document.getElementById('graficoEstado').getContext('2d');
+        var graphData = [<?= $portatilesDisponibles ?>, <?= $cargadoresDisponibles ?>, <?= $portatilesNoDisponibles ?>, <?= $cargadoresNoDisponibles ?>, <?= $portatilesAveriados ?>, <?= $cargadoresAveriados ?>];
+        var color = ['#00F377', '#00F377', '#b69dff', '#b69dff', '#ff001e', '#ff001e'];
+        var etiquetas = ['Portátiles disponibles', 'Cargadores disponibles', 'Portátiles no disponibles', 'Cargadores no disponibles', 'Portátiles averiados', 'Cargadores averiados'];
+
         var graficoEstado = new Chart(ctx, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
-                labels: ['Disponibles', 'No disponibles', 'Averiados'],
+                labels: etiquetas,
                 datasets: [{
-                    label: 'Portátiles',
-                    backgroundColor: ['#00F377', '#ECE3FF', '#FF0033'],
-                    borderColor: '#000000',
-                    data: [<?=$portatilesDisponibles?>, <?=$portatilesNoDisponibles?>, <?=$portatilesAveriados?>]
-                }, {
-                    label: 'Cargadores',
-                    backgroundColor: ['#00F377', '#ECE3FF', '#FF0033'],
-                    borderColor: '#000000',
-                    data: [<?=$cargadoresDisponibles?>, <?=$cargadoresNoDisponibles?>, <?=$cargadoresAveriados?>]
+                    label: ['Total'], 
+                    backgroundColor: color,
+                    borderColor: '#333333',
+                    data: graphData
                 }]
             },
             options: {
@@ -80,6 +94,7 @@
                 }
             }
         });
+
     </script>
 
     <script>
@@ -97,64 +112,108 @@
                     label: 'Capacidad máxima',
                     data: capacidad,
                     backgroundColor: 'rgba(255, 0, 51, 0.086)',
-                    borderColor: '#FF0033',
-                    pointBackgroundColor: '#FF0033',
-                    pointBorderColor: '#E3E3E3',
-                    pointHoverBackgroundColor: '#E3E3E3',
-                    pointHoverBorderColor: '#FF0033'
+                    borderColor: '#ff001e',
+                    pointBackgroundColor: '#ff001e',
+                    pointBorderColor: '#e3e3e3',
+                    pointHoverBackgroundColor: '#e3e3e3',
+                    pointHoverBorderColor: '#ff001e'
                 }, {
                     label: 'Capacidad ocupada actual',
                     data: dispositivos,
                     backgroundColor: 'rgba(64, 64, 255, 0.086)',
-                    borderColor: '#4040FF',
-                    pointBackgroundColor: '#4040FF',
-                    pointBorderColor: '#E3E3E3',
-                    pointHoverBackgroundColor: '#E3E3E3',
-                    pointHoverBorderColor: '#4040FF'
+                    borderColor: '#574bfe',
+                    pointBackgroundColor: '#574bfe',
+                    pointBorderColor: '#e3e3e3',
+                    pointHoverBackgroundColor: '#e3e3e3',
+                    pointHoverBorderColor: '#574bfe'
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
+                    title: {
+                        display: true,
+                        text: 'Capacidad total y actual por almacén',
+                        font: {
+                            size: 16,
+                            family: 'Roboto'
+                        },
+                        padding: {
+                            bottom: 8
+                        }
+                    },
                     legend: {
                         display: false,
+                    },
+                    tooltip: {
+                        titleFont: {
+                            size: 14,
+                            family: 'Roboto'
+                        },
+                        bodyFont: {
+                            size: 12,
+                            family: 'Roboto'
+                        }
                     }
                 },
                 scales: {
                     r: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        suggestedMax: Math.max(...capacidad) + 5,
                     }
                 }
             }
         });
-
     </script>
 
     <script>
-
         var ctx = document.getElementById('graficoCiclos').getContext('2d');
-        var nombres = <?php echo json_encode(array_column($usoCiclo, 'nombre')); ?>;
+        var nombres = <?php echo json_encode(array_column($usoCiclo, 'nombre_corto')); ?>;
         var cantidades = <?php echo json_encode(array_column($usoCiclo, 'cantidad')); ?>;
         var gradientColors = generateGradientColors('#4040ff', '#99FF33', nombres.length);
 
         var graficoEstado = new Chart(ctx, {
-            type: 'pie',
+            type: 'bar',
             data: {
                 labels: nombres,
                 datasets: [{
                     label: 'Alumnos usando pórtatiles',
-                    backgroundColor: gradientColors,
+                    backgroundColor: ['#4040ff', '#99FF33'],
                     borderColor: '#000000',
                     data: cantidades
                 }]
             },
             options: {
+                indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
+                    title: {
+                        display: true,
+                        text: 'Uso de portátiles por ciclo formativo',
+                        font: {
+                            size: 16,
+                            family: 'Roboto'
+                        },
+                        padding: {
+                            bottom: 8
+                        }
+                    },
                     legend: {
                         display: false,
+                    },
+                    tooltip: {
+                        font: {
+                            size: 14,
+                            family: 'Roboto'
+                        }
+                    },
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        suggestedMax: Math.max(...cantidades) + 5
                     }
                 }
             }
@@ -182,9 +241,12 @@
             var r = (bigint >> 16) & 255;
             var g = (bigint >> 8) & 255;
             var b = bigint & 255;
-            return { r: r, g: g, b: b };
+            return {
+                r: r,
+                g: g,
+                b: b
+            };
         }
-
     </script>
 
 </div>
