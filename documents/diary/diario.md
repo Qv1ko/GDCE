@@ -175,3 +175,27 @@
 
 **07/04/2024**
 - Unión del código de la página de creación de almacenes en la página index para implementar un popup al pulsar el botón de crear almacén.
+
+**08/04/2024**
+- Eliminación de la leyenda en los gráficos de la página de gráficos.
+- Añadido color degradado para el fondo del gráfico del uso por ciclo.
+
+**09/04/2024**
+- Cambio en la maquetación y estilos de la página de gráficos, tomando como ejemplo dashboards de otras páginas web.
+
+**10/04/2024**
+- Cambio en el tipo de gráfico del gráfico de uso por ciclo.
+- Añadido texto de información sobre el gráfico de los estados.
+
+**12/04/2024**
+- Cambio en la maquetación del dashboard.
+
+**13/04/2024**
+- Intento de implementación de un modal en la página de inicio para sustituir a la página de portátiles.
+- Cambio en los estilos de la página de gráficos.
+- Añadido contenido a la página del panel.
+
+**14/04/2024**
+- Configuración de los títulos de los gráficos.
+- Cambio en el tipo de gráfico de tipo pastel a tipo donut para una mejor visión de la información.
+- Configuración de los estilos de los encabezados y párrafos para adecuarlos al estilo de la página.
