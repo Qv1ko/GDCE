@@ -86,7 +86,7 @@
         </div>
     </main>
 
-    <footer class="footer mt-auto py-3 text-muted">
+    <footer class="footer mt-auto py-3 text-muted d-flex align-items-center">
         <div class="container">
             <p class="float-left" style="color: #E3E3E3;">Desarrollado por <span style="color: #99FF33">Víctor García Murillo</span></p>
             <a class="float-right footer-icon" href="https://github.com/Qv1ko/GDCE" target="_blank">
