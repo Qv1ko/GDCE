@@ -9,15 +9,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use arogachev\excel\import\advanced\Importer;
-use frontend\models\Answer;
-use frontend\models\Category;
-use frontend\models\Question;
-use frontend\models\Test;
-use yii\helpers\Html;
-
-use yii2tech\csvgrid\CsvGrid;
-
 /**
  * AlmacenesController implements the CRUD actions for Almacenes model.
  */
@@ -78,52 +69,6 @@ class AlmacenesController extends Controller {
             'model' => $model,
         ]);
 
-    }
-
-    public function actionImportCsv() {
-
-        // $importer = new Importer([
-        //     'filePath' => Yii::getAlias('@frontend/data/test.xlsx'),
-        //     'sheetNames' => ['Almacenes'],
-        //     'standardModelsConfig' => [[
-        //         'className' => Almacenes::className(),
-        //         'labels' => ['Almacenes'],
-        //         'standardAttributesConfig' => [
-        //             [
-        //                 'name' => 'Aula',
-        //                 'valueReplacement' => Test::getTypesList(),
-        //             ],
-        //             [
-        //                 'name' => 'Capacidad',
-        //                 'valueReplacement' => function ($value) {
-        //                     return $value ? Html::tag('p', $value) : '';
-        //                 },
-        //             ],
-        //             [
-        //                 'name' => 'category_id',
-        //                 'valueReplacement' => function ($value) {
-        //                     return Category::find()->select('id')->where(['name' => $value]);
-        //                 },
-        //             ],
-        //         ],
-        //     ]],
-        // ]);
-
-    }
-
-    public function actionExportCsv() {
-
-        $exporter = new CsvGrid([
-            'query' => Almacenes::find()->select('aula, capacidad'),
-            'csvFileConfig' => [
-                'cellDelimiter' => ";",
-                'rowDelimiter' => "\n",
-                'enclosure' => '',
-            ],
-        ]);
-
-        return $exporter->export()->send('items.csv');
-    
     }
 
     /**
