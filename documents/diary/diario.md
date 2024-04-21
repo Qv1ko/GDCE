@@ -199,3 +199,34 @@
 - Configuración de los títulos de los gráficos.
 - Cambio en el tipo de gráfico de tipo pastel a tipo donut para una mejor visión de la información.
 - Configuración de los estilos de los encabezados y párrafos para adecuarlos al estilo de la página.
+
+**15/04/2024**
+- Configuración de los gráficos de la página de los gráficos.
+
+**16/04/2024**
+- Eliminación de franjas blancas en la parte inferior del footer en dispositivos móviles y la franja lateral derecha parcialmente, debido a que el widget de GridView en dispositivos móviles no se hace responsive correctamente.
+- Alineación vertical de los elementos del footer.
+- Desarrollado un nuevo modal al pulsar el botón de la página de inicio.
+
+**17/04/2024**
+- Intento de implementación de un modal para el menú de inicio, falla al intentar obtener el modal de otra vista para que esta obtenga los datos del portátil buscado.
+- Fallo en la implementación de otras librerías para modificar la configuración de la exportación de los datos de la base de datos de Almacenes.
+
+**18/04/2024**
+- Botones de importar y exportar eliminados, porque no es una función necesaria para la aplicación.
+- Configurado de nuevo un modal para el acceso al portátil escaneado/buscado sin éxito por un fallo al implementar el código del modal en la página de inicio.
+
+**19/04/2024**
+- Cambio de nombre de la página de Gráficos a Panel.
+- Eliminación de los iconos de exportar e importar.
+- Implementación de botones en la página de gráficos para listar los portátiles y cargadores disponibles, además de los averiados, desde diferentes botones.
+- Implementado un modal que se mostrará al pulsar los botones de listado, con un GridView que no se adapta a las dimensiones del modal.
+
+**20/04/2024**
+- Implementación de GridView en el modal de cada botón.
+- Configuración de GridView con Kartik, finalmente eliminada porque necesitaba implementar una librería de Bootstrap que rompía los estilos de las páginas.
+- Dificultad al implementar el GridView con una consulta de dos tablas, porque los valores de la segunda tabla no se muestran.
+
+**21/04/2024**
+- Configuración de los GridView de la página de Panel para que mostraran las columnas correspondientes y eliminar el summary de los GridView.
+- Documentación la sección del prototipo de la interfaz.
