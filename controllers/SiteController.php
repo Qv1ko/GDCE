@@ -17,10 +17,6 @@ use app\models\Cargan;
 use app\models\Cursan;
 use app\models\Cursos;
 use app\models\Portatiles;
-use Zxing\QrReader;
-use yii\bootstrap\Modal;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 
 class SiteController extends Controller
 {
@@ -83,18 +79,18 @@ class SiteController extends Controller
         $alumnoTurnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'portatiles.codigo' => $portatil])->scalar();
         $alumnoTurnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'portatiles.codigo' => $portatil])->scalar();
 
-        return $this->render('portatil', [
+        return $this->renderAjax('_portatil', [
             'codigo' => $portatil,
             'estado' => $estado,
             'cargador' => $cargador,
             'almacen' => $almacen,
             'alumnoManana' => $alumnoTurnoManana,
-            'alumnoTarde' => $alumnoTurnoTarde,
+            'alumnoTarde' => $alumnoTurnoTarde
         ]);
 
     }
 
-    public function actionGraficos() {
+    public function actionPanel() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -104,23 +100,53 @@ class SiteController extends Controller
         $portatilesNoDisponibles = Portatiles::find()->where('estado = "No disponible"')->count();
         $portatilesAveriados = Portatiles::find()->where('estado = "Averiado"')->count();
         $porcentajePortatilesDisponibles = number_format((float)(($portatilesDisponibles * 100) / ($portatilesDisponibles + $portatilesNoDisponibles + $portatilesAveriados)), 2, '.', '');
+        $listadoPortatilesDisponibles = new ActiveDataProvider([
+            'query' => Portatiles::find()->where(['estado' => 'Disponible'])->with('almacen'),
+            'pagination' => [
+                'pageSize' => 8,
+            ],
+        ]);
+        $listadoPortatilesAveriados = new ActiveDataProvider([
+            'query' => Portatiles::find()->select('codigo, marca, modelo, procesador, memoria_ram')->distinct()->where('estado = "Averiado"'),
+            'pagination' => [
+                'pageSize' => 12,
+            ],
+        ]);
+
         $cargadoresDisponibles = Cargadores::find()->where('estado = "Disponible"')->count();
         $cargadoresNoDisponibles = Cargadores::find()->where('estado = "No disponible"')->count();
         $cargadoresAveriados = Cargadores::find()->where('estado = "Averiado"')->count();
         $porcentajeCargadoresDisponibles = number_format((float)(($cargadoresDisponibles * 100) / ($cargadoresDisponibles + $cargadoresNoDisponibles + $cargadoresAveriados)), 2, '.', '');
-        $cursoActual = Cursan::getCursoActual();
-        $almacenes = Almacenes::find()->select(['CONCAT("Almacén ", almacenes.aula) AS almacen', 'almacenes.capacidad', 'COALESCE(portatiles.count, 0) + COALESCE(cargadores.count, 0) AS dispositivos'])->leftJoin(['portatiles' => (new \yii\db\Query())->select(['id_almacen', 'COUNT(*) AS count'])->from('Portatiles')->groupBy('id_almacen')], 'almacenes.id_almacen = portatiles.id_almacen')->leftJoin(['cargadores' => (new \yii\db\Query())->select(['id_almacen', 'COUNT(*) AS count'])->from('Cargadores')->groupBy('id_almacen')], 'almacenes.id_almacen = cargadores.id_almacen')->asArray()->all();
-        $usoCiclo = Alumnos::find()->select(['cursos.nombre_corto', 'COUNT(*) AS cantidad'])->joinWith('cursan')->joinWith('cursan.curso')->where(['cursan.curso_academico' => $cursoActual])->groupBy('cursos.nombre')->asArray()->all();
+        $listadoCargadoresDisponibles = new ActiveDataProvider([
+            'query' => Cargadores::find()->where(['estado' => 'Disponible'])->with('almacen'),
+            'pagination' => [
+                'pageSize' => 12,
+            ],
+        ]);
+        $listadoCargadoresAveriados = new ActiveDataProvider([
+            'query' => Cargadores::find()->select('codigo, potencia')->distinct()->where('estado = "Averiado"'),
+            'pagination' => [
+                'pageSize' => 12,
+            ],
+        ]);
 
-        return $this->render('graficos', [
+        $almacenes = Almacenes::find()->select(['CONCAT("Almacén ", almacenes.aula) AS almacen', 'almacenes.capacidad', 'COALESCE(portatiles.count, 0) + COALESCE(cargadores.count, 0) AS dispositivos'])->leftJoin(['portatiles' => (new \yii\db\Query())->select(['id_almacen', 'COUNT(*) AS count'])->from('Portatiles')->groupBy('id_almacen')], 'almacenes.id_almacen = portatiles.id_almacen')->leftJoin(['cargadores' => (new \yii\db\Query())->select(['id_almacen', 'COUNT(*) AS count'])->from('Cargadores')->groupBy('id_almacen')], 'almacenes.id_almacen = cargadores.id_almacen')->asArray()->all();
+        
+        $usoCiclo = Alumnos::find()->select(['cursos.nombre_corto', 'COUNT(*) AS cantidad'])->joinWith('cursan')->joinWith('cursan.curso')->where(['cursan.curso_academico' => Cursan::getCursoActual()])->groupBy('cursos.nombre')->asArray()->all();
+
+        return $this->render('panel', [
             'portatilesDisponibles' => $portatilesDisponibles,
             'portatilesNoDisponibles' => $portatilesNoDisponibles,
             'portatilesAveriados' => $portatilesAveriados,
             'porcentajePortatilesDisponibles' => $porcentajePortatilesDisponibles,
+            'listadoPortatilesDisponibles' => $listadoPortatilesDisponibles,
+            'listadoPortatilesAveriados' => $listadoPortatilesAveriados,
             'cargadoresDisponibles' => $cargadoresDisponibles,
             'cargadoresNoDisponibles' => $cargadoresNoDisponibles,
             'cargadoresAveriados' => $cargadoresAveriados,
             'porcentajeCargadoresDisponibles' => $porcentajeCargadoresDisponibles,
+            'listadoCargadoresDisponibles' => $listadoCargadoresDisponibles,
+            'listadoCargadoresAveriados' => $listadoCargadoresAveriados,
             'almacenes' => $almacenes,
             'usoCiclo' => $usoCiclo,
         ]);
