@@ -1,5 +1,6 @@
 body {
     font-family: "Roboto", sans-serif;
+    color: #333333;
     background-color: #e3e3e3;
 }
 
@@ -12,6 +13,10 @@ main > .container {
     color: #e3e3e3 !important;
     font-size: 24px;
     font-family: "Roboto", sans-serif;
+    /* position: fixed; */
+    bottom: 0;
+    width: 100%;
+    padding: 16px 0;
 }
 
 .footer > .container {
@@ -124,7 +129,7 @@ h1, h2, h3 {
     text-align: center;
 }
 
-.site-graficos h2 {
+.site-panel h2 {
     font-size: 16px;
 }
 
@@ -144,7 +149,7 @@ hr {
     padding-bottom: 32px;
 }
 
-.site-graficos .row {
+.site-panel .row {
     padding-top: 16px;
     padding-bottom: 16px;
 }
@@ -176,7 +181,7 @@ hr {
 @media (max-width: 767px) {
 
     main > .container {
-        padding: 96px 0px 32px;
+        padding: 128px 0px 64px; /* Ajustado para compensar el pie de página fijo */
     }
 
     .nav li > form > button.logout {
@@ -208,5 +213,5 @@ hr {
         padding-top: 24px;
         padding-bottom: 24px;
     }
-  
+
 }
