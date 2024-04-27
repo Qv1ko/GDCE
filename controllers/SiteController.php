@@ -71,16 +71,16 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    public function actionPortatil($portatil) {
+    public function actionPortatil($codigo) {
 
-        $estado = Portatiles::find()->select('estado')->distinct()->where(['codigo' => $portatil])->scalar();
-        $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $portatil])->scalar();
-        $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $portatil])->scalar();
-        $alumnoTurnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'portatiles.codigo' => $portatil])->scalar();
-        $alumnoTurnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'portatiles.codigo' => $portatil])->scalar();
+        $estado = Portatiles::find()->select('estado')->distinct()->where(['codigo' => $codigo])->scalar();
+        $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $codigo])->scalar();
+        $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $codigo])->scalar();
+        $alumnoTurnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'portatiles.codigo' => $codigo])->scalar();
+        $alumnoTurnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'portatiles.codigo' => $codigo])->scalar();
 
-        return $this->renderAjax('_portatil', [
-            'codigo' => $portatil,
+        return $this->render('portatil', [
+            'codigo' => $codigo,
             'estado' => $estado,
             'cargador' => $cargador,
             'almacen' => $almacen,
