@@ -229,4 +229,28 @@
 
 **21/04/2024**
 - Configuración de los GridView de la página de Panel para que mostraran las columnas correspondientes y eliminar el summary de los GridView.
-- Documentación la sección del prototipo de la interfaz.
+- Documentación de la sección del prototipo de la interfaz.
+
+**22/04/2024**
+- Documentación sobre los diferentes prototipos de la interfaz.
+
+**23/04/2024**
+- Desarrollo del diagrama de clases.
+
+**24/04/2024**
+- Desarrollo del diagrama de casos de uso.
+- Corrección del diagrama de clases añadiendo las cardinalidades.
+
+**25/04/2024**
+- Documentación de los prototipos y diagramas de clase y de casos de uso añadidos.
+
+**26/04/2024**
+- Corrección del diagrama de casos de uso.
+
+**27/04/2024**
+- Agregado modal que visualiza la vista de información del portátil.
+
+**28/04/2024**
+- Configuración del modal para que no aparezca el pie de página y eliminar el padding superior.
+- El modal no muestra nada en dispositivos móviles.
+- Elección de la plantilla para la presentación.
