@@ -73,6 +73,8 @@ class SiteController extends Controller
 
     public function actionPortatil($codigo) {
 
+        $this->layout = '/main_nofooter';
+
         $estado = Portatiles::find()->select('estado')->distinct()->where(['codigo' => $codigo])->scalar();
         $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $codigo])->scalar();
         $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $codigo])->scalar();
