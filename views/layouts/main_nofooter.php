@@ -40,7 +40,7 @@
         <?php
         NavBar::begin([
             'brandLabel' => Html::img("@web/images/logo.png"),
-            'brandUrl' => Yii::$app->homeUrl,
+            'brandUrl' => ['/site/index'],
             'options' => [
                 'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
             ],
