@@ -18,8 +18,8 @@ use Yii;
  * @property Cursos[] $cursos
  * @property Portatiles $portatil
  */
-class Alumnos extends \yii\db\ActiveRecord
-{
+class Alumnos extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
@@ -89,4 +89,15 @@ class Alumnos extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Portatiles::class, ['id_portatil' => 'id_portatil']);
     }
+
+    public function getAlumnosManana() {
+        $am = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
+        return $am;
+    }
+
+    public function getAlumnosTarde() {
+        $at = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
+        return $at;
+    }
+
 }

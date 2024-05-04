@@ -11,7 +11,6 @@ main > .container {
 .footer {
     background-color: #4040ff;
     color: #e3e3e3 !important;
-    font-size: 24px;
     font-family: "Roboto", sans-serif;
     /* position: fixed; */
     bottom: 0;
@@ -32,6 +31,7 @@ main > .container {
 .navbar-nav {
     font-family: "Roboto", sans-serif;
     font-style: bold;
+    font-size: 18px;
 }
 
 a.asc:after, a.desc:after {
@@ -130,11 +130,11 @@ h1, h2, h3 {
 }
 
 .site-panel h2 {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 p {
-    font-size: 24px;
+    font-size: 18px;
     color: #333333;
     margin: 0;
 }
@@ -159,10 +159,31 @@ hr {
     border: 2px solid #4040ff32;
     border-radius: 8px;
     padding: 8px;
-    background-color: #4040ff24;
-    margin-top: 24px;
-    margin-bottom: 24px;
+    margin-top: 16px;
+    margin-bottom: 16px;
 }
+
+.btn-primary {
+    background-color: #4040ff !important;
+    border: none;
+}
+
+/* .btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+} */
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #99ff33 !important;
+}
+
+/* .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    box-shadow: 0 0 5px #4040ff32 !important;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 8px #4040ff32 !important;
+} */
 
 #reader {
     width: 400px;
@@ -202,7 +223,7 @@ hr {
     }
 
     p {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     hr {

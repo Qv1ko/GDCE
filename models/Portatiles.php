@@ -24,21 +24,19 @@ use Yii;
  * @property Cargadores[] $cargadors
  * @property Cargan[] $cargans
  */
-class Portatiles extends \yii\db\ActiveRecord
-{
+class Portatiles extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'portatiles';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['codigo', 'estado'], 'required'],
             [['memoria_ram', 'capacidad', 'id_almacen'], 'integer'],
@@ -52,19 +50,18 @@ class Portatiles extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id_portatil' => 'Id Portatil',
-            'codigo' => 'Codigo',
+            'id_portatil' => 'ID Portátil',
+            'codigo' => 'Código',
             'marca' => 'Marca',
             'modelo' => 'Modelo',
             'estado' => 'Estado',
             'procesador' => 'Procesador',
-            'memoria_ram' => 'Memoria Ram',
+            'memoria_ram' => 'Memoria RAM',
             'capacidad' => 'Capacidad',
             'dispositivo_almacenamiento' => 'Dispositivo Almacenamiento',
-            'id_almacen' => 'Id Almacen',
+            'id_almacen' => 'ID Almacén',
         ];
     }
 
@@ -73,8 +70,7 @@ class Portatiles extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAlmacen()
-    {
+    public function getAlmacen() {
         return $this->hasOne(Almacenes::class, ['id_almacen' => 'id_almacen']);
     }
 
@@ -83,8 +79,7 @@ class Portatiles extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAlumnos()
-    {
+    public function getAlumnos() {
         return $this->hasMany(Alumnos::class, ['id_portatil' => 'id_portatil']);
     }
 
@@ -93,8 +88,7 @@ class Portatiles extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAplicaciones()
-    {
+    public function getAplicaciones() {
         return $this->hasMany(Aplicaciones::class, ['id_portatil' => 'id_portatil']);
     }
 
@@ -103,8 +97,7 @@ class Portatiles extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCargador()
-    {
+    public function getCargador() {
         return $this->hasMany(Cargadores::class, ['id_cargador' => 'id_cargador'])->viaTable('cargan', ['id_portatil' => 'id_portatil']);
     }
 
@@ -113,54 +106,34 @@ class Portatiles extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCargan()
-    {
+    public function getCargan() {
         return $this->hasMany(Cargan::class, ['id_portatil' => 'id_portatil']);
     }
 
     public static function setEstado($codigo) {
 
+        $portatil = Portatiles::find()->where(['codigo' => $codigo])->one();
+
+        $hora = date('H:i:s');
         $horaInicioTurnoManana = '07:00:00';
         $horaFinTurnoManana = '15:00:00';
         $horaInicioTurnoTarde = '15:00:01';
         $horaFinTurnoTarde = '22:00:00';
     
-        $trigger = <<< SQL
-            CREATE TRIGGER `portatiles_bu` BEFORE UPDATE ON `portatiles`
-            FOR EACH ROW BEGIN
+        $alumnoManana = Portatiles::find()->select('alumno')->innerJoin(['am' => Alumnos::getAlumnosManana()], 'am.id_portatil = portatiles.id_portatil')->where(['codigo' => $codigo])->one();
+        $alumnoTarde = Portatiles::find()->select('alumno')->innerJoin(['at' => Alumnos::getAlumnosTarde()], 'at.id_portatil = portatiles.id_portatil')->where(['codigo' => $codigo])->one();
+
+        if ($portatil !== null) {
+            if ($portatil->estado !== 'Averiado') {
+                if ($hora >= $horaInicioTurnoManana && $hora <= $horaFinTurnoManana) {
+                    $portatil->estado = ($alumnoManana !== null) ? 'No disponible' : 'Disponible';
+                } elseif ($hora >= $horaInicioTurnoTarde && $hora <= $horaFinTurnoTarde) {
+                    $portatil->estado = ($alumnoTarde !== null) ? 'No disponible' : 'Disponible';
+                }
     
-            IF (
-                SELECT COUNT(alumnos.id_alumno)
-                FROM alumnos
-                INNER JOIN cursan ON alumnos.id_alumno = cursan.id_alumno
-                INNER JOIN cursos ON cursan.id_curso = cursos.id_curso
-                INNER JOIN portatiles ON alumnos.id_portatil = portatiles.id_portatil
-                WHERE cursos.turno = 'Mañana' AND portatiles.codigo = :codigo
-            ) = 0 AND CURRENT_TIME() BETWEEN :horaInicioTurnoManana AND :horaFinTurnoManana AND portatiles.estado <> 'Averiado' THEN
-                UPDATE portatiles SET estado = 'Disponible';
-            ELSEIF (
-                SELECT COUNT(alumnos.id_alumno)
-                FROM alumnos
-                INNER JOIN cursan ON alumnos.id_alumno = cursan.id_alumno
-                INNER JOIN cursos ON cursan.id_curso = cursos.id_curso
-                INNER JOIN portatiles ON alumnos.id_portatil = portatiles.id_portatil
-                WHERE cursos.turno = 'Tarde' AND portatiles.codigo = :codigo
-            ) = 0 AND CURRENT_TIME() BETWEEN :horaInicioTurnoTarde AND :horaFinTurnoTarde AND portatiles.estado <> 'Averiado' THEN
-                UPDATE portatiles SET estado = 'Disponible' WHERE portatiles.codigo = :codigo;
-            END IF;
-    
-            END;
-        SQL;
-    
-        $this->execute('DROP TRIGGER /*!50032 IF EXISTS */ `estado_bu`');
-    
-        $this->execute($trigger, [
-            ':codigo' => $codigo,
-            ':horaInicioTurnoManana' => $horaInicioTurnoManana,
-            ':horaFinTurnoManana' => $horaFinTurnoManana,
-            ':horaInicioTurnoTarde' => $horaInicioTurnoTarde,
-            ':horaFinTurnoTarde' => $horaFinTurnoTarde
-        ]);
+                $portatil->save();
+            }
+        }
 
     }
 

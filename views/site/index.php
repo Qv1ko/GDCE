@@ -130,7 +130,7 @@
         if (patron.test(codigo)) {
             // window.location.href = 'site/portatil?portatil=' + codigo;
             $('#modalPortatil').modal('show');
-
+            
             // Cargar el contenido de portatil.php en el modal
             $.ajax({
                 url: 'portatil?codigo=' + codigo,
@@ -145,7 +145,7 @@
             location.reload();
         }
     }
-
+    
     document.getElementById('searchInput').addEventListener('input', function() {
         document.getElementById('tituloPortatil').innerText = 'Portátil ' + this.value.toUpperCase();
     });
