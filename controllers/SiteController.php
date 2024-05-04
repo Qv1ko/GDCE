@@ -17,14 +17,14 @@ use app\models\Cargan;
 use app\models\Cursan;
 use app\models\Cursos;
 use app\models\Portatiles;
+use yii\helpers\ArrayHelper;
 
-class SiteController extends Controller
-{
+class SiteController extends Controller {
+
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -49,8 +49,7 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -72,22 +71,29 @@ class SiteController extends Controller
     }
 
     public function actionPortatil($codigo) {
-
+        
         $this->layout = '/main_nofooter';
 
-        $estado = Portatiles::find()->select('estado')->distinct()->where(['codigo' => $codigo])->scalar();
+        $portatil = Portatiles::find()->where(['codigo' => $codigo])->one();
+        $portatil->setEstado($codigo);
+
         $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $codigo])->scalar();
         $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $codigo])->scalar();
-        $alumnoTurnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'portatiles.codigo' => $codigo])->scalar();
-        $alumnoTurnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'portatiles.codigo' => $codigo])->scalar();
+        $alumnoTurnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $codigo])->scalar();
+        $alumnoTurnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $codigo])->scalar();
+
+        // $model = $this->findModel($codigo);
+        // $data = ArrayHelper::map(Alumnos::getAlumnosTarde()->all(), 'id_portatil', 'alumno');
 
         return $this->render('portatil', [
             'codigo' => $codigo,
-            'estado' => $estado,
+            'estado' => $portatil->estado,
             'cargador' => $cargador,
             'almacen' => $almacen,
             'alumnoManana' => $alumnoTurnoManana,
-            'alumnoTarde' => $alumnoTurnoTarde
+            'alumnoTarde' => $alumnoTurnoTarde,
+            // 'model' => $model,
+            // 'data' => $data
         ]);
 
     }
@@ -185,7 +191,7 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
+        //change goHome
         return $this->goHome();
     }
 
