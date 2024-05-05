@@ -254,3 +254,27 @@
 - Configuración del modal para que no aparezca el pie de página y eliminar el padding superior.
 - El modal no muestra nada en dispositivos móviles.
 - Elección de la plantilla para la presentación.
+
+**29/04/2024**
+- Añadidos títulos a los iconos del pie de página para facilitar la navegación.
+- Cambio en los estilos del modal del portátil.
+
+**30/04/2024**
+- Estilización del modal.
+
+**01/04/2024**
+- Cambio en los estilos de los botones y otros estilos relacionados con el modal de la página de inicio.
+
+**02/04/2024**
+- Desarrollo de las consultas necesarias para la función de actualización del estado del portátil.
+
+**03/05/2024**
+- Implementación y prueba de la función de actualización del estado del portátil al entrar al modal.
+- Desarrollo del selector de los alumnos de tarde con la librería select2.
+
+**04/05/2024**
+- Configuración de las páginas de gestión de portátiles.
+- Desarrollo de una barra de búsqueda en la página de gestión de almacenes.
+
+**05/05/2024**
+- Implementación de la barra de búsqueda en la página de gestión de almacenes.
