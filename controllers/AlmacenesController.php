@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Almacenes;
-use yii\data\ActiveDataProvider;
+use app\models\AlmacenesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,38 +38,18 @@ class AlmacenesController extends Controller {
      */
     public function actionIndex() {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => Almacenes::find(),
-            'pagination' => [
-                'pageSize' => 24
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'aula' => SORT_ASC,
-                ]
-            ],
-        ]);
-
+        $searchModel = new AlmacenesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Almacenes();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_almacen' => $model->id_almacen]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
+    
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model' => $model,
         ]);
 
     }
+    
 
     /**
      * Displays a single Almacenes model.
