@@ -1,7 +1,7 @@
 <?php
 
     /** @var yii\web\View $this */
-
+    use kartik\select2\Select2;
 
 ?>
 
@@ -78,6 +78,15 @@
             <path d="M12 3v6l3 -3m-6 0l3 3" />
         </svg>
         <p style="margin-left: 8px">Alumno de tarde: <?= $alumnoTarde ?></p>
+        <!-- <# Select2::widget([
+            'model' => $model,
+            'attribute' => 'state_2',
+            'data' => $data,
+            'options' => ['placeholder' => 'Select a state ...'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]); ?> -->
     </div>
 
 </div>
