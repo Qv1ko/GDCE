@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Portatiles;
 
 /**
  * This is the model class for table "alumnos".
@@ -23,16 +24,14 @@ class Alumnos extends \yii\db\ActiveRecord {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'alumnos';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['dni', 'nombre', 'estado_matricula'], 'required'],
             [['id_portatil'], 'integer'],
@@ -48,15 +47,14 @@ class Alumnos extends \yii\db\ActiveRecord {
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id_alumno' => 'Id Alumno',
-            'dni' => 'Dni',
+            'id_alumno' => 'ID Alumno',
+            'dni' => 'DNI',
             'nombre' => 'Nombre',
             'apellidos' => 'Apellidos',
             'estado_matricula' => 'Estado Matricula',
-            'id_portatil' => 'Id Portatil',
+            'id_portatil' => 'ID Portatil',
         ];
     }
 
@@ -65,8 +63,7 @@ class Alumnos extends \yii\db\ActiveRecord {
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCursan()
-    {
+    public function getCursan() {
         return $this->hasMany(Cursan::class, ['id_alumno' => 'id_alumno']);
     }
 
@@ -75,8 +72,7 @@ class Alumnos extends \yii\db\ActiveRecord {
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCursos()
-    {
+    public function getCursos() {
         return $this->hasMany(Cursos::class, ['id_curso' => 'id_curso'])->viaTable('cursan', ['id_alumno' => 'id_alumno']);
     }
 
@@ -85,8 +81,7 @@ class Alumnos extends \yii\db\ActiveRecord {
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPortatil()
-    {
+    public function getPortatil() {
         return $this->hasOne(Portatiles::class, ['id_portatil' => 'id_portatil']);
     }
 
@@ -99,5 +94,28 @@ class Alumnos extends \yii\db\ActiveRecord {
         $at = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
         return $at;
     }
+
+    public static function sincronizar() {
+
+        $alumnos = Alumnos::find()->all();
+        $estadoPortatil = '';
+
+        foreach ($alumnos as $alumno) {
+
+            $estadoPortatil = Portatiles::find()->select('estado')->distinct()->where(['id_portatil' => $alumno->id_portatil]);
+            
+            if ($alumno->estado_matricula !== 'Matriculado') {
+                $alumno->id_portatil = null;
+            }
+            if ($estadoPortatil === 'Averiado') {
+                $alumno->id_portatil = null;
+            }
+
+            $alumno->save();
+
+        }
+
+    }
+
 
 }

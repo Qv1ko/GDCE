@@ -12,13 +12,12 @@ use yii\filters\VerbFilter;
 /**
  * AlumnosController implements the CRUD actions for Alumnos model.
  */
-class AlumnosController extends Controller
-{
+class AlumnosController extends Controller {
+
     /**
      * @inheritDoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return array_merge(
             parent::behaviors(),
             [
@@ -37,12 +36,13 @@ class AlumnosController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+
+        Alumnos::sincronizar();
 
         $dataProvider = new ActiveDataProvider([
             'query' => Alumnos::find(),
@@ -61,6 +61,7 @@ class AlumnosController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+
     }
 
     /**
@@ -69,8 +70,7 @@ class AlumnosController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_alumno)
-    {
+    public function actionView($id_alumno) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -79,6 +79,7 @@ class AlumnosController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id_alumno),
         ]);
+
     }
 
     /**
@@ -86,8 +87,7 @@ class AlumnosController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -106,6 +106,7 @@ class AlumnosController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -115,8 +116,7 @@ class AlumnosController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_alumno)
-    {
+    public function actionUpdate($id_alumno) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -131,6 +131,7 @@ class AlumnosController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -140,8 +141,7 @@ class AlumnosController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_alumno)
-    {
+    public function actionDelete($id_alumno) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -150,6 +150,7 @@ class AlumnosController extends Controller
         $this->findModel($id_alumno)->delete();
 
         return $this->redirect(['index']);
+
     }
 
     /**
@@ -159,8 +160,7 @@ class AlumnosController extends Controller
      * @return Alumnos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_alumno)
-    {
+    protected function findModel($id_alumno) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -171,5 +171,7 @@ class AlumnosController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+
     }
+
 }
