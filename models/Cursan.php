@@ -15,21 +15,19 @@ use Yii;
  * @property Alumnos $alumno
  * @property Cursos $curso
  */
-class Cursan extends \yii\db\ActiveRecord
-{
+class Cursan extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'cursan';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['curso_academico'], 'required'],
             [['id_alumno', 'id_curso'], 'integer'],
@@ -43,13 +41,12 @@ class Cursan extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id_cursa' => 'Id Cursa',
-            'curso_academico' => 'Curso Academico',
-            'id_alumno' => 'Id Alumno',
-            'id_curso' => 'Id Curso',
+            'id_cursa' => 'ID Cursa',
+            'curso_academico' => 'Curso Académico',
+            'id_alumno' => 'ID Alumno',
+            'id_curso' => 'ID Curso',
         ];
     }
 
@@ -58,8 +55,7 @@ class Cursan extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAlumno()
-    {
+    public function getAlumno() {
         return $this->hasOne(Alumnos::class, ['id_alumno' => 'id_alumno']);
     }
 
@@ -68,8 +64,7 @@ class Cursan extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCurso()
-    {
+    public function getCurso() {
         return $this->hasOne(Cursos::class, ['id_curso' => 'id_curso']);
     }
 
@@ -96,6 +91,16 @@ class Cursan extends \yii\db\ActiveRecord
         
         // Devolver el año académico actual
         return $cursoEscolarActual;
+
+    }
+
+    public static function sincronizarCursan() {
+
+        $cursanNoMatriculados = Cursan::find()->innerJoin('alumnos', 'cursan.id_alumno = alumnos.id_alumno')->where(['estado_matricula' => 'No matriculado'])->all();
+
+        foreach ($cursanNoMatriculados as $cursa) {
+            $cursa->delete();
+        }
 
     }
 

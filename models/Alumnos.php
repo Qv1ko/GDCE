@@ -53,7 +53,7 @@ class Alumnos extends \yii\db\ActiveRecord {
             'dni' => 'DNI',
             'nombre' => 'Nombre',
             'apellidos' => 'Apellidos',
-            'estado_matricula' => 'Estado Matricula',
+            'estado_matricula' => 'Estado matrícula',
             'id_portatil' => 'ID Portatil',
         ];
     }
@@ -86,16 +86,16 @@ class Alumnos extends \yii\db\ActiveRecord {
     }
 
     public function getAlumnosManana() {
-        $am = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
+        $am = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'id_alumno', 'id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
         return $am;
     }
 
     public function getAlumnosTarde() {
-        $at = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
+        $at = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'id_alumno', 'id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
         return $at;
     }
 
-    public static function sincronizar() {
+    public static function sincronizarAlumnos() {
 
         $alumnos = Alumnos::find()->all();
         $estadoPortatil = '';

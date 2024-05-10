@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Alumnos;
+use app\models\Cursan;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,7 +43,8 @@ class AlumnosController extends Controller {
             return $this->goHome();
         }
 
-        Alumnos::sincronizar();
+        Alumnos::sincronizarAlumnos();
+        Cursan::sincronizarCursan();
 
         $dataProvider = new ActiveDataProvider([
             'query' => Alumnos::find(),
