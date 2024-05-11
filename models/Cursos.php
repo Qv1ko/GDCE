@@ -18,41 +18,45 @@ use Yii;
  * @property Alumnos[] $alumnos
  * @property Cursan[] $cursans
  */
-class Cursos extends \yii\db\ActiveRecord
-{
+class Cursos extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'cursos';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['nombre', 'curso', 'turno', 'aula', 'tutor'], 'required'],
             [['nombre'], 'string', 'max' => 96],
+            [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre solo puede contener caracteres alfabéticos'],
             [['nombre_corto', 'turno'], 'string', 'max' => 8],
+            [['nombre_corto'], 'match', 'pattern' => '/^[A-Z]+$/', 'message' => '⚠️ La sigla solo puede contener caracteres alfabéticos en mayúscula'],
             [['curso'], 'string', 'max' => 16],
+            [['curso'], 'in', 'range' => ['Primer curso', 'Segundo curso'], 'message' => '⚠️ El curso solo puede ser "Primer curso" o "Segundo curso"'],
+            [['turno'], 'string', 'max' => 8],
+            [['turno'], 'in', 'range' => ['Mañana', 'Tarde'], 'message' => '⚠️ El turno solo puede ser "Mañana" o "Tarde"'],
             [['aula'], 'string', 'max' => 4],
+            [['aula'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ El aula debe seguir el siguiente formato de ejemplo: "123N"'],
             [['tutor'], 'string', 'max' => 24],
-            [['nombre'], 'unique'],
+            [['tutor'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre del tutor solo puede contener caracteres alfabéticos'],
+            [['nombre', 'curso'], 'unique', 'targetAttribute' => ['nombre', 'curso'], 'message' => '⚠️ El curso ya existe'],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id_curso' => 'Id Curso',
+            'id_curso' => 'ID Curso',
             'nombre' => 'Nombre',
-            'nombre_corto' => 'Nombre Corto',
+            'nombre_corto' => 'Sigla',
             'curso' => 'Curso',
             'turno' => 'Turno',
             'aula' => 'Aula',
@@ -65,8 +69,7 @@ class Cursos extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAlumnos()
-    {
+    public function getAlumnos() {
         return $this->hasMany(Alumnos::class, ['id_alumno' => 'id_alumno'])->viaTable('cursan', ['id_curso' => 'id_curso']);
     }
 
@@ -75,8 +78,30 @@ class Cursos extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCursans()
-    {
+    public function getCursans() {
         return $this->hasMany(Cursan::class, ['id_curso' => 'id_curso']);
     }
+
+    public function beforeSave($insert) {
+
+        if (parent::beforeSave($insert)) {
+
+            $sigla = '';
+
+            foreach (str_split($this->nombre) as $letra) {
+                if (ctype_upper($letra)) {
+                    $sigla .= $letra;
+                }
+            }
+
+            $this->nombre_corto = $sigla;
+            
+            return true;
+
+        }
+
+        return false;
+
+    }
+
 }

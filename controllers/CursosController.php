@@ -12,13 +12,12 @@ use yii\filters\VerbFilter;
 /**
  * CursosController implements the CRUD actions for Cursos model.
  */
-class CursosController extends Controller
-{
+class CursosController extends Controller {
+
     /**
      * @inheritDoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return array_merge(
             parent::behaviors(),
             [
@@ -37,8 +36,7 @@ class CursosController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -61,6 +59,7 @@ class CursosController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+
     }
 
     /**
@@ -69,8 +68,7 @@ class CursosController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_curso)
-    {
+    public function actionView($id_curso) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -79,6 +77,7 @@ class CursosController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id_curso),
         ]);
+
     }
 
     /**
@@ -86,8 +85,7 @@ class CursosController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -106,6 +104,7 @@ class CursosController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -115,8 +114,7 @@ class CursosController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_curso)
-    {
+    public function actionUpdate($id_curso) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -131,6 +129,7 @@ class CursosController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -140,16 +139,12 @@ class CursosController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_curso)
-    {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+    public function actionDelete($id_curso) {
 
         $this->findModel($id_curso)->delete();
 
         return $this->redirect(['index']);
+
     }
 
     /**
@@ -159,17 +154,14 @@ class CursosController extends Controller
      * @return Cursos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_curso)
-    {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+    protected function findModel($id_curso) {
 
         if (($model = Cursos::findOne(['id_curso' => $id_curso])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+
     }
+
 }
