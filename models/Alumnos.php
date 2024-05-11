@@ -85,14 +85,34 @@ class Alumnos extends \yii\db\ActiveRecord {
         return $this->hasOne(Portatiles::class, ['id_portatil' => 'id_portatil']);
     }
 
-    public function getAlumnosManana() {
-        $am = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'id_alumno', 'id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
-        return $am;
+    public function getNombreCompleto() {
+        return $this->nombre . ' ' . $this->apellidos;
     }
 
-    public function getAlumnosTarde() {
-        $at = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'id_alumno', 'id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
-        return $at;
+    public static function getAlumnosManana() {
+        return Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'alumnos.id_alumno', 'alumnos.id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
+    }
+
+    public static function getAlumnosTarde() {
+        return Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'alumnos.id_alumno', 'alumnos.id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
+    }
+
+    public function afterSave($insert, $changedAttributes) {
+
+        parent::afterSave($insert, $changedAttributes);
+
+        if ($insert) {
+
+            $id_curso = $this->id_curso;
+
+            $cursan = new Cursan();
+            $cursan->id_alumno = $this->id_alumno;
+            $cursan->id_curso = Cursos::findOne($id_curso)->id_curso;
+
+            $cursan->save();
+
+        }
+
     }
 
     public static function sincronizarAlumnos() {

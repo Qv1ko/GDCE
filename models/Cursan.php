@@ -75,7 +75,7 @@ class Cursan extends \yii\db\ActiveRecord {
      * 
      * @return string El año académico actual en el formato "aaaa/aa".
      */
-    public function getCursoActual() {
+    public static function getCursoActual() {
         
         // Año actual
         $anoActual = date('Y');
@@ -96,10 +96,21 @@ class Cursan extends \yii\db\ActiveRecord {
 
     public static function sincronizarCursan() {
 
+        // Matriculaciones de alumnos ya no matriculados
         $cursanNoMatriculados = Cursan::find()->innerJoin('alumnos', 'cursan.id_alumno = alumnos.id_alumno')->where(['estado_matricula' => 'No matriculado'])->all();
+        // Alumnos que estan matriculados en varios cursos
+        $amvc = Cursan::find()->select('id_alumno')->groupBy('id_alumno')->having('COUNT(*) > 1');
+        // Ultimos cursos en los que se han matriculado
+        $ucm = Cursan::find()->select('MAX(id_cursa)')->where('id_alumno = cursan.id_alumno')->groupBy('id_alumno');
+        // Antiguas matriculaciones
+        $am = Cursan::find()->where(['id_alumno' => $amvc])->andWhere(['not in', 'id_cursa', $ucm])->all();
 
         foreach ($cursanNoMatriculados as $cursa) {
             $cursa->delete();
+        }
+
+        foreach ($am as $model) {
+            $model->delete();
         }
 
     }
