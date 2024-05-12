@@ -32,7 +32,7 @@ class Cursos extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['nombre', 'curso', 'turno', 'aula', 'tutor'], 'required'],
+            [['nombre', 'curso', 'turno', 'aula', 'tutor'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['nombre'], 'string', 'max' => 96],
             [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre solo puede contener caracteres alfabéticos'],
             [['nombre_corto', 'turno'], 'string', 'max' => 8],
@@ -54,13 +54,13 @@ class Cursos extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id_curso' => 'ID Curso',
-            'nombre' => 'Nombre',
+            'id_curso' => 'ID del curso',
+            'nombre' => 'Nombre del curso',
             'nombre_corto' => 'Sigla',
-            'curso' => 'Curso',
+            'curso' => 'Curso: Primer curso / Segundo curso',
             'turno' => 'Turno',
             'aula' => 'Aula',
-            'tutor' => 'Tutor',
+            'tutor' => 'Nombre del tutor',
         ];
     }
 

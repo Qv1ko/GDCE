@@ -1,18 +1,15 @@
 <?php
 
-use yii\helpers\Html;
+    use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var app\models\Cursos $model */
+    /** @var yii\web\View $this */
+    /** @var app\models\Cursos $model */
 
-$this->title = 'Update Cursos: ' . $model->id_curso;
-$this->params['breadcrumbs'][] = ['label' => 'Cursos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_curso, 'url' => ['view', 'id_curso' => $model->id_curso]];
-$this->params['breadcrumbs'][] = 'Update';
+    $this->title = $model->nombre . ' - ' . $model->curso;
+
 ?>
-<div class="cursos-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="cursos-update">
 
     <?= $this->render('_form', [
         'model' => $model,

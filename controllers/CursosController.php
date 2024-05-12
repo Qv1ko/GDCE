@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Cursos;
+use app\models\CursosSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,22 +43,22 @@ class CursosController extends Controller {
             return $this->goHome();
         }
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Cursos::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id_curso' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new CursosSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new Cursos();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['index']);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'model' => $model
         ]);
 
     }
@@ -114,22 +115,41 @@ class CursosController extends Controller {
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_curso) {
+    // public function actionUpdate($id_curso) {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+    //     if(Yii::$app->user->isGuest) {
+    //         return $this->goHome();
+    //     }
+
+    //     $model = $this->findModel($id_curso);
+
+    //     if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+    //         return $this->redirect(['view', 'id_curso' => $model->id_curso]);
+    //     }
+
+    //     return $this->render('update', [
+    //         'model' => $model,
+    //     ]);
+
+    // }
+
+    public function actionUpdate($id_curso) {
 
         $model = $this->findModel($id_curso);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_curso' => $model->id_curso]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('update', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

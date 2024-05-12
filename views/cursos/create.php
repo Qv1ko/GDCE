@@ -8,7 +8,9 @@ use yii\helpers\Html;
 $this->title = 'Create Cursos';
 $this->params['breadcrumbs'][] = ['label' => 'Cursos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
+
 <div class="cursos-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
