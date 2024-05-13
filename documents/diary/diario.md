@@ -278,3 +278,37 @@
 
 **05/05/2024**
 - Implementación de la barra de búsqueda en la página de gestión de almacenes.
+
+**06/05/2024**
+- Creado backup de la base de datos.
+- Configurando estilos de la página de panel.
+- Implementada una función de sincronización de los alumnos que elimina el portátil asociado si no están matriculados o si el portátil está averiado.
+
+**07/05/2024**
+- Corrección del título del modal al escanear el código QR.
+
+**08/05/2024**
+- Implementé el reinicio del escáner de códigos QR mediante la instanciación de la variable scanner en diferentes puntos del código, pero no funcionaba porque al mantener la cámara apuntando a un código QR, lo escaneaba continuamente.
+- Implementación de una recarga al salir del modal de la página de inicio para reiniciar el escáner de códigos QR.
+
+**09/05/2024**
+- Intento de implementación del Dropbox sin éxito, debido a que en el modal no funcionaba y al probarlo en la página de inicio necesitaba una nueva librería de Bootstrap que rompía los estilos de la página de inicio.
+
+**10/05/2024**
+- Corrección del diagrama de casos de uso.
+- Desarrollo de la documentación relacionada con el color.
+- Función para actualizar la relación entre los alumnos y los cursos, eliminando las relaciones con alumnos en estado 'No matriculado' implementada.
+
+**11/05/2024**
+- Corrección de una ambigüedad en la función de getAlumnosManana y getAlumnosTarde que provocaba un error que impedía ejecutar correctamente el modal de la página de inicio.
+- El error de la página web/index.php que no muestra el modal es por la ruta que se usa en el método que lo ejecuta, sigo buscando soluciones.
+- Desarrollada función para que al crear un alumno, se cree automáticamente la relación con cursan.
+- Desarrollo de botones desplegables usando formularios.
+- Configuración de las reglas del modelo de Cursos y función para guardar la sigla de un nuevo curso.
+
+**12/05/2024**
+- Implementado en la página de gestión de cursos el modal de crear un nuevo curso.
+- Configurado el GridView de la página de gestión de cursos.
+- Implementado un buscador para la página de gestión de cursos.
+- Configurado el formulario de la gestión de cursos.
+- Implementación de un modal para actualizar los cursos.
