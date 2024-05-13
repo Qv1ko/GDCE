@@ -17,9 +17,7 @@
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Alumnos', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -39,7 +37,11 @@
                  }
             ],
         ],
+        'summary' => '',
     ]); ?>
 
+    <p>
+        <?= Html::a('Create Alumnos', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
 </div>

@@ -145,10 +145,6 @@ class AlumnosController extends Controller {
      */
     public function actionDelete($id_alumno) {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $this->findModel($id_alumno)->delete();
 
         return $this->redirect(['index']);
