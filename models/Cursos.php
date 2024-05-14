@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id_curso
  * @property string $nombre
- * @property string|null $nombre_corto
+ * @property string|null $sigla
  * @property string $curso
  * @property string $turno
  * @property string $aula
@@ -35,8 +35,8 @@ class Cursos extends \yii\db\ActiveRecord {
             [['nombre', 'curso', 'turno', 'aula', 'tutor'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['nombre'], 'string', 'max' => 96],
             [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre solo puede contener caracteres alfabéticos'],
-            [['nombre_corto', 'turno'], 'string', 'max' => 8],
-            [['nombre_corto'], 'match', 'pattern' => '/^[A-Z]+$/', 'message' => '⚠️ La sigla solo puede contener caracteres alfabéticos en mayúscula'],
+            [['sigla', 'turno'], 'string', 'max' => 8],
+            [['sigla'], 'match', 'pattern' => '/^[A-Z]+$/', 'message' => '⚠️ La sigla solo puede contener caracteres alfabéticos en mayúscula'],
             [['curso'], 'string', 'max' => 16],
             [['curso'], 'in', 'range' => ['Primer curso', 'Segundo curso'], 'message' => '⚠️ El curso solo puede ser "Primer curso" o "Segundo curso"'],
             [['turno'], 'string', 'max' => 8],
@@ -56,7 +56,7 @@ class Cursos extends \yii\db\ActiveRecord {
         return [
             'id_curso' => 'ID del curso',
             'nombre' => 'Nombre del curso',
-            'nombre_corto' => 'Sigla',
+            'sigla' => 'Sigla',
             'curso' => 'Curso: Primer curso / Segundo curso',
             'turno' => 'Turno',
             'aula' => 'Aula',
@@ -94,7 +94,7 @@ class Cursos extends \yii\db\ActiveRecord {
                 }
             }
 
-            $this->nombre_corto = $sigla;
+            $this->sigla = $sigla;
             
             return true;
 

@@ -115,23 +115,6 @@ class CursosController extends Controller {
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    // public function actionUpdate($id_curso) {
-
-    //     if(Yii::$app->user->isGuest) {
-    //         return $this->goHome();
-    //     }
-
-    //     $model = $this->findModel($id_curso);
-
-    //     if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-    //         return $this->redirect(['view', 'id_curso' => $model->id_curso]);
-    //     }
-
-    //     return $this->render('update', [
-    //         'model' => $model,
-    //     ]);
-
-    // }
 
     public function actionUpdate($id_curso) {
 
@@ -150,6 +133,7 @@ class CursosController extends Controller {
                 'model' => $model,
             ]);
         }
+
     }
 
     /**

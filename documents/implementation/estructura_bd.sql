@@ -72,7 +72,7 @@ CREATE OR REPLACE TABLE almacenes(
 
 CREATE OR REPLACE TABLE alumnos(
   id_alumno integer AUTO_INCREMENT,
-  dni varchar(8) NOT NULL,
+  dni varchar(9) NOT NULL,
   nombre varchar(24) NOT NULL,
   apellidos varchar(48),
   estado_matricula varchar(16) NOT NULL,
@@ -86,7 +86,7 @@ CREATE OR REPLACE TABLE alumnos(
 CREATE OR REPLACE TABLE cursos(
   id_curso integer AUTO_INCREMENT,
   nombre varchar(96) NOT NULL,
-  nombre_corto varchar(8),
+  sigla varchar(8),
   curso varchar(16) NOT NULL,
   turno varchar(8) NOT NULL,
   aula varchar(4) NOT NULL,

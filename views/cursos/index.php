@@ -32,7 +32,7 @@
                     'attribute' => 'nombre',
                     'label' => 'Curso',
                     'value' => function ($model) {
-                        return (($model->curso === "Primer curso") ? '1º ' : '2º ') . $model->nombre . ' (' . $model->nombre_corto . ')';
+                        return (($model->curso === "Primer curso") ? '1º ' : '2º ') . $model->nombre . ' (' . $model->sigla . ')';
                     },
                 ],
                 [

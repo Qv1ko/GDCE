@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_curso',
             'nombre',
-            'nombre_corto',
+            'sigla',
             'curso',
             'turno',
             'aula',
