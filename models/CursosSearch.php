@@ -26,7 +26,9 @@ class CursosSearch extends Cursos {
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => false,
+            'pagination' => [
+                'pageSize' => 48
+            ],
         ]);
 
         $this->load($params);
@@ -35,7 +37,7 @@ class CursosSearch extends Cursos {
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'nombre', $this->searchString])->orFilterWhere(['like', 'nombre_corto', $this->searchString])->orFilterWhere(['like', 'curso', $this->searchString])->orFilterWhere(['like', 'turno', $this->searchString])->orFilterWhere(['like', 'aula', $this->searchString])->orFilterWhere(['like', 'tutor', $this->searchString]);
+        $query->orFilterWhere(['like', 'nombre', $this->searchString])->orFilterWhere(['like', 'sigla', $this->searchString])->orFilterWhere(['like', 'curso', $this->searchString])->orFilterWhere(['like', 'turno', $this->searchString])->orFilterWhere(['like', 'aula', $this->searchString])->orFilterWhere(['like', 'tutor', $this->searchString]);
 
         return $dataProvider;
 
