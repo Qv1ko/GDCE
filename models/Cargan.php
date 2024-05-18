@@ -14,21 +14,19 @@ use Yii;
  * @property Cargadores $cargador
  * @property Portatiles $portatil
  */
-class Cargan extends \yii\db\ActiveRecord
-{
+class Cargan extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'cargan';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id_portatil', 'id_cargador'], 'integer'],
             [['id_portatil', 'id_cargador'], 'unique', 'targetAttribute' => ['id_portatil', 'id_cargador']],
@@ -40,12 +38,11 @@ class Cargan extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id_carga' => 'Id Carga',
-            'id_portatil' => 'Id Portatil',
-            'id_cargador' => 'Id Cargador',
+            'id_carga' => 'ID Carga',
+            'id_portatil' => 'ID del portátil',
+            'id_cargador' => 'ID del cargador',
         ];
     }
 
@@ -54,8 +51,7 @@ class Cargan extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCargador()
-    {
+    public function getCargador() {
         return $this->hasOne(Cargadores::class, ['id_cargador' => 'id_cargador']);
     }
 
@@ -64,8 +60,31 @@ class Cargan extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPortatil()
-    {
+    public function getPortatil() {
         return $this->hasOne(Portatiles::class, ['id_portatil' => 'id_portatil']);
     }
+
+    public static function sincronizarCargan() {
+
+        $cargas = Cargan::find()->all();
+    
+        foreach ($cargas as $carga) {
+
+            $portatil = Portatiles::findOne($carga->id_portatil);
+            $cargador = Cargadores::findOne($carga->id_cargador);
+    
+            if ($portatil && $portatil->estado === 'Averiado') {
+                $carga->delete();
+                continue;
+            }
+
+            if ($cargador && $cargador->estado === 'Averiado') {
+                $carga->delete();
+                continue;
+            }
+
+        }
+
+    }
+
 }

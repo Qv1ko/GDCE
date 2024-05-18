@@ -29,9 +29,10 @@ class Cursan extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['curso_academico'], 'required'],
+            [['curso_academico'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['id_alumno', 'id_curso'], 'integer'],
             [['curso_academico'], 'string', 'max' => 8],
+            ['curso_academico', 'match', 'pattern' => '/^[0-9]{4}\/[0-9]{2}$/', 'message' => '⚠️ El curso académico debe seguir el siguiente formato de ejemplo: "2023/24"'],
             [['id_alumno', 'id_curso'], 'unique', 'targetAttribute' => ['id_alumno', 'id_curso']],
             [['id_alumno'], 'exist', 'skipOnError' => true, 'targetClass' => Alumnos::class, 'targetAttribute' => ['id_alumno' => 'id_alumno']],
             [['id_curso'], 'exist', 'skipOnError' => true, 'targetClass' => Cursos::class, 'targetAttribute' => ['id_curso' => 'id_curso']],
@@ -44,9 +45,9 @@ class Cursan extends \yii\db\ActiveRecord {
     public function attributeLabels() {
         return [
             'id_cursa' => 'ID Cursa',
-            'curso_academico' => 'Curso Académico',
-            'id_alumno' => 'ID Alumno',
-            'id_curso' => 'ID Curso',
+            'curso_academico' => 'Curso académico',
+            'id_alumno' => 'ID del alumno',
+            'id_curso' => 'ID del curso',
         ];
     }
 

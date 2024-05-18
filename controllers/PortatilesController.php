@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Portatiles;
+use app\models\Cargan;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -12,13 +13,11 @@ use yii\filters\VerbFilter;
 /**
  * PortatilesController implements the CRUD actions for Portatiles model.
  */
-class PortatilesController extends Controller
-{
+class PortatilesController extends Controller {
     /**
      * @inheritDoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return array_merge(
             parent::behaviors(),
             [
@@ -37,12 +36,14 @@ class PortatilesController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+
+        Portatiles::sincronizarPortatiles();
+        Cargan::sincronizarCargan();
 
         $dataProvider = new ActiveDataProvider([
             'query' => Portatiles::find(),
@@ -61,6 +62,7 @@ class PortatilesController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+
     }
 
     /**
@@ -69,8 +71,7 @@ class PortatilesController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_portatil)
-    {
+    public function actionView($id_portatil) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -79,6 +80,7 @@ class PortatilesController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id_portatil),
         ]);
+
     }
 
     /**
@@ -86,8 +88,7 @@ class PortatilesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -106,6 +107,7 @@ class PortatilesController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -115,8 +117,7 @@ class PortatilesController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_portatil)
-    {
+    public function actionUpdate($id_portatil) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -131,6 +132,7 @@ class PortatilesController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -140,8 +142,7 @@ class PortatilesController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_portatil)
-    {
+    public function actionDelete($id_portatil) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -150,6 +151,7 @@ class PortatilesController extends Controller
         $this->findModel($id_portatil)->delete();
 
         return $this->redirect(['index']);
+
     }
 
     /**
@@ -159,8 +161,7 @@ class PortatilesController extends Controller
      * @return Portatiles the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_portatil)
-    {
+    protected function findModel($id_portatil) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -171,5 +172,7 @@ class PortatilesController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+
     }
+
 }

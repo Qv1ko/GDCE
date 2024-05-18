@@ -22,7 +22,7 @@ use Yii;
  * @property Alumnos[] $alumnos
  * @property Aplicaciones[] $aplicaciones
  * @property Cargadores[] $cargadors
- * @property Cargan[] $cargans
+ * @property Cargan[] $Cargan
  */
 class Portatiles extends \yii\db\ActiveRecord {
 
@@ -38,11 +38,15 @@ class Portatiles extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['codigo', 'estado'], 'required'],
+            [['codigo', 'estado'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['memoria_ram', 'capacidad', 'id_almacen'], 'integer'],
             [['codigo'], 'string', 'max' => 4],
+            [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ El código debe seguir el siguiente formato de ejemplo: "123A"'],
             [['marca', 'modelo', 'estado', 'procesador', 'dispositivo_almacenamiento'], 'string', 'max' => 24],
-            [['codigo'], 'unique'],
+            [['marca'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ La marca solo puede contener caracteres alfabéticos'],
+            [['estado'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ El estado solo puede ser "Disponible", "No disponible" o "Averiado"'],
+            [['dispositivo_almacenamiento'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ El dispositivo de almacenamiento solo puede ser "HDD" o "SDD"'],
+            [['codigo'], 'unique', 'message' => '⚠️ El portátil ya existe'],
             [['id_almacen'], 'exist', 'skipOnError' => true, 'targetClass' => Almacenes::class, 'targetAttribute' => ['id_almacen' => 'id_almacen']],
         ];
     }
@@ -52,7 +56,7 @@ class Portatiles extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id_portatil' => 'ID Portátil',
+            'id_portatil' => 'ID del portátil',
             'codigo' => 'Código',
             'marca' => 'Marca',
             'modelo' => 'Modelo',
@@ -60,8 +64,8 @@ class Portatiles extends \yii\db\ActiveRecord {
             'procesador' => 'Procesador',
             'memoria_ram' => 'Memoria RAM',
             'capacidad' => 'Capacidad',
-            'dispositivo_almacenamiento' => 'Dispositivo Almacenamiento',
-            'id_almacen' => 'ID Almacén',
+            'dispositivo_almacenamiento' => 'Dispositivo de almacenamiento',
+            'id_almacen' => 'ID del almacén',
         ];
     }
 
@@ -102,7 +106,7 @@ class Portatiles extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Cargans]].
+     * Gets query for [[Cargan]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -110,7 +114,35 @@ class Portatiles extends \yii\db\ActiveRecord {
         return $this->hasMany(Cargan::class, ['id_portatil' => 'id_portatil']);
     }
 
-    public static function setEstado($codigo) {
+    public static function sincronizarPortatiles() {
+
+        $portatiles = Portatiles::find()->all();
+        $hora = date('H:i:s');
+        $horaInicioTurnoManana = '07:00:00';
+        $horaFinTurnoManana = '15:00:00';
+        $horaInicioTurnoTarde = '15:00:01';
+        $horaFinTurnoTarde = '22:00:00';
+
+        foreach ($portatiles as $portatil) {
+
+            $alumnoManana = Portatiles::find()->select('alumno')->innerJoin(['am' => Alumnos::getAlumnosManana()], 'am.id_portatil = portatiles.id_portatil')->where(['codigo' => $portatil->codigo])->one();
+            $alumnoTarde = Portatiles::find()->select('alumno')->innerJoin(['at' => Alumnos::getAlumnosTarde()], 'at.id_portatil = portatiles.id_portatil')->where(['codigo' => $portatil->codigo])->one();
+
+            if ($portatil->estado !== 'Averiado') {
+                if ($hora >= $horaInicioTurnoManana && $hora <= $horaFinTurnoManana) {
+                    $portatil->estado = ($alumnoManana !== null) ? 'No disponible' : 'Disponible';
+                } elseif ($hora >= $horaInicioTurnoTarde && $hora <= $horaFinTurnoTarde) {
+                    $portatil->estado = ($alumnoTarde !== null) ? 'No disponible' : 'Disponible';
+                }
+
+                $portatil->save();
+            }
+
+        }
+
+    }
+
+    public static function sincronizarPortatil($codigo) {
 
         $portatil = Portatiles::find()->where(['codigo' => $codigo])->one();
 

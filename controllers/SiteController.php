@@ -74,7 +74,7 @@ class SiteController extends Controller {
         $this->layout = '/main_nofooter';
 
         $portatil = Portatiles::find()->where(['codigo' => $portatil])->one();
-        $portatil->setEstado($portatil);
+        $portatil->sincronizarPortatil($portatil);
 
         $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $portatil])->scalar();
         $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $portatil])->scalar();
@@ -138,7 +138,7 @@ class SiteController extends Controller {
 
         $almacenes = Almacenes::find()->select(['CONCAT("Almacén ", almacenes.aula) AS almacen', 'almacenes.capacidad', 'COALESCE(portatiles.count, 0) + COALESCE(cargadores.count, 0) AS dispositivos'])->leftJoin(['portatiles' => (new \yii\db\Query())->select(['id_almacen', 'COUNT(*) AS count'])->from('Portatiles')->groupBy('id_almacen')], 'almacenes.id_almacen = portatiles.id_almacen')->leftJoin(['cargadores' => (new \yii\db\Query())->select(['id_almacen', 'COUNT(*) AS count'])->from('Cargadores')->groupBy('id_almacen')], 'almacenes.id_almacen = cargadores.id_almacen')->asArray()->all();
         
-        $usoCiclo = Alumnos::find()->select(['cursos.nombre_corto', 'COUNT(*) AS cantidad'])->joinWith('cursan')->joinWith('cursan.curso')->where(['cursan.curso_academico' => Cursan::getCursoActual()])->groupBy('cursos.nombre')->asArray()->all();
+        $usoCiclo = Alumnos::find()->select(['cursos.sigla', 'COUNT(*) AS cantidad'])->joinWith('cursan')->joinWith('cursan.curso')->where(['cursan.curso_academico' => Cursan::getCursoActual()])->groupBy('cursos.nombre')->asArray()->all();
 
         return $this->render('panel', [
             'portatilesDisponibles' => $portatilesDisponibles,

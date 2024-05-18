@@ -13,25 +13,24 @@ use Yii;
  *
  * @property Portatiles $portatil
  */
-class Aplicaciones extends \yii\db\ActiveRecord
-{
+class Aplicaciones extends \yii\db\ActiveRecord {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'aplicaciones';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['aplicacion'], 'required'],
+            [['aplicacion'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['id_portatil'], 'integer'],
             [['aplicacion'], 'string', 'max' => 32],
+            [['aplicacion'], 'match', 'pattern' => '/^[a-zA-Z ]+$/', 'message' => '⚠️ La marca solo puede contener caracteres alfabéticos'],
             [['aplicacion', 'id_portatil'], 'unique', 'targetAttribute' => ['aplicacion', 'id_portatil']],
             [['id_portatil'], 'exist', 'skipOnError' => true, 'targetClass' => Portatiles::class, 'targetAttribute' => ['id_portatil' => 'id_portatil']],
         ];
@@ -40,12 +39,11 @@ class Aplicaciones extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id_aplicacion' => 'Id Aplicacion',
-            'aplicacion' => 'Aplicacion',
-            'id_portatil' => 'Id Portatil',
+            'id_aplicacion' => 'ID aplicación',
+            'aplicacion' => 'Aplicación',            
+            'id_portatil' => 'ID del portátil',
         ];
     }
 
@@ -54,8 +52,8 @@ class Aplicaciones extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPortatil()
-    {
+    public function getPortatil() {
         return $this->hasOne(Portatiles::class, ['id_portatil' => 'id_portatil']);
     }
+
 }

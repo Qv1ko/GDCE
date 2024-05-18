@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\models\Portatiles;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "alumnos".
@@ -120,6 +121,15 @@ class Alumnos extends \yii\db\ActiveRecord {
         return Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'alumnos.id_alumno', 'alumnos.id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
     }
 
+    public static function getListaAlumnosManana() {
+        return ArrayHelper::map(Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null])->all(), 'id_alumno', 'nombreCompleto');
+    }
+    
+    public static function getListaAlumnosTarde() {
+        return ArrayHelper::map(Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null])->all(), 'id_alumno', 'nombreCompleto');
+    }
+    
+
     private function getLetraDni($dni) {
         $letras = "TRWAGMYFPDXBNJZSQVHLCKE";
         $posicion = $dni % 23;
@@ -178,6 +188,5 @@ class Alumnos extends \yii\db\ActiveRecord {
         }
 
     }
-
 
 }

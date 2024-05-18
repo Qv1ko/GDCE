@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Cargadores;
+use app\models\Cargan;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -12,13 +13,12 @@ use yii\filters\VerbFilter;
 /**
  * CargadoresController implements the CRUD actions for Cargadores model.
  */
-class CargadoresController extends Controller
-{
+class CargadoresController extends Controller {
+
     /**
      * @inheritDoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return array_merge(
             parent::behaviors(),
             [
@@ -37,12 +37,14 @@ class CargadoresController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+
+        Cargadores::sincronizarCargadores();
+        Cargan::sincronizarCargan();
 
         $dataProvider = new ActiveDataProvider([
             'query' => Cargadores::find(),
@@ -61,6 +63,7 @@ class CargadoresController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+
     }
 
     /**
@@ -69,8 +72,7 @@ class CargadoresController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_cargador)
-    {
+    public function actionView($id_cargador) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -79,6 +81,7 @@ class CargadoresController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id_cargador),
         ]);
+
     }
 
     /**
@@ -86,8 +89,7 @@ class CargadoresController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -106,6 +108,7 @@ class CargadoresController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -115,8 +118,7 @@ class CargadoresController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_cargador)
-    {
+    public function actionUpdate($id_cargador) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -131,6 +133,7 @@ class CargadoresController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -140,8 +143,7 @@ class CargadoresController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_cargador)
-    {
+    public function actionDelete($id_cargador) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -150,6 +152,7 @@ class CargadoresController extends Controller
         $this->findModel($id_cargador)->delete();
 
         return $this->redirect(['index']);
+
     }
 
     /**
@@ -159,8 +162,7 @@ class CargadoresController extends Controller
      * @return Cargadores the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_cargador)
-    {
+    protected function findModel($id_cargador) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -171,5 +173,7 @@ class CargadoresController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+
     }
+
 }

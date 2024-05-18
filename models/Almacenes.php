@@ -28,10 +28,11 @@ class Almacenes extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['aula'], 'required'],
+            [['aula'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['capacidad'], 'integer'],
             [['aula'], 'string', 'max' => 4],
-            [['aula'], 'unique'],
+            [['aula'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ El aula debe seguir el siguiente formato de ejemplo: "123N"'],
+            [['aula'], 'unique', 'message' => '⚠️ El almacén ya existe'],
         ];
     }
 
