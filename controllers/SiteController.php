@@ -17,7 +17,6 @@ use app\models\Cargan;
 use app\models\Cursan;
 use app\models\Cursos;
 use app\models\Portatiles;
-use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller {
 
@@ -70,30 +69,29 @@ class SiteController extends Controller {
         return $this->render('index');
     }
 
-    public function actionPortatil($codigo) {
+    public function actionReserva($portatil) {
         
         $this->layout = '/main_nofooter';
 
-        $portatil = Portatiles::find()->where(['codigo' => $codigo])->one();
-        $portatil->setEstado($codigo);
+        $portatil = Portatiles::find()->where(['codigo' => $portatil])->one();
+        $portatil->setEstado($portatil);
 
-        $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $codigo])->scalar();
-        $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $codigo])->scalar();
-        $alumnoTurnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $codigo])->scalar();
-        $alumnoTurnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $codigo])->scalar();
+        $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $portatil])->scalar();
+        $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $portatil])->scalar();
+        $alumnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $portatil])->scalar();
+        $alumnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $portatil])->scalar();
+        $listaAlumnosManana = Alumnos::getListaAlumnosManana();
+        $listaAlumnosTarde = Alumnos::getListaAlumnosTarde();
 
-        // $model = $this->findModel($codigo);
-        // $data = ArrayHelper::map(Alumnos::getAlumnosTarde()->all(), 'id_portatil', 'alumno');
-
-        return $this->render('portatil', [
-            'codigo' => $codigo,
+        return $this->renderAjax('_reserva', [
+            'portatil' => $portatil,
             'estado' => $portatil->estado,
             'cargador' => $cargador,
             'almacen' => $almacen,
-            'alumnoManana' => $alumnoTurnoManana,
-            'alumnoTarde' => $alumnoTurnoTarde,
-            // 'model' => $model,
-            // 'data' => $data
+            'alumnoManana' => $alumnoManana,
+            'alumnoTarde' => $alumnoTarde,
+            'listaAlumnosManana' => $listaAlumnosManana,
+            'listaAlumnosTarde' => $listaAlumnosTarde,
         ]);
 
     }
@@ -166,8 +164,8 @@ class SiteController extends Controller {
      *
      * @return Response|string
      */
-    public function actionLogin()
-    {
+    public function actionLogin() {
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -181,6 +179,7 @@ class SiteController extends Controller {
         return $this->render('login', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -188,8 +187,7 @@ class SiteController extends Controller {
      *
      * @return Response
      */
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::$app->user->logout();
         //change goHome
         return $this->goHome();
@@ -200,17 +198,19 @@ class SiteController extends Controller {
      *
      * @return Response|string
      */
-    public function actionContact()
-    {
+    public function actionContact() {
+
         $model = new ContactForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-
             return $this->refresh();
         }
+
         return $this->render('contact', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -218,8 +218,8 @@ class SiteController extends Controller {
      *
      * @return string
      */
-    public function actionAbout()
-    {
+    public function actionAbout() {
         return $this->render('about');
     }
+
 }

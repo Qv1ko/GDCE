@@ -3,14 +3,14 @@
     /**
      * @var yii\web\View $this
      */
-    use yii\helpers\Html;
-    use yii\widgets\ActiveForm;
+    use yii\bootstrap4\Modal;
+    use yii\helpers\Url;
 
     // Título de la página
     $this->title = 'Inicio';
 
-    // Enlace al archivo lector_qr.js
-    $this->registerJsFile('@web/js/lector_qr.js', ['position' => \yii\web\View::POS_HEAD]);
+    // Enlace al archivo lectorQr.js
+    $this->registerJsFile('@web/js/lectorQr.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
@@ -68,23 +68,22 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="modal fade" id="modalPortatil" tabindex="-1" role="dialog" aria-labelledby="modalPortatilLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="tituloPortatil" class="col-12"></h2>
-                </div>
-                <div class="modal-body"></div>
-            </div>
-        </div>
-    </div>
-</div>
+<?php
+
+    Modal::begin([
+        'title' => '<h2 class="col-12" id="tituloPortatil"></h2>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+        'closeButton' => false
+    ]);
+    echo "<div id='contenido'></div>";
+    Modal::end();
+
+?>
 
 <!-- Script de JavaScript para controlar el escaner y el buscador de códigos -->
 <script>
 
-    // Crear un nuevo escáner de código QR HTML5
     const scanner = new Html5QrcodeScanner('reader', {
         qrbox: {
             width: 240,
@@ -128,26 +127,24 @@
 
         // Verificar si el código de entrada coincide con la expresión regular
         if (patron.test(codigo)) {
-            // window.location.href = 'site/portatil?portatil=' + codigo;
-            $('#modalPortatil').modal('show');
             
-            // Cargar el contenido de portatil.php en el modal
-            $.ajax({
-                url: 'portatil?codigo=' + codigo,
-                type: 'GET',
-                success: function(data) {
-                    $('.modal-body').html(data);
-                }
+            document.getElementById('tituloPortatil').innerText = 'Portátil ' + codigo.toUpperCase();
+
+            $.get('<?= Url::to(["site/reserva"]) ?>', {portatil: codigo}, function(data) {
+                $('#contenido').html(data);
+                $('#modal').modal('show');
             });
+
+            $('#modal').on('hidden.bs.modal', function () {
+                location.reload();
+            });
+
         } else {
             // Si el código no coincide, mostrar una alerta y recargar la página
             alert('El código del portátil debe tener el formato correcto (ej. 123A)');
             location.reload();
         }
+        
     }
-    
-    document.getElementById('searchInput').addEventListener('input', function() {
-        document.getElementById('tituloPortatil').innerText = 'Portátil ' + this.value.toUpperCase();
-    });
 
 </script>

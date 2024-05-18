@@ -2,6 +2,7 @@ body {
     font-family: "Roboto", sans-serif;
     color: #333333;
     background-color: #e3e3e3;
+    font-size: 18px;
 }
 
 main > .container {
@@ -173,7 +174,7 @@ hr {
     box-shadow: none !important;
 } */
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+.btn-primary:hover, .btn-primary:active {
     background-color: #99ff33 !important;
 }
 
