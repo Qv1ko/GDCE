@@ -4,8 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Portatiles;
+use app\models\PortatilesSearch;
 use app\models\Cargan;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -45,22 +45,14 @@ class PortatilesController extends Controller {
         Portatiles::sincronizarPortatiles();
         Cargan::sincronizarCargan();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Portatiles::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id_portatil' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new PortatilesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new Portatiles();
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'model' => $model
         ]);
 
     }

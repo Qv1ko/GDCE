@@ -4,8 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Cargadores;
+use app\models\CargadoresSearch;
 use app\models\Cargan;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -46,22 +46,14 @@ class CargadoresController extends Controller {
         Cargadores::sincronizarCargadores();
         Cargan::sincronizarCargan();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Cargadores::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id_cargador' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new CargadoresSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new Cargadores();
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'model' => $model
         ]);
 
     }

@@ -29,7 +29,6 @@
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
             'columns' => [
                 'aula',
                 'capacidad',

@@ -27,7 +27,7 @@ class CursosSearch extends Cursos {
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 48
+                'pageSize' => 24
             ],
         ]);
 

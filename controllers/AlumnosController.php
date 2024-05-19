@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Alumnos;
+use app\models\AlumnosSearch;
 use app\models\Cursan;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -46,22 +47,14 @@ class AlumnosController extends Controller {
         Alumnos::sincronizarAlumnos();
         Cursan::sincronizarCursan();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Alumnos::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id_alumno' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new AlumnosSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new Alumnos();
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'model' => $model
         ]);
 
     }
@@ -133,6 +126,16 @@ class AlumnosController extends Controller {
         return $this->render('update', [
             'model' => $model,
         ]);
+
+    }
+
+    public function actionReservar() {
+
+        $idPortatil = Yii::$app->request->post('portatil');
+        $idAlumnoManana = Yii::$app->request->post('alumnoManana');
+        $idAlumnoTarde = Yii::$app->request->post('alumnoTarde');
+
+        Alumnos::updateAll(['id_portatil' => $idPortatil], ['id_alumno' => [$idAlumnoManana, $idAlumnoTarde]]);
 
     }
 

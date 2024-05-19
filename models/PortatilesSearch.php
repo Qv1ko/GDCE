@@ -4,9 +4,9 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Almacenes;
+use app\models\Portatiles;
 
-class AlmacenesSearch extends Almacenes {
+class PortatilesSearch extends Portatiles {
 
     public $searchString;
 
@@ -22,7 +22,7 @@ class AlmacenesSearch extends Almacenes {
 
     public function search($params) {
 
-        $query = Almacenes::find();
+        $query = Portatiles::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -37,8 +37,7 @@ class AlmacenesSearch extends Almacenes {
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'aula', $this->searchString])
-            ->orFilterWhere(['like', 'capacidad', $this->searchString]);
+        $query->orFilterWhere(['like', 'codigo', $this->searchString])->orFilterWhere(['like', 'marca', $this->searchString])->orFilterWhere(['like', 'modelo', $this->searchString])->orFilterWhere(['like', 'estado', $this->searchString])->orFilterWhere(['like', 'procesador', $this->searchString])->orFilterWhere(['like', 'memoria_ram', $this->searchString])->orFilterWhere(['like', 'capacidad', $this->searchString])->orFilterWhere(['like', 'dispositivo_almacenamiento', $this->searchString]);
 
         return $dataProvider;
 

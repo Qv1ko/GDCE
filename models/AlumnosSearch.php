@@ -4,9 +4,9 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Almacenes;
+use app\models\Alumnos;
 
-class AlmacenesSearch extends Almacenes {
+class AlumnosSearch extends Alumnos {
 
     public $searchString;
 
@@ -22,7 +22,7 @@ class AlmacenesSearch extends Almacenes {
 
     public function search($params) {
 
-        $query = Almacenes::find();
+        $query = Alumnos::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -37,8 +37,7 @@ class AlmacenesSearch extends Almacenes {
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'aula', $this->searchString])
-            ->orFilterWhere(['like', 'capacidad', $this->searchString]);
+        $query->orFilterWhere(['like', 'dni', $this->searchString])->orFilterWhere(['like', 'nombre', $this->searchString])->orFilterWhere(['like', 'apellidos', $this->searchString])->orFilterWhere(['like', 'estado_matricula', $this->searchString]);
 
         return $dataProvider;
 

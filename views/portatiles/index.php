@@ -19,11 +19,7 @@
 
         <h1><?= Html::encode($this->title) ?></h1>
 
-        <p><?= Html::input('text','password1','', $options=['class'=>'form-control','maxlength'=>10, 'style'=>'width:350px']) ?></p>
-
-        <p>
-            <?= Html::a('Create Portatiles', ['create'], ['class' => 'btn btn-success']) ?>
-        </p>
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -100,7 +96,11 @@
             ],
             'summary' => '',
         ]); ?>
-    </div>
 
+        <p>
+            <?= Html::a('Create Portatiles', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+
+    </div>
 
 </div>
