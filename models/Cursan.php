@@ -99,10 +99,10 @@ class Cursan extends \yii\db\ActiveRecord {
 
         // Matriculaciones de alumnos ya no matriculados
         $cursanNoMatriculados = Cursan::find()->innerJoin('alumnos', 'cursan.id_alumno = alumnos.id_alumno')->where(['estado_matricula' => 'No matriculado'])->all();
-        // Alumnos que estan matriculados en varios cursos
-        $amvc = Cursan::find()->select('id_alumno')->groupBy('id_alumno')->having('COUNT(*) > 1');
+        // Alumnos que estan matriculados en varios cursos con mismo turno y curso academico
+        $amvc = Cursan::find()->select('id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->groupBy(['id_alumno', 'curso_academico', 'cursos.turno'])->having('COUNT(*) > 1');
         // Ultimos cursos en los que se han matriculado
-        $ucm = Cursan::find()->select('MAX(id_cursa)')->where('id_alumno = cursan.id_alumno')->groupBy('id_alumno');
+        $ucm = Cursan::find()->select('MAX(id_cursa)')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where('id_alumno = cursan.id_alumno')->groupBy(['id_alumno', 'curso_academico', 'cursos.turno']);
         // Antiguas matriculaciones
         $am = Cursan::find()->where(['id_alumno' => $amvc])->andWhere(['not in', 'id_cursa', $ucm])->all();
 
