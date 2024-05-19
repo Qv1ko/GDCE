@@ -312,3 +312,37 @@
 - Implementado un buscador para la página de gestión de cursos.
 - Configurado el formulario de la gestión de cursos.
 - Implementación de un modal para actualizar los cursos.
+
+**13/05/2024**
+- Ampliación de las reglas del modelo Alumnos.
+- Implementación de funciones para validar el DNI de los alumnos.
+- Descubierto un error en la base de datos: el campo del DNI de los alumnos está limitado a 8 caracteres cuando el DNI tiene 9 caracteres.
+
+**14/05/2024**
+- Edicción en la base de datos, cambiando el nombre del campo "nombre_corto" por "sigla" en la tabla Cursos y modificando la longitud del campo "dni" en la tabla Alumnos.
+- Modificación del Gridview, con problemas al intentar implementar una columna con el nombre del curso que cursa el alumno en caso de que esté matriculado.
+
+**15/05/2024**
+- Corrección del diagrama entidad-relación y relacional basado en los cambios del campo "nombre_corto".
+- Búsqueda de nuevos colores porque el color principal de la aplicación es muy saturado.
+- Implementación del modal de inicio con la librería Modal de Bootstrap 4.
+- Implementación del desplegable con los alumnos disponibles para reservar.
+- Pruebas de actualización de los datos en la reserva.
+
+**16/05/2024**
+- Desarrollo de las reglas de negocio en la fase de análisis.
+- Pruebas para actualizar los alumnos al reservar el portátil con POST.
+
+**17/05/2024**
+- Añadida una sección de público objetivo y otra de nombre de la aplicación en la fase de análisis.
+
+**18/05/2024**
+- Implementación de la actualización de los alumnos para añadirles el portátil reservado usando JavaScript.
+- Implementación de condicionales para que los botones de selección no aparezcan si el portátil está averiado y otro condicional que no ejecuta el código Ajax si los valores son nulos, que no funciona correctamente.
+- Implementación de la función para sincronizar portátiles, cargadores y sus cargas.
+- Desarrollo de las principales reglas de los atributos de todos los modelos.
+- Corrección de la consulta que sincroniza el modelo "cursan", eliminando las relaciones que estén en el mismo curso académico y en el mismo turno cursado por el mismo alumno.
+
+**19/05/2024**
+- Implementación de buscadores en las páginas de gestión de alumnos, portátiles y cargadores, además de modificar el número de elementos por paginación en los buscadores ya establecidos.
+- La función de sincronización de alumnos falló debido a un error en la estructura de los datos, que causaba un fallo constante.
