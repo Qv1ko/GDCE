@@ -36,7 +36,7 @@ class Alumnos extends \yii\db\ActiveRecord {
         return [
             [['dni', 'nombre', 'estado_matricula'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['dni'], 'string', 'max' => 9],
-            [['dni'], 'match', 'pattern' => '/^[0-9]{8}[A-Z]$/i', 'message' => '⚠️ El formato del DNI es incorrecto (ej: 12345678Z)'],
+            [['dni'], 'match', 'pattern' => '/^[0-9]{8}[A-Z]$/', 'message' => '⚠️ El formato del DNI es incorrecto (ej: 12345678Z)'],
             [['dni'], 'validarDni'],
             [['nombre'], 'string', 'max' => 24],
             [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre solo puede contener caracteres alfabéticos'],
@@ -163,30 +163,24 @@ class Alumnos extends \yii\db\ActiveRecord {
     public static function sincronizarAlumnos() {
 
         $alumnos = Alumnos::find()->all();
-        $estadoPortatil = '';
-
+    
         foreach ($alumnos as $alumno) {
 
-            $curso = Cursan::find()->select('id_alumno')->where(['id_alumno' => $alumno->id_alumno]);
-            $estadoPortatil = Portatiles::find()->select('estado')->distinct()->where(['id_portatil' => $alumno->id_portatil]);
-            
             if (!$alumno->validarFormatoDni($alumno->dni)) {
                 $alumno->dni = $alumno->setDni($alumno->dni);
             }
-            if ($curso === null) {
+            if ($alumno->cursan === null) {
                 $alumno->estado_matricula = 'No matriculado';
             }
             if ($alumno->estado_matricula !== 'Matriculado') {
                 $alumno->id_portatil = null;
             }
-            if ($estadoPortatil === 'Averiado') {
+            if ($alumno->portatil !== null && $alumno->portatil->estado === 'Averiado') {
                 $alumno->id_portatil = null;
             }
-
-            $alumno->save();
-
+    
         }
-
+    
     }
 
 }
