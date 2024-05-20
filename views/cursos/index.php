@@ -5,7 +5,7 @@
     use yii\helpers\Url;
     use yii\grid\ActionColumn;
     use yii\grid\GridView;
-    use yii\bootstrap\Modal;
+    use yii\bootstrap4\Modal;
 
     /** @var yii\web\View $this */
     /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -13,7 +13,7 @@
     $this->title = 'Gestión de cursos';
 
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
-    $this->registerJsFile('@web/js/curso.js', ['position' => \yii\web\View::POS_HEAD]);
+    $this->registerJsFile('@web/js/cursos.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
@@ -87,12 +87,12 @@
 </div>
 
 <?php
-    yii\bootstrap4\Modal::begin([
+    Modal::begin([
         'id' => 'modalEditarCurso',
         'size' => 'modal-lg',
         'title' => '<h1 class="tituloModalEditarCurso"></h1>',
     ]);
-    yii\bootstrap4\Modal::end();
+    Modal::end();
 ?>
 
 <div class="container">
