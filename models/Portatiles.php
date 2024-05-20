@@ -133,8 +133,9 @@ class Portatiles extends \yii\db\ActiveRecord {
                     $portatil->estado = ($alumnoManana !== null) ? 'No disponible' : 'Disponible';
                 } elseif ($hora >= $horaInicioTurnoTarde && $hora <= $horaFinTurnoTarde) {
                     $portatil->estado = ($alumnoTarde !== null) ? 'No disponible' : 'Disponible';
+                } else {
+                    ($alumnoManana !== null && $alumnoTarde !== null) ? 'No disponible' : 'Disponible';
                 }
-
                 $portatil->save();
             }
 
@@ -155,16 +156,15 @@ class Portatiles extends \yii\db\ActiveRecord {
         $alumnoManana = Portatiles::find()->select('alumno')->innerJoin(['am' => Alumnos::getAlumnosManana()], 'am.id_portatil = portatiles.id_portatil')->where(['codigo' => $codigo])->one();
         $alumnoTarde = Portatiles::find()->select('alumno')->innerJoin(['at' => Alumnos::getAlumnosTarde()], 'at.id_portatil = portatiles.id_portatil')->where(['codigo' => $codigo])->one();
 
-        if ($portatil !== null) {
-            if ($portatil->estado !== 'Averiado') {
-                if ($hora >= $horaInicioTurnoManana && $hora <= $horaFinTurnoManana) {
-                    $portatil->estado = ($alumnoManana !== null) ? 'No disponible' : 'Disponible';
-                } elseif ($hora >= $horaInicioTurnoTarde && $hora <= $horaFinTurnoTarde) {
-                    $portatil->estado = ($alumnoTarde !== null) ? 'No disponible' : 'Disponible';
-                }
-    
-                $portatil->save();
+        if ($portatil !== null && $portatil->estado !== 'Averiado') {
+            if ($hora >= $horaInicioTurnoManana && $hora <= $horaFinTurnoManana) {
+                $portatil->estado = ($alumnoManana !== null) ? 'No disponible' : 'Disponible';
+            } elseif ($hora >= $horaInicioTurnoTarde && $hora <= $horaFinTurnoTarde) {
+                $portatil->estado = ($alumnoTarde !== null) ? 'No disponible' : 'Disponible';
+            } else {
+                ($alumnoManana !== null && $alumnoTarde !== null) ? 'No disponible' : 'Disponible';
             }
+            $portatil->save();
         }
 
     }
