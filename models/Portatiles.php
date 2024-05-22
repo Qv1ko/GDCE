@@ -45,7 +45,7 @@ class Portatiles extends \yii\db\ActiveRecord {
             [['marca', 'modelo', 'estado', 'procesador', 'dispositivo_almacenamiento'], 'string', 'max' => 24],
             [['marca'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ La marca solo puede contener caracteres alfabéticos'],
             [['estado'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ El estado solo puede ser "Disponible", "No disponible" o "Averiado"'],
-            [['dispositivo_almacenamiento'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ El dispositivo de almacenamiento solo puede ser "HDD" o "SDD"'],
+            [['dispositivo_almacenamiento'], 'in', 'range' => ['HDD', 'SSD'], 'message' => '⚠️ El dispositivo de almacenamiento solo puede ser "HDD" o "SSD"'],
             [['codigo'], 'unique', 'message' => '⚠️ El portátil ya existe'],
             [['id_almacen'], 'exist', 'skipOnError' => true, 'targetClass' => Almacenes::class, 'targetAttribute' => ['id_almacen' => 'id_almacen']],
         ];

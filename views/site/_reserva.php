@@ -62,40 +62,43 @@
     </div>
 
     <div class="d-flex flex-column justify-content-center align-items-center">
-
+        <?php if ($portatil->estado !== 'Averiado'): ?>
         <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunrise">
-                <title>Alumno de mañana</title>
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M3 17h1m16 0h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7m-9.7 5.7a4 4 0 0 1 8 0" />
-                <path d="M3 21l18 0" />
-                <path d="M12 9v-6l3 3m-6 0l3 -3" />
-            </svg>
-            <?php
-                if ($alumnoManana) {
-                    echo '<p style="margin-left: 8px">Alumno de mañana: ' . $alumnoManana . '</p>';
-                } else {
-                    echo Html::dropDownList('alumnosManana', null, $listaAlumnosManana, ['prompt' => 'Reservar alumno de mañana', 'class' => 'form-control', 'onchange' => 'var idManana = $(this).val();']);
-                }
-            ?>
-        </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunrise">
+                    <title>Alumno de mañana</title>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M3 17h1m16 0h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7m-9.7 5.7a4 4 0 0 1 8 0" />
+                    <path d="M3 21l18 0" />
+                    <path d="M12 9v-6l3 3m-6 0l3 -3" />
+                </svg>
+                <?php
+                    if ($alumnoManana) {
+                        echo '<p style="margin-left: 8px">Alumno de mañana: ' . $alumnoManana . '</p>';
+                    } else {
+                        echo Html::dropDownList('alumnosManana', null, $listaAlumnosManana, ['prompt' => 'Reservar alumno de mañana', 'class' => 'form-control', 'onchange' => 'var idManana = $(this).val();']);
+                    }
+                ?>
+            </div>
 
-        <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunset">
-                <title>Alumno de tarde</title>
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M3 17h1m16 0h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7m-9.7 5.7a4 4 0 0 1 8 0" />
-                <path d="M3 21l18 0" />
-                <path d="M12 3v6l3 -3m-6 0l3 3" />
-            </svg>
-            <?php
-                if ($alumnoTarde) {
-                    echo '<p style="margin-left: 8px">Alumno de tarde: ' . $alumnoTarde . '</p>';
-                } else {
-                    echo Html::dropDownList('alumnosTarde', null, $listaAlumnosTarde, ['prompt' => 'Reservar alumno de tarde', 'class' => 'form-control', 'onchange' => 'var idTarde = $(this).val();']);
-                }
-            ?>
-        </div>
+            <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunset">
+                    <title>Alumno de tarde</title>
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M3 17h1m16 0h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7m-9.7 5.7a4 4 0 0 1 8 0" />
+                    <path d="M3 21l18 0" />
+                    <path d="M12 3v6l3 -3m-6 0l3 3" />
+                </svg>
+                <?php
+                    if ($alumnoTarde) {
+                        echo '<p style="margin-left: 8px">Alumno de tarde: ' . $alumnoTarde . '</p>';
+                    } else {
+                        echo Html::dropDownList('alumnosTarde', null, $listaAlumnosTarde, ['prompt' => 'Reservar alumno de tarde', 'class' => 'form-control', 'onchange' => 'var idTarde = $(this).val();']);
+                    }
+                ?>
+            </div>
+        <?php else: ?>
+            <h3>El portátil no se puede reservar porque esta averiado</h3>
+        <?php endif; ?>
 
     </div>
 
@@ -116,22 +119,26 @@
         var idManana = $('select[name="alumnosManana"]').val();
         var idTarde = $('select[name="alumnosTarde"]').val();
 
-        $.ajax({
-            url: '<?= Url::to(['alumnos/reservar']) ?>',
-            type: "POST",
-            data: {
-                portatil: <?= $portatil->id_portatil ?>,
-                alumnoManana: idManana,
-                alumnoTarde: idTarde
-            },
-            success: function(response) {
-                alert('Portátil ' + <?= $portatil->codigo ?> + 'reservado');
-                location.href = '<?= Url::to(['index']) ?>';
-            },
-            error: function(xhr, status, error) {
-                alert('Error: ' + error);
-            }
-        });
-
+        if (idManana != null || idTarde != null) {
+            $.ajax({
+                url: '<?= Url::to(['alumnos/reservar']) ?>',
+                type: "POST",
+                data: {
+                    portatil: <?= $portatil->id_portatil ?>,
+                    alumnoManana: idManana,
+                    alumnoTarde: idTarde
+                },
+                success: function(response) {
+                    alert('Portátil <?= $portatil->codigo ?> reservado');
+                    location.href = '<?= Url::to(['index']) ?>';
+                },
+                error: function(xhr, status, error) {
+                    alert('Error: ' + error);
+                }
+            });
+        } else {
+            location.href = '<?= Url::to(['index']) ?>';
+        }
+        
     });
 </script>
