@@ -1,21 +1,22 @@
 <?php
 
-use yii\helpers\Html;
+    use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var app\models\Almacenes $model */
+    /** @var yii\web\View $this */
+    /** @var app\models\Almacenes $model */
 
-$this->title = 'Update Almacenes: ' . $model->id_almacen;
-$this->params['breadcrumbs'][] = ['label' => 'Almacenes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_almacen, 'url' => ['view', 'id_almacen' => $model->id_almacen]];
-$this->params['breadcrumbs'][] = 'Update';
+    $this->title = 'Editar almacén ' . $model->aula;
+
 ?>
+
 <div class="almacenes-update">
+    <div class="container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+        <?= $this->render('_updateForm', [
+            'model' => $model,
+        ]) ?>
 
+    </div>
 </div>
