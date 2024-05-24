@@ -5,12 +5,14 @@ namespace app\controllers;
 use Yii;
 use app\models\Almacenes;
 use app\models\AlmacenesSearch;
+use app\models\Cargadores;
+use app\models\Portatiles;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
- * AlmacenesController implements the CRUD actions for Almacenes model.
+ * AlmacenesController implementa las acciones CRUD para el modelo Almacenes.
  */
 class AlmacenesController extends Controller {
 
@@ -32,15 +34,26 @@ class AlmacenesController extends Controller {
     }
 
     /**
-     * Lists all Almacenes models.
-     *
+     * Muestra todos los modelos Almacenes.
      * @return string
      */
     public function actionIndex() {
 
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $searchModel = new AlmacenesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Almacenes();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['index']);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
     
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -49,59 +62,13 @@ class AlmacenesController extends Controller {
         ]);
 
     }
-    
 
     /**
-     * Displays a single Almacenes model.
-     * @param int $id_almacen Id Almacen
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id_almacen) {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        return $this->render('view', [
-            'model' => $this->findModel($id_almacen),
-        ]);
-
-    }
-
-    /**
-     * Creates a new Almacenes model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Actualiza un modelo Almacenes existente.
+     * Si la actualización es exitosa, el navegador será redirigido a la página 'index'.
+     * @param int $id_almacen ID del almacén
      * @return string|\yii\web\Response
-     */
-    public function actionCreate() {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new Almacenes();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_almacen' => $model->id_almacen]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-
-    }
-
-    /**
-     * Updates an existing Almacenes model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id_almacen Id Almacen
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException si el modelo no puede ser encontrado
      */
     public function actionUpdate($id_almacen) {
 
@@ -112,7 +79,7 @@ class AlmacenesController extends Controller {
         $model = $this->findModel($id_almacen);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_almacen' => $model->id_almacen]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -122,11 +89,11 @@ class AlmacenesController extends Controller {
     }
 
     /**
-     * Deletes an existing Almacenes model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id_almacen Id Almacen
+     * Elimina un modelo Almacenes existente.
+     * Si la eliminación es exitosa, el navegador será redirigido a la página 'index'.
+     * @param int $id_almacen ID del Almacén
      * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException si el modelo no puede ser encontrado
      */
     public function actionDelete($id_almacen) {
 
@@ -134,6 +101,10 @@ class AlmacenesController extends Controller {
             return $this->goHome();
         }
 
+        Portatiles::updateAll(['id_almacen' => null], 'id_almacen = :id_almacen', [':id_almacen' => $id_almacen]);
+        Cargadores::updateAll(['id_almacen' => null], 'id_almacen = :id_almacen', [':id_almacen' => $id_almacen]);
+
+        // Elimina el almacén
         $this->findModel($id_almacen)->delete();
 
         return $this->redirect(['index']);
@@ -141,11 +112,11 @@ class AlmacenesController extends Controller {
     }
 
     /**
-     * Finds the Almacenes model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id_almacen Id Almacen
-     * @return Almacenes the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * Encuentra el modelo Almacenes basado en su valor de clave primaria.
+     * Si el modelo no se encuentra, se lanzará una excepción HTTP 404.
+     * @param int $id_almacen ID del Almacén
+     * @return Almacenes el modelo cargado
+     * @throws NotFoundHttpException si el modelo no puede ser encontrado
      */
     protected function findModel($id_almacen) {
 
@@ -157,7 +128,7 @@ class AlmacenesController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('❌ El almacén no existe.');
 
     }
 
