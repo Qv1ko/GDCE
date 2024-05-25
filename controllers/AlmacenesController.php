@@ -43,6 +43,8 @@ class AlmacenesController extends Controller {
             return $this->goHome();
         }
 
+        Almacenes::sincronizarAlmacenes();
+
         $searchModel = new AlmacenesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Almacenes();

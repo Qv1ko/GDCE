@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 
 /**
  * Esta es la clase de modelo para la tabla "almacenes".
@@ -59,6 +61,30 @@ class Almacenes extends \yii\db\ActiveRecord {
      */
     public function getPortatiles() {
         return $this->hasMany(Portatiles::class, ['id_almacen' => 'id_almacen']);
+    }
+    
+    public static function getOcupacion($id) {
+        return Portatiles::find()->where(['id_almacen' => $id])->count() + Cargadores::find()->where(['id_almacen' => $id])->count();
+    }
+    
+    public static function getAlmacenesDisponibles() {
+        return ArrayHelper::map(Almacenes::find()->select(['id_almacen', 'aula'])->where(['>', 'capacidad', new Expression('(SELECT COUNT(*) FROM portatiles WHERE id_almacen = almacenes.id_almacen) + (SELECT COUNT(*) FROM cargadores WHERE id_almacen = almacenes.id_almacen)')])->all(), 'id_almacen', 'aula');
+    }
+
+    public static function sincronizarAlmacenes() {
+
+        $almacenes = Almacenes::find()->all();
+
+        foreach($almacenes as $almacen) {
+
+            if($almacen->capacidad < 0) {
+                $almacen->capacidad = abs($almacen->capacidad);
+            }
+
+            $almacen->save();
+
+        }
+
     }
 
 }
