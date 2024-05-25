@@ -31,13 +31,13 @@ class Cargadores extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['codigo', 'estado'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
+            [['codigo', 'estado'], 'required', 'message' => '⚠️ Campo obligatorio'],
             [['potencia', 'id_almacen'], 'integer'],
             [['codigo'], 'string', 'max' => 4],
             [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ El código debe seguir el siguiente formato de ejemplo: "123A"'],
             [['estado'], 'string', 'max' => 24],
             [['estado'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ El estado solo puede ser "Disponible", "No disponible" o "Averiado"'],
-            [['codigo'], 'unique'],
+            [['codigo'], 'unique', 'message' => '⚠️ El cargador ya existe'],
             [['id_almacen'], 'exist', 'skipOnError' => true, 'targetClass' => Almacenes::class, 'targetAttribute' => ['id_almacen' => 'id_almacen']],
         ];
     }
@@ -51,7 +51,7 @@ class Cargadores extends \yii\db\ActiveRecord {
             'codigo' => 'Código',
             'potencia' => 'Vatios de potencia',
             'estado' => 'Estado',
-            'id_almacen' => 'ID del almacen',
+            'id_almacen' => 'ID del almacén',
         ];
     }
 
@@ -87,19 +87,22 @@ class Cargadores extends \yii\db\ActiveRecord {
         $cargadores = Cargadores::find()->all();
     
         foreach ($cargadores as $cargador) {
+
             if ($cargador->estado === 'Averiado') {
                 continue;
             }
-    
-            $carga = Cargan::findOne(['id_cargador' => $cargador->id_cargador]);
-    
-            if ($carga) {
-                $cargador->estado = 'No disponible';
-            } else {
-                $cargador->estado = 'Disponible';
+        
+            $portatilNoDisponible = false;
+            foreach ($cargador->portatil as $portatil) {
+                if ($portatil->estado === "No disponible") {
+                    $portatilNoDisponible = true;
+                    break;
+                }
             }
-    
+        
+            $cargador->estado = $portatilNoDisponible ? 'No disponible' : 'Disponible';
             $cargador->save();
+
         }
 
     }

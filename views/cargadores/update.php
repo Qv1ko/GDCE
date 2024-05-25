@@ -1,21 +1,22 @@
 <?php
 
-use yii\helpers\Html;
+    use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var app\models\Cargadores $model */
+    /** @var yii\web\View $this */
+    /** @var app\models\Cargadores $model */
 
-$this->title = 'Update Cargadores: ' . $model->id_cargador;
-$this->params['breadcrumbs'][] = ['label' => 'Cargadores', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_cargador, 'url' => ['view', 'id_cargador' => $model->id_cargador]];
-$this->params['breadcrumbs'][] = 'Update';
+    $this->title = 'Editar cargador ' . $model->codigo;
+
 ?>
+
 <div class="cargadores-update">
+    <div class="container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode($this->title) ?></h1>
+        
+        <?= $this->render('_updateForm', [
+            'model' => $model,
+        ]) ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+    </div>
 </div>
