@@ -6,6 +6,7 @@ use Yii;
 use app\models\Cargadores;
 use app\models\CargadoresSearch;
 use app\models\Cargan;
+use app\models\Portatiles;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -43,62 +44,26 @@ class CargadoresController extends Controller {
             return $this->goHome();
         }
 
-        Cargadores::sincronizarCargadores();
+        Portatiles::sincronizarPortatiles();
         Cargan::sincronizarCargan();
+        Cargadores::sincronizarCargadores();
 
         $searchModel = new CargadoresSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Cargadores();
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'model' => $model
-        ]);
-
-    }
-
-    /**
-     * Displays a single Cargadores model.
-     * @param int $id_cargador Id Cargador
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id_cargador) {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        return $this->render('view', [
-            'model' => $this->findModel($id_cargador),
-        ]);
-
-    }
-
-    /**
-     * Creates a new Cargadores model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate() {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new Cargadores();
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_cargador' => $model->id_cargador]);
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
-            'model' => $model,
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'model' => $model
         ]);
 
     }
@@ -119,7 +84,7 @@ class CargadoresController extends Controller {
         $model = $this->findModel($id_cargador);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_cargador' => $model->id_cargador]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -139,6 +104,10 @@ class CargadoresController extends Controller {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
+        }
+
+        foreach ($this->findModel($id_cargador)->cargan as $cargan) {
+            $cargan->delete();
         }
 
         $this->findModel($id_cargador)->delete();
