@@ -41,9 +41,9 @@ class Aplicaciones extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id_aplicacion' => 'ID aplicación',
+            'id_aplicacion' => 'ID de la aplicación',
             'aplicacion' => 'Aplicación',            
-            'id_portatil' => 'ID del portátil',
+            'id_portatil' => 'Portátil',
         ];
     }
 
@@ -54,6 +54,11 @@ class Aplicaciones extends \yii\db\ActiveRecord {
      */
     public function getPortatil() {
         return $this->hasOne(Portatiles::class, ['id_portatil' => 'id_portatil']);
+    }
+
+    public static function getListaAplicaciones() {
+        $aplicaciones = array_unique(array_column(Aplicaciones::find()->asArray()->all(), 'aplicacion'));
+        return array_chunk($aplicaciones, ceil(count($aplicaciones) / 16));
     }
 
 }

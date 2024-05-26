@@ -41,7 +41,7 @@ class Almacenes extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id_almacen' => 'ID del almacén',
+            'id_almacen' => 'Almacén',
             'aula' => 'Código del aula',
             'capacidad' => 'Capacidad máxima del almacén',
         ];

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "cargadores".
@@ -47,11 +48,11 @@ class Cargadores extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id_cargador' => 'ID del cargador',
+            'id_cargador' => 'Cargador',
             'codigo' => 'Código',
             'potencia' => 'Vatios de potencia',
             'estado' => 'Estado',
-            'id_almacen' => 'ID del almacén',
+            'id_almacen' => 'Almacén',
         ];
     }
 
@@ -80,6 +81,10 @@ class Cargadores extends \yii\db\ActiveRecord {
      */
     public function getPortatil() {
         return $this->hasMany(Portatiles::class, ['id_portatil' => 'id_portatil'])->viaTable('cargan', ['id_cargador' => 'id_cargador']);
+    }
+
+    public static function getCargadoresDisponibles() {
+        return ArrayHelper::map(Cargadores::find()->where(['estado' => 'Disponible'])->all(), 'id_cargador', 'codigo');
     }
 
     public static function sincronizarCargadores() {

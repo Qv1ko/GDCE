@@ -20,7 +20,7 @@
         <div class="col">
             <?= $form->field($model, 'searchString', [
                 'inputOptions' => [
-                    'placeholder' => 'Buscar almacén',
+                    'placeholder' => 'Buscar cargador',
                     'class' => 'form-control',
                 ],
             ])->label(false) ?>
