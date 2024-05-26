@@ -346,3 +346,47 @@
 **19/05/2024**
 - Implementación de buscadores en las páginas de gestión de alumnos, portátiles y cargadores, además de modificar el número de elementos por paginación en los buscadores ya establecidos.
 - La función de sincronización de alumnos falló debido a un error en la estructura de los datos, que causaba un fallo constante.
+
+**20/05/2024**
+- Corregida la sincronización de los alumnos debido a que, al haber dos campos iguales, daba error y no se guardaban los cambios.
+- Maquetado el gridview de la página de gestión de alumnos.
+
+**21/05/2024**
+- Corregido el método de sincronización de alumnos causado por un error en el DNI.
+- Intento de crear un label en el formulario de creación de un alumno que se relacionase con el modelo de "cursan" para crear un nuevo curso.
+
+**22/05/2024**
+- Corregidas las reglas de los portátiles.
+- Corregida la reserva de los portátiles ya que el código JavaScript tenía un error.
+- Intento de implementar varios formularios en la página de creación de un nuevo alumno, para crear a su vez la relación entre el alumno y los cursos.
+- Intento de crear un selector de cursos múltiple, pero por errores con diferentes widgets probados tuvo que ser descartado.
+
+**23/05/2024**
+- Corrección y finalización del DAFO.
+- Implementación de los apartados del análisis en formato Markdown.
+- Añadida la validación y sincronización de valores NIE en el campo de DNI del modelo Alumnos.
+- Intento de implementar el formulario de creación de alumnos y la relación de "cursan" pero hay un error al crear el campo de "cursan" ya que este no se crea.
+- Dado que la implementación de modales se está complicando, solo voy a hacer modales para los formularios de creación de los modelos.
+- Configuración de la página de gestión de almacenes, incluyendo formularios, gridview, validaciones, y las operaciones de crear, actualizar y borrar.
+
+**24/05/2024**
+- Corrección de elementos en la actualización y creación de almacenes.
+- Implementación y configuración de iconos en los botones.
+- Finalización de la configuración del CRUD de Almacenes.
+- Desarrollo del gridview de la página de gestión de cargadores.
+- Problemas al añadir nuevos cargadores al intentar guardar el valor del almacén con un dropdown.
+
+**25/05/2024**
+- Desarrollado el modal para crear cargadores.
+- Implementado un botón para descargar los códigos QR de los cargadores.
+- Actualizada la vista para actualizar los cargadores.
+- Configurado el buscador de los cargadores.
+- Error al no mostrar el mensaje cuando hay un cargador y almacén duplicado.
+- Documentación de las pruebas.
+
+**26/06/2024**
+- Probando diferentes estilos de las columnas de los gridview y los botones de gestión.
+- Configuración de los botones del gridview de la página de gestión de portátiles.
+- Implementación de una sección de checkboxes para seleccionar las aplicaciones que tendrá un nuevo portátil.
+- Implementación del botón de descarga del código QR en la página de gestión de portátiles.
+- Desarrollo del formulario para la creación de portátiles.
