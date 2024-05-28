@@ -12,13 +12,12 @@ use yii\filters\VerbFilter;
 /**
  * AplicacionesController implements the CRUD actions for Aplicaciones model.
  */
-class AplicacionesController extends Controller
-{
+class AplicacionesController extends Controller {
+
     /**
      * @inheritDoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return array_merge(
             parent::behaviors(),
             [
@@ -37,75 +36,34 @@ class AplicacionesController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => Aplicaciones::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id_aplicacion' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Aplicaciones model.
-     * @param int $id_aplicacion Id Aplicacion
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id_aplicacion)
-    {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        return $this->render('view', [
-            'model' => $this->findModel($id_aplicacion),
-        ]);
-    }
-
-    /**
-     * Creates a new Aplicaciones model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        Aplicaciones::sincronizarAplicaciones();
 
         $model = new Aplicaciones();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_aplicacion' => $model->id_aplicacion]);
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        $dataProvider = new ActiveDataProvider([
+            'query' => Aplicaciones::find()->where(['id_portatil' => null])->groupBy('aplicacion'),
+            'pagination' => false,
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -115,8 +73,7 @@ class AplicacionesController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_aplicacion)
-    {
+    public function actionUpdate($id_aplicacion) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -124,13 +81,31 @@ class AplicacionesController extends Controller
 
         $model = $this->findModel($id_aplicacion);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_aplicacion' => $model->id_aplicacion]);
+        if ($this->request->isPost) {
+        
+            $nombre = $model->aplicacion;
+
+            if ($model->load($this->request->post())) {
+
+                $aplicaciones = Aplicaciones::find()->where(['aplicacion' => $nombre])->andWhere(['not', ['id_portatil' => null]])->all();
+
+                foreach ($aplicaciones as $aplicacion) {
+                    $aplicacion->aplicacion = $model->aplicacion;
+                    $aplicacion->save();
+                }
+
+                $model->save();
+
+                return $this->redirect(['index']);
+
+            }
+
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -140,16 +115,20 @@ class AplicacionesController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_aplicacion)
-    {
+    public function actionDelete($id_aplicacion) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $this->findModel($id_aplicacion)->delete();
+        $aplicaciones = Aplicaciones::find()->where(['aplicacion' => $this->findModel($id_aplicacion)->aplicacion])->all();
+
+        foreach ($aplicaciones as $aplicacion) {
+            $aplicacion->delete();
+        }
 
         return $this->redirect(['index']);
+
     }
 
     /**
@@ -159,8 +138,7 @@ class AplicacionesController extends Controller
      * @return Aplicaciones the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_aplicacion)
-    {
+    protected function findModel($id_aplicacion) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -170,6 +148,8 @@ class AplicacionesController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('❌ El aplicación no existe');
+
     }
+
 }

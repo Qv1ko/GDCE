@@ -1,20 +1,18 @@
 <?php
 
-use yii\helpers\Html;
+    use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var app\models\Aplicaciones $model */
+    /** @var yii\web\View $this */
+    /** @var app\models\Aplicaciones $model */
 
-$this->title = 'Update Aplicaciones: ' . $model->id_aplicacion;
-$this->params['breadcrumbs'][] = ['label' => 'Aplicaciones', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_aplicacion, 'url' => ['view', 'id_aplicacion' => $model->id_aplicacion]];
-$this->params['breadcrumbs'][] = 'Update';
+    $this->title = 'Editar ' . $model->aplicacion;
+
 ?>
 <div class="aplicaciones-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?= $this->render('_updateForm', [
         'model' => $model,
     ]) ?>
 
