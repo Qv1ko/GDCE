@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Portatiles;
 use app\models\PortatilesSearch;
+use app\models\Aplicaciones;
+use app\models\Alumnos;
 use app\models\Cargan;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -43,61 +45,48 @@ class PortatilesController extends Controller {
         }
 
         Portatiles::sincronizarPortatiles();
+        Aplicaciones::sincronizarAplicaciones();
         Cargan::sincronizarCargan();
 
         $searchModel = new PortatilesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Portatiles();
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'model' => $model
-        ]);
-
-    }
-
-    /**
-     * Displays a single Portatiles model.
-     * @param int $id_portatil Id Portatil
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id_portatil) {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        return $this->render('view', [
-            'model' => $this->findModel($id_portatil),
-        ]);
-
-    }
-
-    /**
-     * Creates a new Portatiles model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate() {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new Portatiles();
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_portatil' => $model->id_portatil]);
+
+                $aplicacionesSeleccionadas = Yii::$app->request->post('aplicaciones');
+
+                if (is_array($aplicacionesSeleccionadas)) {
+                    foreach ($aplicacionesSeleccionadas as $aplicacion) {
+                        $aplicacionModel = new Aplicaciones();
+                        $aplicacionModel->aplicacion = $aplicacion;
+                        $aplicacionModel->id_portatil = $model->id_portatil;
+                        $aplicacionModel->save();
+                    }
+                }
+
+                if ($model->estado !== 'Averiado') {
+                    $cargador = Yii::$app->request->post('cargador');
+    
+                    if ($cargador) {
+                        $carganModel = new Cargan();
+                        $carganModel->id_portatil = $model->id_portatil;
+                        $carganModel->id_cargador = $cargador;
+                        $carganModel->save();
+                    }
+                }
+
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
-            'model' => $model,
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'model' => $model
         ]);
 
     }
@@ -116,13 +105,73 @@ class PortatilesController extends Controller {
         }
 
         $model = $this->findModel($id_portatil);
+        $aplicacionesInstaladas = array_map(function($app) {
+            return $app->aplicacion;
+        }, $model->aplicaciones);
+        $aplicacionesActuales = $model->aplicaciones;
+        $cargadorActual = $model->cargador;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_portatil' => $model->id_portatil]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+
+                $aplicacionesSeleccionadas = Yii::$app->request->post('aplicaciones');
+
+                if (is_array($aplicacionesSeleccionadas)) {
+
+                    foreach ($aplicacionesSeleccionadas as $aplicacion) {
+                        if (!in_array($aplicacion, $aplicacionesActuales)) {
+                            $aplicacionModel = new Aplicaciones();
+                            $aplicacionModel->aplicacion = $aplicacion;
+                            $aplicacionModel->id_portatil = $model->id_portatil;
+                            $aplicacionModel->save();
+                        }
+                    }
+
+                    foreach ($aplicacionesActuales as $app) {
+    
+                        $aplicacionModel = Aplicaciones::findOne(['aplicacion' => $app->aplicacion, 'id_portatil' => $model->id_portatil]);
+    
+                        if ($aplicacionModel !== null && !in_array($aplicacionModel->aplicacion, $aplicacionesSeleccionadas)) {
+                            $aplicacionModel->delete();
+                        }
+
+                    }
+
+                }
+
+                if ($model->estado !== 'Averiado') {
+
+                    $cargador = Yii::$app->request->post('cargador');
+                
+                    if (!empty($cargador)) {
+                        if (($cargadorActual) ? $cargador != $cargadorActual->id_cargador : true) {
+                            $carganModel = new Cargan();
+                            $carganModel->id_portatil = $model->id_portatil;
+                            $carganModel->id_cargador = $cargador;
+                            $carganModel->save();
+                            if ($cargadorActual) {
+                                Cargan::find()->where(['id_cargador' => $cargadorActual->id_cargador])->andWhere(['id_portatil' => $model->id_portatil])->one()->delete();
+                            }
+                        }
+                    } else if ($cargadorActual) {
+                        Cargan::find()->where(['id_cargador' => $cargadorActual->id_cargador])->andWhere(['id_portatil' => $model->id_portatil])->one()->delete();
+                    }
+
+                } else if ($cargadorActual) {
+                    Cargan::find()->where(['id_cargador' => $cargadorActual->id_cargador])->andWhere(['id_portatil' => $model->id_portatil])->one()->delete();
+                }
+        
+                return $this->redirect(['index']);
+
+            }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('update', [
             'model' => $model,
+            'aplicacionesInstaladas' => $aplicacionesInstaladas,
+            'cargador' => $cargadorActual,
         ]);
 
     }
@@ -140,10 +189,34 @@ class PortatilesController extends Controller {
             return $this->goHome();
         }
 
+        $aplicaciones = Aplicaciones::find()->where(['id_portatil' => $id_portatil])->all();
+
+        foreach ($aplicaciones as $aplicacion) {
+            $aplicacion->delete();
+        }
+
+        $cargas = Cargan::find()->where(['id_portatil' => $id_portatil])->all();
+
+        foreach ($cargas as $carga) {
+            $carga->delete();
+        }
+
+        $alumnos = Alumnos::find()->where(['id_portatil' => $id_portatil])->all();
+
+        foreach ($alumnos as $alumno) {
+            $alumno->id_portatil = null;
+            $alumno->save();
+        }
+
         $this->findModel($id_portatil)->delete();
 
         return $this->redirect(['index']);
 
+    }
+
+    public function actionAplicaciones($id) {
+        $model = Portatiles::findOne($id);
+        return $this->renderAjax('_aplicaciones', ['model' => $model]);
     }
 
     /**

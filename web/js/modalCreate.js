@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Controlador de eventos de clic al botón
-    $('#crearBoton').click(mostrarModal);
+    $('#botonCreate').click(mostrarModal);
 });
 
 // Función para mostrar el modal

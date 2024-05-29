@@ -87,6 +87,14 @@ class Cargadores extends \yii\db\ActiveRecord {
         return ArrayHelper::map(Cargadores::find()->where(['estado' => 'Disponible'])->all(), 'id_cargador', 'codigo');
     }
 
+    public static function getCargadoresLibres() {
+        return ArrayHelper::map(Cargadores::find()->leftJoin('cargan', 'cargadores.id_cargador = cargan.id_cargador')->where(['estado' => 'Disponible', 'id_carga' => null])->all(), 'id_cargador', 'codigo');
+    }
+
+    public static function getCargadoresLibresmca($idCargador) {
+        return ArrayHelper::map(Cargadores::find()->leftJoin('cargan', 'cargadores.id_cargador = cargan.id_cargador')->where(['estado' => 'Disponible', 'id_carga' => null])->orWhere(['cargadores.id_cargador' => $idCargador])->all(), 'id_cargador', 'codigo');
+    }
+
     public static function sincronizarCargadores() {
 
         $cargadores = Cargadores::find()->all();

@@ -21,7 +21,7 @@
                     ],
                 ])->label($model->getAttributeLabel('aula'))->textInput(['maxlength' => true]) ?>
             </div>
-    
+
             <div>
                 <?= $form->field($model, 'capacidad', [
                     'inputOptions' => [

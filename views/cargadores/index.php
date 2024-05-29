@@ -13,7 +13,7 @@
     $this->title = 'Gestión de cargadores';
 
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
-    $this->registerJsFile('@web/js/cargadores.js', ['position' => \yii\web\View::POS_HEAD]);
+    $this->registerJsFile('@web/js/modalCreate.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
@@ -126,7 +126,7 @@
                     <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
                 </svg>
                 <span>Añadir cargador</span>
-            </div>', ['create'], ['class' => 'btn btn-success', 'id' => 'crearBoton']) ?>
+            </div>', ['create'], ['class' => 'btn btn-success', 'id' => 'botonCreate']) ?>
         </div>
 
     </div>

@@ -38,14 +38,14 @@ class Portatiles extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['codigo', 'estado'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
-            [['memoria_ram', 'capacidad', 'id_almacen'], 'integer'],
+            [['codigo', 'estado'], 'required', 'message' => '⚠️ Campo es obligatorio'],
+            [['memoria_ram', 'capacidad', 'id_almacen'], 'integer', 'message' => '⚠️ Formato incorrecto (ej: 8)'],
             [['codigo'], 'string', 'max' => 4],
-            [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ El código debe seguir el siguiente formato de ejemplo: "123A"'],
+            [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ Formato incorrecto (ej: 001A)'],
             [['marca', 'modelo', 'estado', 'procesador', 'dispositivo_almacenamiento'], 'string', 'max' => 24],
-            [['marca'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ La marca solo puede contener caracteres alfabéticos'],
-            [['estado'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ El estado solo puede ser "Disponible", "No disponible" o "Averiado"'],
-            [['dispositivo_almacenamiento'], 'in', 'range' => ['HDD', 'SSD'], 'message' => '⚠️ El dispositivo de almacenamiento solo puede ser "HDD" o "SSD"'],
+            [['marca'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ Solo puede contener caracteres alfabéticos'],
+            [['estado'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ Solo puede ser "Disponible", "No disponible" o "Averiado"'],
+            [['dispositivo_almacenamiento'], 'in', 'range' => ['HDD', 'SSD'], 'message' => '⚠️ Solo puede ser "HDD" o "SSD"'],
             [['codigo'], 'unique', 'message' => '⚠️ El portátil ya existe'],
             [['id_almacen'], 'exist', 'skipOnError' => true, 'targetClass' => Almacenes::class, 'targetAttribute' => ['id_almacen' => 'id_almacen']],
         ];
@@ -56,16 +56,16 @@ class Portatiles extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id_portatil' => 'ID del portátil',
+            'id_portatil' => 'Portátil',
             'codigo' => 'Código',
             'marca' => 'Marca',
             'modelo' => 'Modelo',
             'estado' => 'Estado',
             'procesador' => 'Procesador',
-            'memoria_ram' => 'Memoria RAM',
-            'capacidad' => 'Capacidad',
+            'memoria_ram' => 'Gigabytes de memoria RAM',
+            'capacidad' => 'Gigabytes de capacidad',
             'dispositivo_almacenamiento' => 'Dispositivo de almacenamiento',
-            'id_almacen' => 'ID del almacén',
+            'id_almacen' => 'Almacén',
         ];
     }
 
@@ -102,7 +102,7 @@ class Portatiles extends \yii\db\ActiveRecord {
      * @return \yii\db\ActiveQuery
      */
     public function getCargador() {
-        return $this->hasMany(Cargadores::class, ['id_cargador' => 'id_cargador'])->viaTable('cargan', ['id_portatil' => 'id_portatil']);
+        return $this->hasOne(Cargadores::class, ['id_cargador' => 'id_cargador'])->viaTable('cargan', ['id_portatil' => 'id_portatil']);
     }
 
     /**
@@ -111,7 +111,7 @@ class Portatiles extends \yii\db\ActiveRecord {
      * @return \yii\db\ActiveQuery
      */
     public function getCargan() {
-        return $this->hasMany(Cargan::class, ['id_portatil' => 'id_portatil']);
+        return $this->hasOne(Cargan::class, ['id_portatil' => 'id_portatil']);
     }
 
     public static function sincronizarPortatiles() {

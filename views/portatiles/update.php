@@ -5,10 +5,7 @@
     /** @var yii\web\View $this */
     /** @var app\models\Portatiles $model */
 
-    $this->title = 'Actualizando portátil ' . $model->codigo;
-    $this->params['breadcrumbs'][] = ['label' => 'Portatiles', 'url' => ['index']];
-    $this->params['breadcrumbs'][] = ['label' => $model->id_portatil, 'url' => ['view', 'id_portatil' => $model->id_portatil]];
-    $this->params['breadcrumbs'][] = 'Update';
+    $this->title = 'Editar portátil ' . $model->codigo;
 
 ?>
 
@@ -16,8 +13,10 @@
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?= $this->render('_updateForm', [
         'model' => $model,
+        'aplicacionesInstaladas' => $aplicacionesInstaladas,
+        'cargador' => $cargador,
     ]) ?>
 
 </div>

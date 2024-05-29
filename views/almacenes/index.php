@@ -13,7 +13,7 @@
 
     // Archivos JavaScript
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
-    $this->registerJsFile('@web/js/almacenes.js', ['position' => \yii\web\View::POS_HEAD]);
+    $this->registerJsFile('@web/js/modalCreate.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
@@ -32,6 +32,8 @@
                     [
                         'attribute' => 'aula',
                         'label' => 'Aula',
+                        // 'headerOptions' => ['style' => 'text-align:center'],
+                        // 'contentOptions' => ['style' => 'text-align:center'],
                     ],
                     [
                         'attribute' => 'capacidad',
@@ -39,12 +41,16 @@
                         'value' => function ($model) {
                             return ($model->capacidad != null) ? $model->capacidad . ' dispositivos' : 'Sin definir';
                         },
+                        // 'headerOptions' => ['style' => 'text-align:center'],
+                        // 'contentOptions' => ['style' => 'text-align:center'],
                     ],
                     [
                         'label' => 'Dispositivos almacenados',
                         'value' => function ($model) {
                             return Almacenes::getOcupacion($model->id_almacen) . ' dispositivos';
                         },
+                        // 'headerOptions' => ['style' => 'text-align:center'],
+                        // 'contentOptions' => ['style' => 'text-align:center'],
                     ],
                     [
                         'header' => 'Botones de gestión',
@@ -78,7 +84,9 @@
                                     <span>Eliminar</span>
                                 </div>', $url, ['class' => 'btn btn-danger', 'data-confirm' => '¿Estás seguro de que quieres borrar este almacén?', 'data-method' => 'post']);
                             }
-                        ]
+                        ],
+                        'headerOptions' => ['style' => 'text-align:center'],
+                        'contentOptions' => ['style' => 'text-align:center'],
                     ],
                 ],
                 'summary' => '',
@@ -94,7 +102,7 @@
                     <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
                 </svg>
                 <span>Añadir almacén</span>
-            </div>', [''], ['class' => 'btn btn-success', 'id' => 'crearBoton']) ?>
+            </div>', [''], ['class' => 'btn btn-success', 'id' => 'botonCreate']) ?>
         </div>
         
     </div>

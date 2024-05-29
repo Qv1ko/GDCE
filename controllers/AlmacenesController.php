@@ -130,7 +130,7 @@ class AlmacenesController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('❌ El almacén no existe.');
+        throw new NotFoundHttpException('❌ El almacén no existe');
 
     }
 

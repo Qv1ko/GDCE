@@ -41,8 +41,8 @@ class Cargan extends \yii\db\ActiveRecord {
     public function attributeLabels() {
         return [
             'id_carga' => 'ID Carga',
-            'id_portatil' => 'ID del portátil',
-            'id_cargador' => 'ID del cargador',
+            'id_portatil' => 'Portátil',
+            'id_cargador' => 'Cargador',
         ];
     }
 
