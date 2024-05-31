@@ -1,233 +1,61 @@
 <p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Basic Project Template</h1>
+    <img src="./web/images/logo_lg.png" height="100px">
+    <h1 align="center">GDCE</h1>
     <br>
 </p>
 
-Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-rapidly creating small projects.
+GDCE es una aplicación web creada para gestionar la reserva de los portátiles de centros de estudio.
 
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
+La aplicación se basa en una sección inicial para todos los usuarios donde podrán escanear el código QR de los portátiles y reservarlos. Por otra parte, los usuarios administradores se les añade el acceso a panel con información y gráficas y las páginas para gestionar los dispositivos, alumnos, cursos y almacenes.
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-basic.svg)](https://packagist.org/packages/yiisoft/yii2-app-basic)
-[![build](https://github.com/yiisoft/yii2-app-basic/workflows/build/badge.svg)](https://github.com/yiisoft/yii2-app-basic/actions?query=workflow%3Abuild)
+![Bootstrap 4](https://img.shields.io/badge/Bootstrap_4-7952B3?style=for-the-badge&logo=bootstrap&logoColor=E3E3E3&labelColor=333333)
+![Composer 2.6.6](https://img.shields.io/badge/Composer_2.6.6-885630?style=for-the-badge&logo=composer&logoColor=E3E3E3&labelColor=333333)
+![PHP 7.2](https://img.shields.io/badge/PHP_7.2-777BB4?style=for-the-badge&logo=php&logoColor=E3E3E3&labelColor=333333)
+![Yii2](https://img.shields.io/badge/Yii2-8ABC4B?style=for-the-badge&logo=yii2&logoColor=E3E3E3&labelColor=333333)
+![Xampp 3.2.3](https://img.shields.io/badge/Xampp_3.2.3-FB7A24?style=for-the-badge&logo=xampp&logoColor=E3E3E3&labelColor=333333)
 
-DIRECTORY STRUCTURE
+ESTRUCTURA DE DIRECTORIOS
 -------------------
 
-      assets/             contains assets definition
-      commands/           contains console commands (controllers)
-      config/             contains application configurations
-      controllers/        contains Web controller classes
-      mail/               contains view files for e-mails
-      models/             contains model classes
-      runtime/            contains files generated during runtime
-      tests/              contains various tests for the basic application
-      vendor/             contains dependent 3rd-party packages
-      views/              contains view files for the Web application
-      web/                contains the entry script and Web resources
+      assets/             contiene la definición de los assets
+      commands/           contiene los comandos de la consola (controladores)
+      config/             contiene configuración de la aplicación
+      controllers/        contiene las clases de controladores de la aplicación web
+      data/               contiene la copia de seguridad de la base de datos
+      documents/          contiene la documentación del proyecto
+      mail/               contiene el diseño para correos electrónicos
+      models/             contiene las clases de modelos
+      runtime/            contiene los ficheros generados durante la ejecución
+      tests/              contiene varios tests para la aplicación
+      vendor/             contiene paquetes dependientes de terceros
+      views/              contiene las vistas de la aplicación web
+      web/                contiene el script de entrada, los recursos, el archivo CSS y los archivos JavaScript
 
 
-
-REQUIREMENTS
+PROGRAMAS REQUERIDOS
 ------------
 
-The minimum requirement by this project template that your Web server supports PHP 5.6.0.
+- Composer (v2.6.6)
+- Git
+- PHP (v7.2)
+- Xampp (v3.2.3)
 
 
-INSTALLATION
+INSTALACIÓN
 ------------
 
-### Install via Composer
-
-If you do not have [Composer](http://getcomposer.org/), you may install it by following the instructions
-at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
-
-You can then install this project template using the following command:
-
-~~~
-composer create-project --prefer-dist yiisoft/yii2-app-basic basic
-~~~
-
-Now you should be able to access the application through the following URL, assuming `basic` is the directory
-directly under the Web root.
-
-~~~
-http://localhost/basic/web/
-~~~
-
-### Install from an Archive File
-
-Extract the archive file downloaded from [yiiframework.com](http://www.yiiframework.com/download/) to
-a directory named `basic` that is directly under the Web root.
-
-Set cookie validation key in `config/web.php` file to some random secret string:
-
-```php
-'request' => [
-    // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-    'cookieValidationKey' => '<secret random string goes here>',
-],
-```
-
-You can then access the application through the following URL:
-
-~~~
-http://localhost/basic/web/
-~~~
-
-
-### Install with Docker
-
-Update your vendor packages
-
-    docker-compose run --rm php composer update --prefer-dist
-    
-Run the installation triggers (creating cookie validation code)
-
-    docker-compose run --rm php composer install    
-    
-Start the container
-
-    docker-compose up -d
-    
-You can then access the application through the following URL:
-
-    http://127.0.0.1:8000
-
-**NOTES:** 
-- Minimum required Docker engine version `17.04` for development (see [Performance tuning for volume mounts](https://docs.docker.com/docker-for-mac/osxfs-caching/))
-- The default configuration uses a host-volume in your home directory `.docker-composer` for composer caches
-
-
-CONFIGURATION
--------------
-
-### Database
-
-Edit the file `config/db.php` with real data, for example:
-
-```php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '1234',
-    'charset' => 'utf8',
-];
-```
-
-**NOTES:**
-- Yii won't create the database for you, this has to be done manually before you can access it.
-- Check and edit the other files in the `config/` directory to customize your application as required.
-- Refer to the README in the `tests` directory for information specific to basic application tests.
-
-
-TESTING
--------
-
-Tests are located in `tests` directory. They are developed with [Codeception PHP Testing Framework](http://codeception.com/).
-By default, there are 3 test suites:
-
-- `unit`
-- `functional`
-- `acceptance`
-
-Tests can be executed by running
+Clona el repositorio en el directorio web base (si usas xampp `xampp/htdocs/`)
 
 ```
-vendor/bin/codecept run
+git clone https://github.com/Qv1ko/GDCE.git
+```
+```
+git clone https://gitlab.com/vgarcia3301646/gdce.git
 ```
 
-The command above will execute unit and functional tests. Unit tests are testing the system components, while functional
-tests are for testing user interaction. Acceptance tests are disabled by default as they require additional setup since
-they perform testing in real browser. 
-
-
-### Running  acceptance tests
-
-To execute acceptance tests do the following:  
-
-1. Rename `tests/acceptance.suite.yml.example` to `tests/acceptance.suite.yml` to enable suite configuration
-
-2. Replace `codeception/base` package in `composer.json` with `codeception/codeception` to install full-featured
-   version of Codeception
-
-3. Update dependencies with Composer 
-
-    ```
-    composer update  
-    ```
-
-4. Download [Selenium Server](http://www.seleniumhq.org/download/) and launch it:
-
-    ```
-    java -jar ~/selenium-server-standalone-x.xx.x.jar
-    ```
-
-    In case of using Selenium Server 3.0 with Firefox browser since v48 or Google Chrome since v53 you must download [GeckoDriver](https://github.com/mozilla/geckodriver/releases) or [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) and launch Selenium with it:
-
-    ```
-    # for Firefox
-    java -jar -Dwebdriver.gecko.driver=~/geckodriver ~/selenium-server-standalone-3.xx.x.jar
-    
-    # for Google Chrome
-    java -jar -Dwebdriver.chrome.driver=~/chromedriver ~/selenium-server-standalone-3.xx.x.jar
-    ``` 
-    
-    As an alternative way you can use already configured Docker container with older versions of Selenium and Firefox:
-    
-    ```
-    docker run --net=host selenium/standalone-firefox:2.53.0
-    ```
-
-5. (Optional) Create `yii2basic_test` database and update it by applying migrations if you have them.
-
-   ```
-   tests/bin/yii migrate
-   ```
-
-   The database configuration can be found at `config/test_db.php`.
-
-
-6. Start web server:
-
-    ```
-    tests/bin/yii serve
-    ```
-
-7. Now you can run all available tests
-
-   ```
-   # run all available tests
-   vendor/bin/codecept run
-
-   # run acceptance tests
-   vendor/bin/codecept run acceptance
-
-   # run only unit and functional tests
-   vendor/bin/codecept run unit,functional
-   ```
-
-### Code coverage support
-
-By default, code coverage is disabled in `codeception.yml` configuration file, you should uncomment needed rows to be able
-to collect code coverage. You can run your tests and collect coverage with the following command:
-
+Dentro del repositorio clonado ejecuta el siguiente comando:
 ```
-#collect coverage for all tests
-vendor/bin/codecept run --coverage --coverage-html --coverage-xml
-
-#collect coverage only for unit tests
-vendor/bin/codecept run unit --coverage --coverage-html --coverage-xml
-
-#collect coverage for unit and functional tests
-vendor/bin/codecept run functional,unit --coverage --coverage-html --coverage-xml
+composer update
 ```
 
-You can see code coverage output under the `tests/_output` directory.
+Importa la base de datos en MySQL ([estructura](/documents/implementation/estructura_bd.sql) / [backup](/data/backup.sql))
