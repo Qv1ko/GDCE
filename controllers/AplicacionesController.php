@@ -148,7 +148,7 @@ class AplicacionesController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('❌ El aplicación no existe');
+        throw new NotFoundHttpException('❌ La aplicación no existe');
 
     }
 
