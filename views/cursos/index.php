@@ -90,7 +90,7 @@
     Modal::begin([
         'id' => 'modalEditarCurso',
         'size' => 'modal-lg',
-        'title' => '<h1 class="tituloModalEditarCurso"></h1>',
+        'title' => '<h2 class="tituloModalEditarCurso"></h2>',
     ]);
     Modal::end();
 ?>
