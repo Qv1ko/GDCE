@@ -51,8 +51,6 @@
         ]);
         $menuItems = [
             ['label' => 'INICIO', 'url' => ['/site/index']],
-            // ['label' => 'ABOUT', 'url' => ['/site/about']],
-            // ['label' => 'CONTACT', 'url' => ['/site/contact']],
         ];
         if (Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'INICIAR SESIÓN', 'url' => ['/site/login']];
@@ -61,11 +59,9 @@
             $menuItems[] = ['label' => 'PORTATILES', 'url' => ['/portatiles/index']];
             $menuItems[] = ['label' => 'APLICACIONES', 'url' => ['/aplicaciones/index']];
             $menuItems[] = ['label' => 'CARGADORES', 'url' => ['/cargadores/index']];
-            $menuItems[] = ['label' => 'CARGAN', 'url' => ['/cargan/index']];
             $menuItems[] = ['label' => 'ALMACENES', 'url' => ['/almacenes/index']];
             $menuItems[] = ['label' => 'ALUMNOS', 'url' => ['/alumnos/index']];
             $menuItems[] = ['label' => 'CURSOS', 'url' => ['/cursos/index']];
-            $menuItems[] = ['label' => 'CURSAN', 'url' => ['/cursan/index']];
             $menuItems[] = ['label' => 'CERRAR SESIÓN (' . strtoupper(Yii::$app->user->identity->username) . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
         }
         echo Nav::widget([

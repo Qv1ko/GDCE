@@ -10,7 +10,7 @@ main > .container {
 }
 
 .footer {
-    background-color: #4040ff;
+    background-color: #16697A;
     color: #e3e3e3 !important;
     font-family: "Roboto", sans-serif;
     /* position: fixed; */
@@ -80,19 +80,48 @@ a.desc:after {
 }
 
 .navbar {
-    background-color: #4040ff;
+    background-color: #16697A;
 }
 
 .nav-link {
-    text-decoration: none;
-    color: #e3e3e3 !important;
+    font-size: 18px;
+    color: #E3E3E3 !important;
+    font-family: inherit;
     font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    background: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color;
 }
 
 .nav-link.active, .nav-link:focus, .nav-link:hover {
     text-decoration: none;
-    color: #99ff33 !important;
+    color: #82C0CC !important;
     font-weight: bold;
+}
+
+.nav-link:focus:after, .nav-link:hover:after {
+    width: 100%;
+    left: 0%;
+}
+
+.nav-link:after {
+    content: "";
+    pointer-events: none;
+    bottom: -2px;
+    left: 50%;
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: #82C0CC;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: width, left;
 }
 
 .nav > li > form > button.logout {
@@ -103,7 +132,7 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus, .nav > li > form > button.logout:hover {
     text-decoration: none;
-    color: #99ff33;
+    color: #489FB5;
     font-weight: bold;
 }
 
@@ -116,7 +145,7 @@ a.desc:after {
 }
 
 .button-icon:hover {
-    fill: #99ff33;
+    fill: #489FB5;
 }
 
 .footer-icon {
@@ -125,7 +154,7 @@ a.desc:after {
 }
 
 h1, h2, h3 {
-    color: #4040ff;
+    color: #16697A;
     font-weight: bold;
     text-align: center;
 }
@@ -141,7 +170,7 @@ p {
 }
 
 hr {
-    border: 1px solid #4040ff32;
+    border: 1px solid #16697A32;
     margin: 32px;
 }
 
@@ -157,7 +186,7 @@ hr {
 
 /* Estilos para cajas - página de portatil */
 .caja {
-    border: 2px solid #4040ff32;
+    border: 2px solid #16697A32;
     border-radius: 8px;
     padding: 8px;
     margin-top: 16px;
@@ -165,7 +194,7 @@ hr {
 }
 
 .btn-primary {
-    background-color: #4040ff !important;
+    background-color: #16697A !important;
     border: none;
 }
 
@@ -175,15 +204,15 @@ hr {
 } */
 
 .btn-primary:hover, .btn-primary:active {
-    background-color: #99ff33 !important;
+    background-color: #489FB5 !important;
 }
 
 /* .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    box-shadow: 0 0 5px #4040ff32 !important;
+    box-shadow: 0 0 5px #16697A32 !important;
 }
 
 .btn-primary:focus {
-    box-shadow: 0 0 8px #4040ff32 !important;
+    box-shadow: 0 0 8px #16697A32 !important;
 } */
 
 #reader {

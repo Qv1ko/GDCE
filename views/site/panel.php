@@ -1,15 +1,14 @@
 <?php
 
-/** @var yii\web\View $this */
+    /** @var yii\web\View $this */
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\data\ActiveDataProvider;
+    use yii\grid\GridView;
+    use yii\helpers\Html;
 
-$this->title = 'Panel';
+    $this->title = 'Panel';
 
-$this->registerJsFile('https://code.jquery.com/jquery-3.6.0.min.js', ['position' => \yii\web\View::POS_HEAD]);
-$this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD]);
+    $this->registerJsFile('https://code.jquery.com/jquery-3.6.0.min.js', ['position' => \yii\web\View::POS_HEAD]);
+    $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
@@ -20,11 +19,14 @@ $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD
 
             <div class="col-md-3">
                 <div class="square d-flex flex-column justify-content-between" style="height:240px;">
-                    <h2>PORTÁTILES DISPONIBLES</h2>
+
+                    <h2>Portátiles disponibles</h2>
+
                     <div class="d-flex flex-column justify-content-center">
                         <p class="font-weight-bold" style="font-size:64px;height: 80px;"><?= $portatilesDisponibles ?></p>
-                        <p style="color: <?= $porcentajePortatilesDisponibles < 10 ? 'red' : ($porcentajePortatilesDisponibles < 25 ? 'yellow' : 'green') ?>;"><?= $porcentajePortatilesDisponibles ?>%</p>
+                        <p class="font-weight-bold" style="color: <?= $porcentajePortatilesDisponibles < 10 ? '#489FB5' : '#82C0CC' ?>;"><?= $porcentajePortatilesDisponibles ?>%</p>
                     </div>
+
                     <p>
                         <?= Html::a('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -36,16 +38,20 @@ $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD
                             <path d="M5 18l0 .01" />
                         </svg> Ver listado', [''], ['class' => 'btn btn-primary', 'id' => 'modal-portatiles-button']) ?>
                     </p>
+
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="square d-flex flex-column justify-content-between" style="height:240px;">
-                    <h2>CARGADORES DISPONIBLES</h2>
+
+                    <h2>Cargadores disponibles</h2>
+
                     <div class="d-flex flex-column justify-content-center">
                         <p class="font-weight-bold" style="font-size:64px;height: 80px;"><?= $cargadoresDisponibles ?></p>
-                        <p style="color: <?= $porcentajeCargadoresDisponibles < 10 ? 'red' : ($porcentajeCargadoresDisponibles < 25 ? 'yellow' : 'green') ?>;"><?= $porcentajeCargadoresDisponibles ?>%</p>
+                        <p class="font-weight-bold" style="color: <?= $porcentajeCargadoresDisponibles < 10 ? '#489FB5' :  '#82C0CC' ?>;"><?= $porcentajeCargadoresDisponibles ?>%</p>
                     </div>
+
                     <p>
                         <?= Html::a('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -57,12 +63,13 @@ $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD
                             <path d="M5 18l0 .01" />
                         </svg> Ver listado', [''], ['class' => 'btn btn-primary', 'id' => 'modal-cargadores-button']) ?>
                     </p>
+
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="square d-flex flex-column justify-content-between" style="height:240px;">
-                    <h2>DISPOSITIVOS AVERIADOS</h2>
+                    <h2>Dispositivos averiados</h2>
                     <p><span class="font-weight-bold" style="font-size:32px;"><?= $portatilesAveriados ?></span> portátiles</p>
                     <p><span class="font-weight-bold" style="font-size:32px;"><?= $cargadoresAveriados ?></span> cargadores</p>
                     <p>
@@ -254,7 +261,7 @@ $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD
 <script>
     var ctx = document.getElementById('graficoEstado').getContext('2d');
     var graphData = [<?= $portatilesDisponibles ?>, <?= $cargadoresDisponibles ?>, <?= $portatilesNoDisponibles ?>, <?= $cargadoresNoDisponibles ?>, <?= $portatilesAveriados ?>, <?= $cargadoresAveriados ?>];
-    var color = ['#00F377', '#00F377', '#b69dff', '#b69dff', '#ff001e', '#ff001e'];
+    var color = ['#82C0CC', '#82C0CC', '#489FB5', '#489FB5', '#16697A', '#16697A'];
     var etiquetas = ['Portátiles disponibles', 'Cargadores disponibles', 'Portátiles no disponibles', 'Cargadores no disponibles', 'Portátiles averiados', 'Cargadores averiados'];
 
     var graficoEstado = new Chart(ctx, {
@@ -300,21 +307,21 @@ $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD
             datasets: [{
                 label: 'Capacidad máxima',
                 data: capacidad,
-                backgroundColor: 'rgba(255, 0, 51, 0.086)',
-                borderColor: '#ff001e',
-                pointBackgroundColor: '#ff001e',
-                pointBorderColor: '#e3e3e3',
-                pointHoverBackgroundColor: '#e3e3e3',
-                pointHoverBorderColor: '#ff001e'
+                backgroundColor: '#489FB516',
+                borderColor: '#489FB5',
+                pointBackgroundColor: '#489FB5',
+                pointBorderColor: '#E3E3E3',
+                pointHoverBackgroundColor: '#E3E3E3',
+                pointHoverBorderColor: '#489FB5'
             }, {
                 label: 'Capacidad ocupada actual',
                 data: dispositivos,
-                backgroundColor: 'rgba(64, 64, 255, 0.086)',
-                borderColor: '#574bfe',
-                pointBackgroundColor: '#574bfe',
-                pointBorderColor: '#e3e3e3',
-                pointHoverBackgroundColor: '#e3e3e3',
-                pointHoverBorderColor: '#574bfe'
+                backgroundColor: '#82C0CC32',
+                borderColor: '#82C0CC',
+                pointBackgroundColor: '#82C0CC',
+                pointBorderColor: '#E3E3E3',
+                pointHoverBackgroundColor: '#E3E3E3',
+                pointHoverBorderColor: '#82C0CC'
             }]
         },
         options: {
@@ -361,7 +368,7 @@ $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD
 
 <script>
     var ctx = document.getElementById('graficoCiclos').getContext('2d');
-    var nombres = <?php echo json_encode(array_column($usoCiclo, 'nombre_corto')); ?>;
+    var nombres = <?php echo json_encode(array_column($usoCiclo, 'sigla')); ?>;
     var cantidades = <?php echo json_encode(array_column($usoCiclo, 'cantidad')); ?>;
 
     var graficoEstado = new Chart(ctx, {
@@ -370,7 +377,7 @@ $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD
             labels: nombres,
             datasets: [{
                 label: 'Alumnos usando pórtatiles',
-                backgroundColor: ['#4040ff', '#3eb489'],
+                backgroundColor: ['#489FB5', '#82C0CC'],
                 data: cantidades
             }]
         },
@@ -393,23 +400,6 @@ $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD
                 legend: {
                     display: false,
                 },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            var label = context.dataset.label || '';
-                            if (context.parsed.y !== null) {
-                                label += ': ' + context.parsed.y;
-                            }
-                            // Busca el índice del elemento actual en el arreglo "nombres"
-                            var index = nombres.indexOf(context.label);
-                            // Si el índice es válido, utiliza el nombre completo en lugar del nombre corto
-                            if (index !== -1) {
-                                label = nombres[index];
-                            }
-                            return label;
-                        }
-                    }
-                }
             },
             scales: {
                 y: {
