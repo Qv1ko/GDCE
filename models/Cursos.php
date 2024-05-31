@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "cursos".
@@ -35,6 +36,7 @@ class Cursos extends \yii\db\ActiveRecord {
             [['nombre', 'curso', 'turno', 'aula', 'tutor'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['nombre'], 'string', 'max' => 96],
             [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre solo puede contener caracteres alfabéticos'],
+            [['nombre'], 'match', 'pattern' => '/[A-ZÁÉÍÓÚÑ]/', 'message' => '⚠️ El nombre debe contener letras en mayúscula para crear la sigla del curso'],
             [['sigla', 'turno'], 'string', 'max' => 8],
             [['sigla'], 'match', 'pattern' => '/^[A-Z]+$/', 'message' => '⚠️ La sigla solo puede contener caracteres alfabéticos en mayúscula'],
             [['curso'], 'string', 'max' => 16],
@@ -78,8 +80,20 @@ class Cursos extends \yii\db\ActiveRecord {
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCursans() {
+    public function getCursan() {
         return $this->hasMany(Cursan::class, ['id_curso' => 'id_curso']);
+    }
+
+    public static function getListaCursosManana() {
+        return ArrayHelper::map(Cursos::find()->where(['turno' => 'Mañana'])->all(), 'id_curso', function($model) {
+            return (($model->curso == 'Primer curso') ? '1º ' : '2º ') . $model->nombre;
+        });
+    }
+
+    public static function getListaCursosTarde() {
+        return ArrayHelper::map(Cursos::find()->where(['turno' => 'Tarde'])->all(), 'id_curso', function($model) {
+            return (($model->curso == 'Primer curso') ? '1º ' : '2º ') . $model->nombre;
+        });
     }
 
     public function beforeSave($insert) {
@@ -90,7 +104,7 @@ class Cursos extends \yii\db\ActiveRecord {
 
             foreach (str_split($this->nombre) as $letra) {
                 if (ctype_upper($letra)) {
-                    $sigla .= $letra;
+                    $sigla .= str_replace(['Á', 'É', 'Í', 'Ó', 'Ú'], ['A', 'E', 'I', 'O', 'U'], $letra);
                 }
             }
 

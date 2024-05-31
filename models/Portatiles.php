@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "portatiles".
@@ -112,6 +113,10 @@ class Portatiles extends \yii\db\ActiveRecord {
      */
     public function getCargan() {
         return $this->hasOne(Cargan::class, ['id_portatil' => 'id_portatil']);
+    }
+
+    public static function getPortatilesDisponibles() {
+        return ArrayHelper::map(Portatiles::find()->where(['estado' => 'Disponible'])->all(), 'id_portatil', 'codigo');
     }
 
     public static function sincronizarPortatiles() {

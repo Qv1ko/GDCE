@@ -36,7 +36,7 @@ class Alumnos extends \yii\db\ActiveRecord {
         return [
             [['dni', 'nombre', 'estado_matricula'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['dni'], 'string', 'max' => 9],
-            [['dni'], 'match', 'pattern' => '/^[0-9]{8}[A-Z]$/', 'message' => '⚠️ El formato del DNI es incorrecto (ej: 12345678Z)'],
+            [['dni'], 'match', 'pattern' => '/^[XYZ]\d{8}[A-Z]$|^\d{8}[A-Z]$/', 'message' => '⚠️ El formato del DNI/NIE es incorrecto (ej: 12345678Z, X12345678Z)'],
             [['dni'], 'validarDni'],
             [['nombre'], 'string', 'max' => 24],
             [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre solo puede contener caracteres alfabéticos'],
@@ -52,20 +52,46 @@ class Alumnos extends \yii\db\ActiveRecord {
 
     public function validarDni($attribute, $params) {
 
-        $validacion = $this->validarFormatoDni($this->$attribute);
-
-        if ($validacion !== true) {
-            $this->addError($attribute, "⚠️ El DNI es incorrecto");
+        if (preg_match('/^[0-9]{8}[A-Z]$/', $this->$attribute)) {
+            $validacion = $this->validarFormatoDni($this->$attribute);
+            if ($validacion !== true) {
+                $this->addError($attribute, "⚠️ El DNI es incorrecto");
+            }
+        } elseif (preg_match('/^[XYZ]\d{7,8}[A-Z]$/', $this->$attribute)) {
+            $validacion = $this->validarFormatoNie($this->$attribute);
+            if ($validacion !== true) {
+                $this->addError($attribute, "⚠️ El NIE es incorrecto");
+            }
+        } else {
+            $this->addError($attribute, "⚠️ El DNI/NIE es incorrecto");
         }
 
     }
-
+    
     public function validarFormatoDni($dni) {
+
         $numero = substr($dni, 0, -1);
         $letra = substr($dni, -1);
         $letraCorrecta = $this->getLetraDni($numero);
     
         return $letra == $letraCorrecta;
+
+    }
+    
+    public function validarFormatoNie($nie) {
+
+        $letraInicial = substr($nie, 0, 1);
+        $numero = substr($nie, 1, -1);
+        $letra = substr($nie, -1);
+        $letraCorrecta = $this->getLetraDni($numero);
+
+        if ($letraInicial == 'X' || $letraInicial == 'Y' || $letraInicial == 'Z') {
+            $letraInicial = str_replace(['X', 'Y', 'Z'], ['0', '1', '2'], $letraInicial);
+            $numero = $letraInicial . $numero;
+        }
+    
+        return $letra == $letraCorrecta;
+
     }
 
     /**
@@ -73,12 +99,12 @@ class Alumnos extends \yii\db\ActiveRecord {
      */
     public function attributeLabels() {
         return [
-            'id_alumno' => 'ID del alumno',
-            'dni' => 'DNI del alumno',
-            'nombre' => 'Nombre del alumno',
-            'apellidos' => 'Apellidos del alumno',
+            'id_alumno' => 'Alumno/a',
+            'dni' => 'DNI o NIE del alumno/a',
+            'nombre' => 'Nombre del alumno/a',
+            'apellidos' => 'Apellidos del alumno/a',
             'estado_matricula' => 'Estado de la matrícula',
-            'id_portatil' => 'ID del portátil',
+            'id_portatil' => 'Portátil',
         ];
     }
 
@@ -98,6 +124,14 @@ class Alumnos extends \yii\db\ActiveRecord {
      */
     public function getCursos() {
         return $this->hasMany(Cursos::class, ['id_curso' => 'id_curso'])->viaTable('cursan', ['id_alumno' => 'id_alumno']);
+    }
+
+    public function getCursoManana() {
+        return $this->hasOne(Cursos::class, ['id_curso' => 'id_curso'])->viaTable('cursan', ['id_alumno' => 'id_alumno'])->onCondition(['turno' => 'Mañana']);
+    }
+
+    public function getCursoTarde() {
+        return $this->hasOne(Cursos::class, ['id_curso' => 'id_curso'])->viaTable('cursan', ['id_alumno' => 'id_alumno'])->onCondition(['turno' => 'Tarde']);
     }
 
     /**
@@ -137,26 +171,25 @@ class Alumnos extends \yii\db\ActiveRecord {
     }
 
     public function setDni($dni) {
-        $numero = substr($dni, 0, -1);
-        $letraCorrecta = $this->getLetraDni($numero);
-        return $numero . $letraCorrecta;
-    }
 
-    public function afterSave($insert, $changedAttributes) {
+        $numero = '';
+        $letraCorrecta = '';
 
-        parent::afterSave($insert, $changedAttributes);
+        if (preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
+            $numero = substr($dni, 0, -1);
+            $letraCorrecta = $this->getLetraDni($numero);
+        } elseif (preg_match('/^[XYZ]\d{7,8}[A-Z]$/', $dni)) {
+            $letraInicial = substr($dni, 0, 1);
+            $numero = substr($dni, 1, -1);
+            $letraCorrecta = $this->getLetraDni($numero);
 
-        if ($insert) {
-
-            $id_curso = $this->id_curso;
-
-            $cursan = new Cursan();
-            $cursan->id_alumno = $this->id_alumno;
-            $cursan->id_curso = Cursos::findOne($id_curso)->id_curso;
-
-            $cursan->save();
-
+            if ($letraInicial == 'X' || $letraInicial == 'Y' || $letraInicial == 'Z') {
+                $letraInicial = strtoupper($letraInicial);
+                $numero = $letraInicial . $numero;
+            }
         }
+
+        return $numero . $letraCorrecta;
 
     }
 
@@ -166,10 +199,16 @@ class Alumnos extends \yii\db\ActiveRecord {
     
         foreach ($alumnos as $alumno) {
 
+            $existe = Alumnos::find()->where(['nombre' => $alumno->nombre, 'apellidos' => $alumno->apellidos])->orWhere(['dni' => $alumno->dni])->andWhere(['!=', 'id_alumno', $alumno->id_alumno])->exists();
+
+            if ($existe) {
+                $alumno->delete();
+                continue;
+            }
             if (!$alumno->validarFormatoDni($alumno->dni)) {
                 $alumno->dni = $alumno->setDni($alumno->dni);
             }
-            if ($alumno->cursan === null) {
+            if (empty($alumno->cursan) || empty($alumno->cursos)) {
                 $alumno->estado_matricula = 'No matriculado';
             }
             if ($alumno->estado_matricula !== 'Matriculado') {
@@ -178,6 +217,8 @@ class Alumnos extends \yii\db\ActiveRecord {
             if ($alumno->portatil !== null && $alumno->portatil->estado === 'Averiado') {
                 $alumno->id_portatil = null;
             }
+
+            $alumno->save();
     
         }
     

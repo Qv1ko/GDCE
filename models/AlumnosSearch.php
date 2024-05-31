@@ -37,7 +37,7 @@ class AlumnosSearch extends Alumnos {
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'dni', $this->searchString])->orFilterWhere(['like', 'nombre', $this->searchString])->orFilterWhere(['like', 'apellidos', $this->searchString])->orFilterWhere(['like', 'estado_matricula', $this->searchString]);
+        $query->orFilterWhere(['like', 'dni', $this->searchString])->orFilterWhere(['like', 'nombre', $this->searchString])->orFilterWhere(['like', 'apellidos', $this->searchString])->orFilterWhere(['like', 'CONCAT(nombre, " ", apellidos)', $this->searchString])->orFilterWhere(['like', 'estado_matricula', $this->searchString]);
 
         return $dataProvider;
 
