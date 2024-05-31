@@ -102,6 +102,10 @@ class SiteController extends Controller {
             return $this->goHome();
         }
 
+        Portatiles::sincronizarPortatiles();
+        Cargan::sincronizarCargan();
+        Cargadores::sincronizarCargadores();
+
         $portatilesDisponibles = Portatiles::find()->where('estado = "Disponible"')->count();
         $portatilesNoDisponibles = Portatiles::find()->where('estado = "No disponible"')->count();
         $portatilesAveriados = Portatiles::find()->where('estado = "Averiado"')->count();
