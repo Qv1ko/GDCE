@@ -39,7 +39,7 @@
     <header>
         <?php
         NavBar::begin([
-            'brandLabel' => Html::img("@web/images/logo.png"),
+            'brandLabel' => Html::img("@web/images/logo_sm.png"),
             'brandUrl' => ['/site/index'],
             'options' => [
                 'class' => 'navbar navbar-expand-md navbar-dark fixed-top',
