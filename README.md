@@ -4,9 +4,9 @@
     <br>
 </p>
 
-GDCE es una aplicación web creada para gestionar la reserva de los portátiles de centros de estudio.
+GDCE es una aplicación web creada para gestionar la reserva de portátiles en centros de estudio.
 
-La aplicación se basa en una sección inicial para todos los usuarios donde podrán escanear el código QR de los portátiles y reservarlos. Por otra parte, los usuarios administradores se les añade el acceso a panel con información y gráficas y las páginas para gestionar los dispositivos, alumnos, cursos y almacenes.
+La aplicación se basa en una sección inicial para todos los usuarios donde podrán escanear el código QR de los portátiles y reservarlos. Por otra parte, a los usuarios administradores se les añade el acceso a un panel con información y gráficas, así como a las páginas para gestionar los dispositivos, alumnos, cursos y almacenes.
 
 ![Bootstrap 4](https://img.shields.io/badge/Bootstrap_4-7952B3?style=for-the-badge&logo=bootstrap&logoColor=E3E3E3&labelColor=333333)
 ![Composer 2.6.6](https://img.shields.io/badge/Composer_2.6.6-885630?style=for-the-badge&logo=composer&logoColor=E3E3E3&labelColor=333333)
@@ -19,7 +19,7 @@ ESTRUCTURA DE DIRECTORIOS
 
       assets/             contiene la definición de los assets
       commands/           contiene los comandos de la consola (controladores)
-      config/             contiene configuración de la aplicación
+      config/             contiene la configuración de la aplicación
       controllers/        contiene las clases de controladores de la aplicación web
       data/               contiene la copia de seguridad de la base de datos
       documents/          contiene la documentación del proyecto
@@ -44,7 +44,7 @@ PROGRAMAS REQUERIDOS
 INSTALACIÓN
 ------------
 
-Clona el repositorio en el directorio web base (si usas xampp `xampp/htdocs/`)
+Clona el repositorio en el directorio web base (si usas Xampp, en `xampp/htdocs/`)
 
 ```
 git clone https://github.com/Qv1ko/GDCE.git
