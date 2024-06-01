@@ -9,21 +9,19 @@
     // Título de la página
     $this->title = 'Inicio';
 
-    // Enlace al archivo lectorQr.js
     $this->registerJsFile('@web/js/lectorQr.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
 <div class="site-index">
-
     <div class="container">
 
         <!-- Crear una fila con contenido centrado -->
         <div class="row d-flex justify-content-center">
         
             <div class="col-12">
-                <h2>Escanea el código QR</h2>
+                <h1>Escanear código QR</h1>
             </div>
             
             <div class="col-md-12 col-10 d-flex justify-content-center">
@@ -39,7 +37,7 @@
 
             <!-- Crear una columna centrada para el encabezado h3 -->
             <div class="col-12">
-                <h2>Ingresa el código del portátil</h2>
+                <h2>Ingresar código del portátil</h2>
             </div>
 
             <!-- Crear una columna para el grupo de entrada -->
@@ -72,11 +70,19 @@
 
     Modal::begin([
         'title' => '<h2 class="col-12" id="tituloPortatil"></h2>',
-        'id' => 'modal',
+        'id' => 'modalPortatil',
         'size' => 'modal-lg',
         'closeButton' => false
     ]);
-    echo "<div id='contenido'></div>";
+    echo "<div id='contenidoPortatil'></div>";
+    Modal::end();
+
+    Modal::begin([
+        'title' => '<h2 class="col-12" id="tituloCargador"></h2>',
+        'id' => 'modalCargador',
+        'closeButton' => false
+    ]);
+    echo "<div id='contenidoCargador'></div>";
     Modal::end();
 
 ?>
@@ -115,33 +121,58 @@
     }
 
     $('#buscarPortatil').click(function() {
-        var codigo = $('#searchInput').val();
-        buscar(codigo);
+        var busqueda = $('#searchInput').val();
+        buscar(busqueda);
     });
 
     // Función para redirigir al usuario a la página del portátil
-    function buscar(codigo) {
+    function buscar(resultado) {
 
-        // Expresión regular del código de los portátiles
-        var patron = /^\d{3}[a-zA-Z]$/;
+        var recortarResultado = false;
+
+        if (resultado.length !== 4) {
+            var patronPortatil = /^P\d{3}[A-Z]$/;
+            var patronCargador = /^C\d{3}[A-Z]$/;
+            recortarResultado = true;
+        } else {        
+            var patronPortatil = /^\d{3}[a-zA-Z]$/;
+            var patronCargador = /^\d{3}[a-zA-Z]$/;
+        }
 
         // Verificar si el código de entrada coincide con la expresión regular
-        if (patron.test(codigo)) {
-            
+        if (patronPortatil.test(resultado)) {
+
+            codigo = (recortarResultado) ? resultado.substring(1) : resultado;
+
             document.getElementById('tituloPortatil').innerText = 'Portátil ' + codigo.toUpperCase();
 
-            $.get('<?= Url::to(["site/reserva"]) ?>', {portatil: codigo}, function(data) {
-                $('#contenido').html(data);
-                $('#modal').modal('show');
+            $.get('<?= Url::to(["site/portatil"]) ?>', {codigo: codigo}, function(data) {
+                $('#contenidoPortatil').html(data);
+                $('#modalPortatil').modal('show');
             });
 
-            $('#modal').on('hidden.bs.modal', function () {
+            $('#modalPortatil').on('hidden.bs.modal', function () {
+                location.reload();
+            });
+
+        } else if (patronCargador.test(resultado)) {
+
+            codigo = (recortarResultado) ? resultado.substring(1) : resultado;
+
+            document.getElementById('tituloCargador').innerText = 'Cargador ' + codigo.toUpperCase();
+
+            $.get('<?= Url::to(["site/cargador"]) ?>', {codigo: codigo}, function(data) {
+                $('#contenidoCargador').html(data);
+                $('#modalCargador').modal('show');
+            });
+
+            $('#modalCargador').on('hidden.bs.modal', function () {
                 location.reload();
             });
 
         } else {
             // Si el código no coincide, mostrar una alerta y recargar la página
-            alert('El código del portátil debe tener el formato correcto (ej. 123A)');
+            alert('El código del dispositivo debe tener el formato correcto (ej. 123A)');
             location.reload();
         }
         

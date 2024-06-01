@@ -66,33 +66,72 @@ class SiteController extends Controller {
      * @return string
      */
     public function actionIndex() {
+
         return $this->render('index');
+
     }
 
-    public function actionReserva($portatil) {
+    public function actionPortatil($codigo) {
         
         $this->layout = '/main_nofooter';
 
-        $portatil = Portatiles::find()->where(['codigo' => $portatil])->one();
-        $portatil->sincronizarPortatil($portatil);
+        Cargan::sincronizarCargan();
+        $portatil = Portatiles::find()->where(['codigo' => $codigo])->one();
 
-        $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $portatil])->scalar();
-        $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $portatil])->scalar();
-        $alumnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $portatil])->scalar();
-        $alumnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $portatil])->scalar();
-        $listaAlumnosManana = Alumnos::getListaAlumnosManana();
-        $listaAlumnosTarde = Alumnos::getListaAlumnosTarde();
+        if ($portatil) {
 
-        return $this->renderAjax('_reserva', [
-            'portatil' => $portatil,
-            'estado' => $portatil->estado,
-            'cargador' => $cargador,
-            'almacen' => $almacen,
-            'alumnoManana' => $alumnoManana,
-            'alumnoTarde' => $alumnoTarde,
-            'listaAlumnosManana' => $listaAlumnosManana,
-            'listaAlumnosTarde' => $listaAlumnosTarde,
-        ]);
+            $portatil->sincronizarPortatil($portatil);
+
+            $cargador = Cargadores::find()->select('cargadores.codigo')->distinct()->innerJoin(Cargan::tableName(), 'cargadores.id_cargador = cargan.id_cargador')->innerJoin(Portatiles::tableName(), 'cargan.id_portatil = portatiles.id_portatil')->where(['portatiles.codigo' => $codigo])->scalar();
+            $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Portatiles::tableName(), 'almacenes.id_almacen = portatiles.id_almacen')->where(['portatiles.codigo' => $codigo])->scalar();
+            $alumnoManana = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Mañana', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $codigo])->scalar();
+            $alumnoTarde = Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", apellidos)'])->distinct()->innerJoin(Cursan::tableName(), 'alumnos.id_alumno = cursan.id_alumno')->innerJoin(Cursos::tableName(), 'cursan.id_curso = cursos.id_curso')->innerJoin(Portatiles::tableName(), 'alumnos.id_portatil = portatiles.id_portatil')->where(['cursos.turno' => 'Tarde', 'estado_matricula' => "Matriculado", 'curso_academico' => Cursan::getCursoActual(), 'portatiles.codigo' => $codigo])->scalar();
+            $listaAlumnosManana = Alumnos::getListaAlumnosManana();
+            $listaAlumnosTarde = Alumnos::getListaAlumnosTarde();
+
+            return $this->renderAjax('_portatil', [
+                'portatil' => $portatil,
+                'estado' => $portatil->estado,
+                'cargador' => $cargador,
+                'almacen' => $almacen,
+                'alumnoManana' => $alumnoManana,
+                'alumnoTarde' => $alumnoTarde,
+                'listaAlumnosManana' => $listaAlumnosManana,
+                'listaAlumnosTarde' => $listaAlumnosTarde,
+            ]);
+
+        } else {
+            Yii::$app->session->setFlash('error', 'No se encontro ningun portátil con código ' . $codigo);
+            return $this->redirect(['index']);
+        }
+
+    }
+
+    public function actionCargador($codigo) {
+        
+        $this->layout = '/main_nofooter';
+
+        Cargan::sincronizarCargan();
+        Cargadores::sincronizarCargadores();
+
+        $cargador = Cargadores::find()->where(['codigo' => $codigo])->one();
+
+        if ($cargador) {
+            
+            $portatil = Portatiles::find()->innerJoin(Cargan::tableName(), 'portatiles.id_portatil = cargan.id_portatil')->innerJoin(Cargadores::tableName(), 'cargan.id_cargador = cargadores.id_cargador')->where(['cargadores.id_cargador' => $cargador->id_cargador])->one();
+            $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Cargadores::tableName(), 'almacenes.id_almacen = cargadores.id_almacen')->where(['cargadores.codigo' => $codigo])->scalar();
+    
+            return $this->renderAjax('_cargador', [
+                'cargador' => $cargador,
+                'portatil' => $portatil,
+                'estado' => $cargador->estado,
+                'almacen' => $almacen,
+            ]);
+
+        } else {
+            Yii::$app->session->setFlash('error', 'No se encontro ningun cargador con código ' . $codigo);
+            return $this->redirect(['index']);
+        }
 
     }
 

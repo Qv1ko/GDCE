@@ -46,8 +46,8 @@ class Cursan extends \yii\db\ActiveRecord {
         return [
             'id_cursa' => 'ID Cursa',
             'curso_academico' => 'Curso académico',
-            'id_alumno' => 'ID del alumno',
-            'id_curso' => 'ID del curso',
+            'id_alumno' => 'Alumno',
+            'id_curso' => 'Curso',
         ];
     }
 

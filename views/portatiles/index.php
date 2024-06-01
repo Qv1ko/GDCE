@@ -103,7 +103,7 @@
                                 </div>', ['class' => 'btn btn-primary botonAplicaciones', 'data-id' => $model->id_portatil, 'data-toggle' => 'modal', 'data-target' => '#modalAplicaciones']);
                             },
                             'qr' => function ($url, $model, $key) {
-                                $qrCode = new QrCode($model->codigo);
+                                $qrCode = new QrCode('P' . $model->codigo);
                                 $qrCode->setSize(240);
                                 $qrCode->setMargin(16);
                                 $qrCodeString = $qrCode->writeString();
@@ -126,7 +126,7 @@
                                         <path d="M17 17l3 0" />
                                         <path d="M20 17l0 3" />
                                     </svg>
-                                </div>', $url, ['class' => 'btn btn-info', 'download' => 'cargador_' . $model->codigo . '.png']);
+                                </div>', $url, ['class' => 'btn btn-info', 'download' => 'portatil_' . $model->codigo . '.png']);
                             },
                             'update' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">

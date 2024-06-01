@@ -61,7 +61,7 @@
                         'template' => '{qr} {update} {delete}',
                         'buttons' => [
                             'qr' => function ($url, $model, $key) {
-                                $qrCode = new QrCode($model->codigo);
+                                $qrCode = new QrCode('C' . $model->codigo);
                                 $qrCode->setSize(240);
                                 $qrCode->setMargin(16);
                                 $qrCodeString = $qrCode->writeString();

@@ -85,6 +85,17 @@ class Cargan extends \yii\db\ActiveRecord {
 
         }
 
+        //Portatiles con más de una relación
+        $pvr = Cargan::find()->select('cargan.id_portatil')->innerJoin('portatiles', 'cargan.id_portatil = portatiles.id_portatil')->groupBy(['id_portatil'])->having('COUNT(*) > 1');
+        // Ultima carga
+        $uc = Cargan::find()->select('MAX(id_carga)')->innerJoin('portatiles', 'cargan.id_portatil = portatiles.id_portatil')->where('id_cargador = cargan.id_cargador')->groupBy(['cargan.id_portatil'])->all();
+        // Antiguas cargas
+        $ac = Cargan::find()->where(['id_portatil' => $pvr])->andWhere(['not in', 'id_carga', $uc])->all();
+
+        foreach ($ac as $model) {
+            $model->delete();
+        }
+
     }
 
 }

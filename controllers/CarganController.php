@@ -12,13 +12,12 @@ use yii\filters\VerbFilter;
 /**
  * CarganController implements the CRUD actions for Cargan model.
  */
-class CarganController extends Controller
-{
+class CarganController extends Controller {
+
     /**
      * @inheritDoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return array_merge(
             parent::behaviors(),
             [
@@ -37,8 +36,7 @@ class CarganController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -61,6 +59,7 @@ class CarganController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+
     }
 
     /**
@@ -69,8 +68,7 @@ class CarganController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_carga)
-    {
+    public function actionView($id_carga) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -79,6 +77,7 @@ class CarganController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id_carga),
         ]);
+
     }
 
     /**
@@ -86,8 +85,7 @@ class CarganController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -106,6 +104,7 @@ class CarganController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+
     }
 
     /**
@@ -115,8 +114,7 @@ class CarganController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_carga)
-    {
+    public function actionUpdate($id_carga) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -131,6 +129,38 @@ class CarganController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
+    }
+    
+    public function actionVincular() {
+
+        $cargador = Yii::$app->request->post('cargador');
+        $portatil = Yii::$app->request->post('portatil');
+
+
+        if ($cargador !== null && $portatil !== null) {
+
+            $antiguasCargas = Cargan::find()->where(['id_cargador' => $cargador])->orWhere(['id_portatil' => $portatil])->all();
+    
+            foreach ($antiguasCargas as $carga) {
+                $carga->delete();
+            }
+    
+            $model = new Cargan();
+            $model->id_cargador = $cargador;
+            $model->id_portatil = $portatil;
+            $model->save();
+
+        } elseif ($cargador !== null && $portatil === null) {
+
+            $antiguasCargas = Cargan::find()->where(['id_cargador' => $cargador])->all();
+    
+            foreach ($antiguasCargas as $carga) {
+                $carga->delete();
+            }
+
+        }
+
     }
 
     /**
@@ -140,8 +170,7 @@ class CarganController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_carga)
-    {
+    public function actionDelete($id_carga) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -150,6 +179,7 @@ class CarganController extends Controller
         $this->findModel($id_carga)->delete();
 
         return $this->redirect(['index']);
+
     }
 
     /**
@@ -159,8 +189,7 @@ class CarganController extends Controller
      * @return Cargan the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_carga)
-    {
+    protected function findModel($id_carga) {
 
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -170,6 +199,8 @@ class CarganController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('No existe esta carga');
+
     }
+
 }
