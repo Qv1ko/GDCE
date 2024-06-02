@@ -2,8 +2,10 @@
 
 namespace app\models;
 
+
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\validators\NumberValidator;
 
 /**
  * This is the model class for table "cargadores".
@@ -34,6 +36,7 @@ class Cargadores extends \yii\db\ActiveRecord {
         return [
             [['codigo', 'estado'], 'required', 'message' => '⚠️ Campo obligatorio'],
             [['potencia', 'id_almacen'], 'integer'],
+            [['potencia'], NumberValidator::class, 'min' => 1, 'message' => '⚠️ El valor no puede ser menor de 1'],
             [['codigo'], 'string', 'max' => 4],
             [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ El código debe seguir el siguiente formato de ejemplo: "123A"'],
             [['estado'], 'string', 'max' => 24],
