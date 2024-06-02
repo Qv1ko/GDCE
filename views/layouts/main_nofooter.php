@@ -56,7 +56,7 @@
             $menuItems[] = ['label' => 'INICIAR SESIÓN', 'url' => ['/site/login']];
         } else {
             $menuItems[] = ['label' => 'PANEL', 'url' => ['/site/panel']];
-            $menuItems[] = ['label' => 'PORTATILES', 'url' => ['/portatiles/index']];
+            $menuItems[] = ['label' => 'PORTÁTILES', 'url' => ['/portatiles/index']];
             $menuItems[] = ['label' => 'APLICACIONES', 'url' => ['/aplicaciones/index']];
             $menuItems[] = ['label' => 'CARGADORES', 'url' => ['/cargadores/index']];
             $menuItems[] = ['label' => 'ALMACENES', 'url' => ['/almacenes/index']];
