@@ -14171,7 +14171,7 @@ var __Html5QrcodeLibrary__;
                 i.setAttributeNS(null, "y", e.toString()),
                 i.setAttributeNS(null, "height", r.toString()),
                 i.setAttributeNS(null, "width", n.toString()),
-                i.setAttributeNS(null, "fill", "#000000"),
+                i.setAttributeNS(null, "fill", "#333333"),
                 i
               );
             }
@@ -15409,22 +15409,22 @@ var __Html5QrcodeLibrary__;
         function t() {}
         return (
           (t.codeParseError = function (t) {
-            return "QR code parse error, error = " + t;
+            return "Error al analizar el código QR (" + t + ")";
           }),
           (t.errorGettingUserMedia = function (t) {
-            return "Error getting userMedia, error = " + t;
+            return "Error al obtener los datos (" + t + ")";
           }),
           (t.onlyDeviceSupportedError = function () {
-            return "The device doesn't support navigator.mediaDevices , only supported cameraIdOrConfig in this case is deviceId parameter (string).";
+            return "El dispositivo no es compatible con navigator.mediaDevices , sólo soporta cameraIdOrConfig.";
           }),
           (t.cameraStreamingNotSupported = function () {
-            return "Camera streaming not supported by the browser.";
+            return "El navegador no admite la transmisión de la cámara.";
           }),
           (t.unableToQuerySupportedDevices = function () {
-            return "Unable to query supported devices, unknown error.";
+            return "No se pueden consultar los dispositivos compatibles, error desconocido.";
           }),
           (t.insecureContextCameraQueryError = function () {
-            return "Camera access is only supported in secure context like https or localhost.";
+            return "El acceso a la cámara sólo se admite en un contexto seguro como https o localhost.";
           }),
           t
         );
@@ -15445,76 +15445,73 @@ var __Html5QrcodeLibrary__;
             return "Permission";
           }),
           (t.noCameraFoundErrorStatus = function () {
-            return "No Cameras";
+            return "No hay cámaras";
           }),
           (t.lastMatch = function (t) {
-            return "Last Match: " + t;
+            return "Último resultado: " + t;
           }),
           (t.codeScannerTitle = function () {
-            return "Code Scanner";
+            return "Escáner de códigos QR";
           }),
           (t.cameraPermissionTitle = function () {
-            return "Request Camera Permissions";
+            return "Solicitar permisos de cámara";
           }),
           (t.cameraPermissionRequesting = function () {
-            return "Requesting camera permissions...";
+            return "Solicitando permisos de cámara...";
           }),
           (t.noCameraFound = function () {
-            return "No camera found";
+            return "No se encontró ninguna cámara";
           }),
           (t.scanButtonStopScanningText = function () {
-            return "Stop Scanning";
+            return "Dejar de escanear";
           }),
           (t.scanButtonStartScanningText = function () {
-            return "Start Scanning";
+            return "Iniciar escaneo";
           }),
           (t.torchOnButton = function () {
-            return "Switch On Torch";
+            return "Encienda la linterna";
           }),
           (t.torchOffButton = function () {
-            return "Switch Off Torch";
+            return "Apague la linterna";
           }),
           (t.torchOnFailedMessage = function () {
-            return "Failed to turn on torch";
+            return "Fallo al encender la linterna";
           }),
           (t.torchOffFailedMessage = function () {
-            return "Failed to turn off torch";
+            return "Fallo al apagar la linterna";
           }),
           (t.scanButtonScanningStarting = function () {
-            return "Launching Camera...";
+            return "Iniciando cámara...";
           }),
           (t.textIfCameraScanSelected = function () {
-            return "Scan an Image File";
+            return "Escanear una imagen";
           }),
           (t.textIfFileScanSelected = function () {
-            return "Scan using camera directly";
+            return "Escanear usando la cámara";
           }),
           (t.selectCamera = function () {
-            return "Select Camera";
+            return "Seleccionar cámara ";
           }),
           (t.fileSelectionChooseImage = function () {
-            return "Choose Image";
+            return "Elegir imagen";
           }),
           (t.fileSelectionChooseAnother = function () {
-            return "Choose Another";
-          }),
-          (t.fileSelectionNoImageSelected = function () {
-            return "No image choosen";
+            return "Elija otra";
           }),
           (t.anonymousCameraPrefix = function () {
-            return "Anonymous Camera";
+            return "Cámara anónima";
           }),
           (t.dragAndDropMessage = function () {
-            return "Or drop an image to scan";
+            return "O suelta una imagen para escanearla";
           }),
           (t.dragAndDropMessageOnlyImages = function () {
-            return "Or drop an image to scan (other files not supported)";
+            return "O suelta una imagen para escanearla (otros archivos no compatibles)";
           }),
           (t.zoom = function () {
             return "zoom";
           }),
           (t.loadingImage = function () {
-            return "Loading image...";
+            return "Cargando imagen...";
           }),
           t
         );
@@ -15523,10 +15520,10 @@ var __Html5QrcodeLibrary__;
         function t() {}
         return (
           (t.poweredBy = function () {
-            return "Powered by ";
+            return "Impulsado por ";
           }),
           (t.reportIssues = function () {
-            return "Report issues";
+            return "Informar de problemas";
           }),
           t
         );
@@ -17007,7 +17004,7 @@ var __Html5QrcodeLibrary__;
           (e.SHADED_BOTTOM = 4),
           (e.SHADED_REGION_ELEMENT_ID = "qr-shaded-region"),
           (e.VERBOSE = !1),
-          (e.BORDER_SHADER_DEFAULT_COLOR = "#ffffff"),
+          (e.BORDER_SHADER_DEFAULT_COLOR = "#E3E3E3E3"),
           (e.BORDER_SHADER_MATCH_COLOR = "rgb(90, 193, 56)"),
           e
         );
@@ -17709,7 +17706,7 @@ var __Html5QrcodeLibrary__;
               (this.infoDiv.style.zIndex = "2"),
               (this.infoDiv.style.display = "none"),
               (this.infoDiv.style.padding = "5pt"),
-              (this.infoDiv.style.border = "1px solid #171717"),
+              (this.infoDiv.style.border = "1px solid #333333"),
               (this.infoDiv.style.fontSize = "10pt"),
               (this.infoDiv.style.background = "rgb(0 0 0 / 69%)"),
               (this.infoDiv.style.borderRadius = "5px"),
@@ -17728,14 +17725,14 @@ var __Html5QrcodeLibrary__;
             this.infoDiv.appendChild(r), this.infoDiv.appendChild(n);
             var i = document.createElement("a");
             (i.innerText = A.reportIssues()),
-              (i.href = "https://github.com/mebjas/html5-qrcode/issues"),
+              (i.href = "https://github.com/Qv1ko/GDCE/issues"),
               (i.target = "new"),
               (i.style.color = "white"),
               this.infoDiv.appendChild(i),
               t.appendChild(this.infoDiv);
           }),
           (t.prototype.show = function () {
-            this.infoDiv.style.display = "block";
+            this.infoDiv.style.display = "hide";
           }),
           (t.prototype.hide = function () {
             this.infoDiv.style.display = "none";
@@ -17810,7 +17807,7 @@ var __Html5QrcodeLibrary__;
         }
         return (
           (t.prototype.renderInto = function (t) {
-            this.infoDiv.renderInto(t), this.infoIcon.renderInto(t);
+            // this.infoDiv.renderInto(t), this.infoIcon.renderInto(t);
           }),
           t
         );
@@ -18424,10 +18421,10 @@ var __Html5QrcodeLibrary__;
             );
           }),
           (t.prototype.fileBasedScanRegionDefaultBorder = function () {
-            return "6px dashed #ebebeb";
+            return "2px dashed #333333";
           }),
           (t.prototype.fileBasedScanRegionActiveBorder = function () {
-            return "6px dashed rgb(153 151 151)";
+            return "2px dashed rgb(153 151 151)";
           }),
           (t.prototype.createDragAndDropMessage = function () {
             var t = document.createElement("div");
@@ -18449,9 +18446,7 @@ var __Html5QrcodeLibrary__;
           }),
           (t.prototype.setInitialValueToButton = function () {
             var t =
-              p.fileSelectionChooseImage() +
-              " - " +
-              p.fileSelectionNoImageSelected();
+              p.fileSelectionChooseImage();
             this.fileSelectionButton.innerText = t;
           }),
           (t.prototype.getFileScanInputId = function () {
@@ -18481,7 +18476,7 @@ var __Html5QrcodeLibrary__;
             if (1 === r) e.style.display = "none";
             else {
               var n = p.selectCamera();
-              e.innerText = n + " (" + this.cameras.length + ")  ";
+              e.innerText = n;
             }
             for (var i = 1, o = 0, s = this.cameras; o < s.length; o++) {
               var a = s[o],
@@ -18773,7 +18768,7 @@ var __Html5QrcodeLibrary__;
             (r.style.fontSize = "14px"),
             (r.style.padding = "2px 10px"),
             (r.style.margin = "4px"),
-            (r.style.borderTop = "1px solid #f6f6f6"),
+            (r.style.borderTop = "1px solid #E3E3E3"),
             e.appendChild(r);
         }),
         (t.prototype.createSection = function (t) {
@@ -19010,6 +19005,7 @@ var __Html5QrcodeLibrary__;
           o.style.textAlign = "center";
           var s = rt.createElement("a", this.getDashboardSectionSwapLinkId());
           (s.style.textDecoration = "underline"),
+          (s.style.cursor = "pointer"),
             (s.innerText = tt.isCameraScanType(this.currentScanType) ? e : r),
             s.addEventListener("click", function () {
               t.sectionSwapAllowed
