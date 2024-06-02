@@ -58,7 +58,7 @@ class Aplicaciones extends \yii\db\ActiveRecord {
 
     public static function getListaAplicaciones() {
         $aplicaciones = array_unique(array_column(Aplicaciones::find()->where(['id_portatil' => null])->orderBy(['aplicacion' => SORT_ASC])->asArray()->all(), 'aplicacion'));
-        return array_chunk($aplicaciones, ceil(count($aplicaciones) / 3));
+        return (empty($aplicaciones)) ? [] : array_chunk($aplicaciones, ceil(count($aplicaciones) / 3));
     }
 
     public static function sincronizarAplicaciones() {
