@@ -29,6 +29,12 @@ class CursosSearch extends Cursos {
             'pagination' => [
                 'pageSize' => 24
             ],
+            'sort' => [
+                'defaultOrder' => [
+                    'nombre' => SORT_ASC,
+                    'curso' => SORT_ASC,
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -37,7 +43,11 @@ class CursosSearch extends Cursos {
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'nombre', $this->searchString])->orFilterWhere(['like', 'sigla', $this->searchString])->orFilterWhere(['like', 'curso', $this->searchString])->orFilterWhere(['like', 'turno', $this->searchString])->orFilterWhere(['like', 'aula', $this->searchString])->orFilterWhere(['like', 'tutor', $this->searchString]);
+        $searchTerms = explode(' ', $this->searchString);
+
+        foreach ($searchTerms as $term) {
+            $query->orFilterWhere(['like', 'nombre', $this->searchString])->orFilterWhere(['like', 'sigla', $term])->orFilterWhere(['like', 'curso', $this->searchString])->orFilterWhere(['like', 'turno', $term])->orFilterWhere(['like', 'aula', $term])->orFilterWhere(['like', 'tutor', $this->searchString]);
+        }
 
         return $dataProvider;
 

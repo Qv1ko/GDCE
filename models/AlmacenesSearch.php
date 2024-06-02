@@ -40,6 +40,11 @@ class AlmacenesSearch extends Almacenes {
             'pagination' => [
                 'pageSize' => 24
             ],
+            'sort' => [
+                'defaultOrder' => [
+                    'aula' => SORT_ASC,
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -48,7 +53,11 @@ class AlmacenesSearch extends Almacenes {
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'aula', $this->searchString])->orFilterWhere(['like', 'capacidad', $this->searchString]);
+        $searchTerms = explode(' ', $this->searchString);
+
+        foreach ($searchTerms as $term) {
+            $query->orFilterWhere(['like', 'aula', $term])->orFilterWhere(['like', 'capacidad', $term]);
+        }
 
         return $dataProvider;
 

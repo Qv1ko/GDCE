@@ -29,6 +29,11 @@ class PortatilesSearch extends Portatiles {
             'pagination' => [
                 'pageSize' => 24
             ],
+            'sort' => [
+                'defaultOrder' => [
+                    'codigo' => SORT_ASC,
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -37,7 +42,11 @@ class PortatilesSearch extends Portatiles {
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'codigo', $this->searchString])->orFilterWhere(['like', 'marca', $this->searchString])->orFilterWhere(['like', 'modelo', $this->searchString])->orFilterWhere(['like', 'estado', $this->searchString])->orFilterWhere(['like', 'procesador', $this->searchString])->orFilterWhere(['like', 'memoria_ram', $this->searchString])->orFilterWhere(['like', 'capacidad', $this->searchString])->orFilterWhere(['like', 'dispositivo_almacenamiento', $this->searchString]);
+        $searchTerms = explode(' ', $this->searchString);
+
+        foreach ($searchTerms as $term) {
+            $query->orFilterWhere(['like', 'codigo', $term])->orFilterWhere(['like', 'marca', $term])->orFilterWhere(['like', 'modelo', $term])->orFilterWhere(['like', 'estado', $this->searchString])->orFilterWhere(['like', 'procesador', $term])->orFilterWhere(['like', 'memoria_ram', $term])->orFilterWhere(['like', 'capacidad', $term])->orFilterWhere(['like', 'dispositivo_almacenamiento', $term]);
+        }
 
         return $dataProvider;
 

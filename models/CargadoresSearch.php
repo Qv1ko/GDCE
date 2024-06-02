@@ -29,6 +29,11 @@ class CargadoresSearch extends Cargadores {
             'pagination' => [
                 'pageSize' => 24
             ],
+            'sort' => [
+                'defaultOrder' => [
+                    'codigo' => SORT_ASC,
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -37,7 +42,11 @@ class CargadoresSearch extends Cargadores {
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'codigo', $this->searchString])->orFilterWhere(['like', 'potencia', $this->searchString])->orFilterWhere(['like', 'estado', $this->searchString]);
+        $searchTerms = explode(' ', $this->searchString);
+
+        foreach ($searchTerms as $term) {
+            $query->orFilterWhere(['like', 'codigo', $term])->orFilterWhere(['like', 'potencia', $term])->orFilterWhere(['like', 'estado', $this->searchString]);
+        }
 
         return $dataProvider;
 

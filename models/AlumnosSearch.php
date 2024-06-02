@@ -29,6 +29,11 @@ class AlumnosSearch extends Alumnos {
             'pagination' => [
                 'pageSize' => 24
             ],
+            'sort' => [
+                'defaultOrder' => [
+                    'apellidos' => SORT_ASC,
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -37,7 +42,11 @@ class AlumnosSearch extends Alumnos {
             return $dataProvider;
         }
 
-        $query->orFilterWhere(['like', 'dni', $this->searchString])->orFilterWhere(['like', 'nombre', $this->searchString])->orFilterWhere(['like', 'apellidos', $this->searchString])->orFilterWhere(['like', 'CONCAT(nombre, " ", apellidos)', $this->searchString])->orFilterWhere(['like', 'estado_matricula', $this->searchString]);
+        $searchTerms = explode(' ', $this->searchString);
+
+        foreach ($searchTerms as $term) {
+            $query->orFilterWhere(['like', 'dni', $term])->orFilterWhere(['like', 'nombre', $term])->orFilterWhere(['like', 'apellidos', $term])->orFilterWhere(['like', 'CONCAT(nombre, " ", apellidos)', $term])->orFilterWhere(['like', 'estado_matricula', $this->searchString]);
+        }
 
         return $dataProvider;
 
