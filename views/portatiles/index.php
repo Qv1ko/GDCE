@@ -32,11 +32,11 @@
                 'columns' => [
                     [
                         'attribute' => 'codigo',
-                        'label' => 'Código',
+                        'label' => 'Portátil',
                     ],
                     [
                         'attribute' => 'marca',
-                        'label' => 'Portátil',
+                        'label' => 'Modelo',
                         'value' => function ($model) {
                             return empty($model->marca)? 'Sin definir' : $model->marca . ' ' . $model->modelo;
                         },

@@ -173,7 +173,7 @@ class SiteController extends Controller {
             ],
         ]);
         $listadoCargadoresAveriados = new ActiveDataProvider([
-            'query' => Cargadores::find()->select('codigo, potencia')->distinct()->where('estado = "Averiado"'),
+            'query' => Cargadores::find()->distinct()->where('estado = "Averiado"'),
             'pagination' => [
                 'pageSize' => 12,
             ],
