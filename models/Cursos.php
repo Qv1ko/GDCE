@@ -33,20 +33,20 @@ class Cursos extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['nombre', 'curso', 'turno', 'aula', 'tutor'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
+            [['nombre', 'curso', 'turno', 'aula', 'tutor'], 'required', 'message' => '⚠️ Campo obligatorio'],
             [['nombre'], 'string', 'max' => 96],
-            [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre solo puede contener caracteres alfabéticos'],
-            [['nombre'], 'match', 'pattern' => '/[A-ZÁÉÍÓÚÑ]/', 'message' => '⚠️ El nombre debe contener letras en mayúscula para crear la sigla del curso'],
+            [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ Solo puede contener caracteres alfabéticos'],
+            [['nombre'], 'match', 'pattern' => '/[A-ZÁÉÍÓÚÑ]/', 'message' => '⚠️ Tiene que contener letras en mayúscula'],
             [['sigla', 'turno'], 'string', 'max' => 8],
-            [['sigla'], 'match', 'pattern' => '/^[A-Z]+$/', 'message' => '⚠️ La sigla solo puede contener caracteres alfabéticos en mayúscula'],
+            [['sigla'], 'match', 'pattern' => '/^[A-Z]+$/', 'message' => '⚠️ Solo puede contener caracteres alfabéticos en mayúscula'],
             [['curso'], 'string', 'max' => 16],
-            [['curso'], 'in', 'range' => ['Primer curso', 'Segundo curso'], 'message' => '⚠️ El curso solo puede ser "Primer curso" o "Segundo curso"'],
+            [['curso'], 'in', 'range' => ['Primer curso', 'Segundo curso'], 'message' => '⚠️ Solo puede ser "Primer curso" o "Segundo curso"'],
             [['turno'], 'string', 'max' => 8],
-            [['turno'], 'in', 'range' => ['Mañana', 'Tarde'], 'message' => '⚠️ El turno solo puede ser "Mañana" o "Tarde"'],
+            [['turno'], 'in', 'range' => ['Mañana', 'Tarde'], 'message' => '⚠️ Solo puede ser "Mañana" o "Tarde"'],
             [['aula'], 'string', 'max' => 4],
-            [['aula'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ El aula debe seguir el siguiente formato de ejemplo: "123N"'],
+            [['aula'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ Formato incorrecto'],
             [['tutor'], 'string', 'max' => 24],
-            [['tutor'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre del tutor solo puede contener caracteres alfabéticos'],
+            [['tutor'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ Solo puede contener caracteres alfabéticos'],
             [['nombre', 'curso'], 'unique', 'targetAttribute' => ['nombre', 'curso'], 'message' => '⚠️ El curso ya existe'],
         ];
     }
@@ -59,7 +59,7 @@ class Cursos extends \yii\db\ActiveRecord {
             'id_curso' => 'ID del curso',
             'nombre' => 'Nombre del curso',
             'sigla' => 'Sigla',
-            'curso' => 'Curso: Primer curso / Segundo curso',
+            'curso' => 'Curso',
             'turno' => 'Turno',
             'aula' => 'Aula',
             'tutor' => 'Nombre del tutor',

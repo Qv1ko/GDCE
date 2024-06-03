@@ -9,6 +9,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * CursosController implements the CRUD actions for Cursos model.
@@ -47,9 +49,17 @@ class CursosController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Cursos();
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'El curso se ha añadido correctamente.');
                 return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('error', 'Ha ocurrido un error.');
             }
         } else {
             $model->loadDefaultValues();
@@ -59,51 +69,6 @@ class CursosController extends Controller {
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'model' => $model
-        ]);
-
-    }
-
-    /**
-     * Displays a single Cursos model.
-     * @param int $id_curso Id Curso
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id_curso) {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        return $this->render('view', [
-            'model' => $this->findModel($id_curso),
-        ]);
-
-    }
-
-    /**
-     * Creates a new Cursos model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate() {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new Cursos();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_curso' => $model->id_curso]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
         ]);
 
     }
@@ -120,18 +85,21 @@ class CursosController extends Controller {
 
         $model = $this->findModel($id_curso);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
         }
-
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('update', [
-                'model' => $model,
-            ]);
+    
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'El curso se ha actualizado correctamente.');
+            if (Yii::$app->request->isAjax) {
+                return $this->renderAjax('update', ['model' => $model]);
+            } else {
+                return $this->redirect(['index']);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            Yii::$app->session->setFlash('error', 'Ha ocurrido un error al actualizar el curso.');
+            return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->render('update', ['model' => $model]);
         }
 
     }
