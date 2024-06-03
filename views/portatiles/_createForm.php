@@ -14,19 +14,19 @@ use app\models\Cargadores;
 
 <div class="portatiles-form">
     <div class="container">
-        <?php $form = ActiveForm::begin(); ?>
-
-            <div>
-                <?= $form->field($model, 'codigo', [
-                    'inputOptions' => [
-                        'placeholder' => 'ej: 001A',
-                        'class' => 'form-control',
-                    ],
-                ])->label($model->getAttributeLabel('codigo'))->textInput(['maxlength' => true]) ?>
-            </div>
+        <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-2">
+                    <?= $form->field($model, 'codigo', [
+                        'inputOptions' => [
+                            'placeholder' => 'ej: 001A',
+                            'class' => 'form-control',
+                        ],
+                    ])->label($model->getAttributeLabel('codigo'))->textInput(['maxlength' => true]) ?>
+                </div>
+
+                <div class="col-md-5">
                     <?= $form->field($model, 'marca', [
                         'inputOptions' => [
                             'placeholder' => 'ej: HP',
@@ -35,7 +35,7 @@ use app\models\Cargadores;
                     ])->label($model->getAttributeLabel('marca'))->textInput(['maxlength' => true]) ?>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <?= $form->field($model, 'modelo', [
                         'inputOptions' => [
                             'placeholder' => 'ej: ProBook',
@@ -43,6 +43,7 @@ use app\models\Cargadores;
                         ],
                     ])->label($model->getAttributeLabel('modelo'))->textInput(['maxlength' => true]) ?>
                 </div>
+
             </div>
 
             <div class="row">
@@ -98,15 +99,16 @@ use app\models\Cargadores;
                 </div>
             </div>
 
-            <div>
-                <?= $form->field($model, 'estado')->label($model->getAttributeLabel('estado'))->dropDownList(
-                    ['Disponible' => 'Disponible', 'Averiado' => 'Averiado'],
-                    ['prompt'=>'Selecciona un estado']
-                ) ?>
-            </div>
-
             <div class="row">
-                <div class="col-md-6">
+
+                <div class="col-md-4">
+                    <?= $form->field($model, 'estado')->label($model->getAttributeLabel('estado'))->dropDownList(
+                        ['Disponible' => 'Disponible', 'Averiado' => 'Averiado'],
+                        ['prompt'=>'Selecciona un estado']
+                    ) ?>
+                </div>
+
+                <div class="col-md-4">
                     <label class="control-label">Cargador</label>
                     <?= Html::dropDownList(
                         'cargador',
@@ -116,12 +118,13 @@ use app\models\Cargadores;
                     ) ?>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <?= $form->field($model, 'id_almacen')->dropDownList(
                         Almacenes::getAlmacenesDisponibles(),
                         ['prompt' => 'Selecciona un almacén']
                     ) ?>
                 </div>
+
             </div>
 
             <div class="row d-flex justify-content-around">

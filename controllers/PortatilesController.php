@@ -11,6 +11,8 @@ use app\models\Cargan;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * PortatilesController implements the CRUD actions for Portatiles model.
@@ -51,6 +53,10 @@ class PortatilesController extends Controller {
         $searchModel = new PortatilesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Portatiles();
+        $aplicacionesInstaladas = array_map(function($app) {
+            return $app->aplicacion;
+        }, $model->aplicaciones);
+        $cargadorActual = $model->cargador;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -86,7 +92,9 @@ class PortatilesController extends Controller {
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'model' => $model
+            'model' => $model,
+            'aplicacionesInstaladas' => $aplicacionesInstaladas,
+            'cargador' => $cargadorActual,
         ]);
 
     }
@@ -111,8 +119,11 @@ class PortatilesController extends Controller {
         $aplicacionesActuales = $model->aplicaciones;
         $cargadorActual = $model->cargador;
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } else {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
                 $aplicacionesSeleccionadas = Yii::$app->request->post('aplicaciones');
 
@@ -160,19 +171,26 @@ class PortatilesController extends Controller {
                 } else if ($cargadorActual) {
                     Cargan::find()->where(['id_cargador' => $cargadorActual->id_cargador])->andWhere(['id_portatil' => $model->id_portatil])->one()->delete();
                 }
-        
-                return $this->redirect(['index']);
 
+                Yii::$app->session->setFlash('success', 'El portátil se ha actualizado correctamente.');
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', [
+                    'model' => $model,
+                    'aplicacionesInstaladas' => $aplicacionesInstaladas,
+                    'cargador' => $cargadorActual,
+                ]) : $this->redirect(['index']);
+
+            } else {
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', [
+                    'model' => $model,
+                    'aplicacionesInstaladas' => $aplicacionesInstaladas,
+                    'cargador' => $cargadorActual,
+                ]) : $this->render('update', [
+                    'model' => $model,
+                    'aplicacionesInstaladas' => $aplicacionesInstaladas,
+                    'cargador' => $cargadorActual,
+                ]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
-
-        return $this->render('update', [
-            'model' => $model,
-            'aplicacionesInstaladas' => $aplicacionesInstaladas,
-            'cargador' => $cargadorActual,
-        ]);
 
     }
 
@@ -236,7 +254,7 @@ class PortatilesController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('❌ El portátil no existe');
+        throw new NotFoundHttpException('El portátil no existe');
 
     }
 

@@ -42,7 +42,8 @@ class Portatiles extends \yii\db\ActiveRecord {
         return [
             [['codigo', 'estado'], 'required', 'message' => '⚠️ Campo es obligatorio'],
             [['memoria_ram', 'capacidad', 'id_almacen'], 'integer', 'message' => '⚠️ Formato incorrecto (ej: 8)'],
-            [['memoria_ram', 'capacidad'], NumberValidator::class, 'min' => 1, 'message' => '⚠️ El valor no puede ser menor de 1'],
+            [['memoria_ram'], NumberValidator::class, 'min' => 1, 'max' => 128, 'tooSmall' => '⚠️ El valor mínimo es 1', 'tooBig' => '⚠️ El valor máximo es 128'],
+            [['capacidad'], NumberValidator::class, 'min' => 1, 'max' => 16000, 'tooSmall' => '⚠️ El valor mínimo es 1', 'tooBig' => '⚠️ El valor máximo es 16000'],
             [['codigo'], 'string', 'max' => 4],
             [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ Formato incorrecto (ej: 001A)'],
             [['marca', 'modelo', 'estado', 'procesador', 'dispositivo_almacenamiento'], 'string', 'max' => 24],

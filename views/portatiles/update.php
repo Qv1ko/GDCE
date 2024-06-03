@@ -5,8 +5,6 @@
     /** @var yii\web\View $this */
     /** @var app\models\Portatiles $model */
 
-    $this->title = 'Editar portátil ' . $model->codigo;
-
 ?>
 
 <div class="portatiles-update">

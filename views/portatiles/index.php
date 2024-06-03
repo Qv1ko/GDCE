@@ -13,6 +13,7 @@
     /** @var yii\data\ActiveDataProvider $dataProvider */
 
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
+    $this->registerJsFile('@web/js/modalUpdate.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalCreate.js', ['position' => \yii\web\View::POS_HEAD]);
 
     $this->title = 'Gestión de portátiles';
@@ -137,7 +138,7 @@
                                         <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
                                         <path d="M16 5l3 3" />
                                     </svg>
-                                </div>', $url, ['class' => 'btn btn-primary']);
+                                </div>', $url, ['class' => 'btn btn-primary', 'id' => 'botonUpdate', 'data-code' => 'Editar portátil ' . $model->codigo]);
                             },
                             'delete' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">
@@ -185,6 +186,25 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h2 id="tituloModalUpdate"></h2>
+                </div>
+                <div class="modal-body">
+                    <?= $this->render('_updateForm', [
+                        'model' => $model,
+                        'aplicacionesInstaladas' => $aplicacionesInstaladas,
+                        'cargador' => $cargador,
+                    ]) ?>
                 </div>
             </div>
         </div>

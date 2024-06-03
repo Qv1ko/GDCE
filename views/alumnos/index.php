@@ -89,7 +89,7 @@
                                         <path d="M16 5l3 3" />
                                     </svg>
                                     <span>Editar</span>
-                                </div>', $url, ['class' => 'btn btn-primary', 'id' => 'botonUpdate', 'data-code' => $model->nombre . ' ' . $model->apellidos]);
+                                </div>', $url, ['class' => 'btn btn-primary', 'id' => 'botonUpdate', 'data-code' => 'Editar ' . $model->nombre . ' ' . $model->apellidos]);
                             },
                             'delete' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">
