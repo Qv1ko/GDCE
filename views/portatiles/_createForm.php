@@ -17,7 +17,7 @@ use app\models\Cargadores;
         <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
 
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <?= $form->field($model, 'codigo', [
                         'inputOptions' => [
                             'placeholder' => 'ej: 001A',
@@ -26,7 +26,7 @@ use app\models\Cargadores;
                     ])->label($model->getAttributeLabel('codigo'))->textInput(['maxlength' => true]) ?>
                 </div>
 
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <?= $form->field($model, 'marca', [
                         'inputOptions' => [
                             'placeholder' => 'ej: HP',

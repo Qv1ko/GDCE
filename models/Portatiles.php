@@ -40,12 +40,12 @@ class Portatiles extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['codigo', 'estado'], 'required', 'message' => '⚠️ Campo es obligatorio'],
-            [['memoria_ram', 'capacidad', 'id_almacen'], 'integer', 'message' => '⚠️ Formato incorrecto (ej: 8)'],
+            [['codigo', 'estado'], 'required', 'message' => '⚠️ Campo obligatorio'],
+            [['memoria_ram', 'capacidad', 'id_almacen'], 'integer', 'message' => '⚠️ Formato incorrecto'],
             [['memoria_ram'], NumberValidator::class, 'min' => 1, 'max' => 128, 'tooSmall' => '⚠️ El valor mínimo es 1', 'tooBig' => '⚠️ El valor máximo es 128'],
             [['capacidad'], NumberValidator::class, 'min' => 1, 'max' => 16000, 'tooSmall' => '⚠️ El valor mínimo es 1', 'tooBig' => '⚠️ El valor máximo es 16000'],
             [['codigo'], 'string', 'max' => 4],
-            [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ Formato incorrecto (ej: 001A)'],
+            [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ Formato incorrecto'],
             [['marca', 'modelo', 'estado', 'procesador', 'dispositivo_almacenamiento'], 'string', 'max' => 24],
             [['marca'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ Solo puede contener caracteres alfabéticos'],
             [['estado'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ Solo puede ser "Disponible", "No disponible" o "Averiado"'],
@@ -119,7 +119,7 @@ class Portatiles extends \yii\db\ActiveRecord {
     }
 
     public static function getPortatilesDisponibles() {
-        return ArrayHelper::map(Portatiles::find()->where(['estado' => 'Disponible'])->all(), 'id_portatil', 'codigo');
+        return ArrayHelper::map(Portatiles::find()->where(['estado' => 'Disponible'])->andWhere(['alumnos.id_alumno' => null])->leftJoin('alumnos', 'portatiles.id_portatil = alumnos.id_portatil')->all(), 'id_portatil', 'codigo');
     }
 
     // Portátiles sin cargador
