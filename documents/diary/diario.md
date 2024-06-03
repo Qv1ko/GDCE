@@ -390,3 +390,46 @@
 - Implementación de una sección de checkboxes para seleccionar las aplicaciones que tendrá un nuevo portátil.
 - Implementación del botón de descarga del código QR en la página de gestión de portátiles.
 - Desarrollo del formulario para la creación de portátiles.
+
+**27/05/2024**
+- Eliminación del botón de aplicaciones en la página de gestión de portátiles debido a las complicaciones que estaba causando. Las aplicaciones se han implementado en una columna del GridView.
+- Implementación de un ListView para la página de aplicaciones.
+- Implementación de un modal para crear aplicaciones.
+- Desarrollo de una función de sincronización de aplicaciones.
+
+**28/05/2024**
+- Implementación de un modal que muestra las aplicaciones de cada portátil.
+- Implementación de funciones de actualización y eliminación de aplicaciones, con su correspondiente sincronización.
+- Desarrollo de la actualización de los portátiles.
+
+**29/05/2024**
+- Desarrollo de la página de actualización de portátiles, incluyendo la selección de aplicaciones y cargadores.
+- Cambio de la paleta de colores.
+- Desarrollo de las reglas de negocio de la aplicación.
+- Implementación de una animación al hacer hover en la barra de navegación.
+
+**30/05/2024**
+- Implementación de la función para crear alumnos.
+- Realización de pruebas sobre el modelo de alumnos.
+- Implementación de la función para actualizar alumnos.
+- Eliminación de todas las vistas de los modelos "cursan" y "cargan".
+
+**31/05/2024**
+- Cambio del logo de la aplicación.
+- Desarrollo del README.md.
+- Desarrollo de un modal que aparecera al escanear un codigo QR de un cargador.
+
+**01/06/2024**
+- Implementación de la funcionalidad de vincular los cargadores con un portátil a partir de escanear el QR del cargador.
+- Cambio de colores en la documentación.
+- Corrección y finalización de la documentación sobre colores y tipografía.
+
+**02/06/2024**
+- Corrección del array que pasa el listado de las aplicaciones de cada portátiles, para que si no hay aplicaciones no dé error.
+- Corrección del cálculo del porcentaje de dispositivos disponibles, ya que si algún valor era igual a 0, daba un error.
+- Añadida una regla para definir el valor mínimo de valores enteros en las tablas de portátiles, cargadores y almacenes.
+- Traducción y configuración de la maquetación del escáner de códigos QR.
+- Corrección de los GridView de la página de panel para que la información aparezca correctamente.
+- Configuración de los buscadores para que busquen determinados atributos, separando la búsqueda por cada espacio, permitiendo buscar varios atributos a la vez.
+- Implementado el mensaje de error al duplicar los valores únicos en un formulario que anteriormente no se mostraba en el modal.
+- Implementación de un modal de actualización para la gestión de cursos.
