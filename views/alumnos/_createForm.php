@@ -17,15 +17,17 @@
 
 <div class="alumnos-form">
     <div class="container">
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
 
-            <div>
-                <?= $form->field($model, 'dni', [
-                    'inputOptions' => [
-                        'placeholder' => 'ej: 66355049A o Z7574542A',
-                        'class' => 'form-control',
-                    ],
-                ])->label($model->getAttributeLabel('dni'))->textInput(['maxlength' => true]) ?>
+        <div class="row">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'dni', [
+                        'inputOptions' => [
+                            'placeholder' => 'ej: 66355049A o Z7574542A',
+                            'class' => 'form-control',
+                        ],
+                    ])->label($model->getAttributeLabel('dni'))->textInput(['maxlength' => true]) ?>
+                </div>
             </div>
 
             <div class="row">
@@ -47,38 +49,40 @@
                 </div>
             </div>
 
-            <div>
-                <?= $form->field($model, 'estado_matricula')->label($model->getAttributeLabel('estado_matricula'))->dropDownList(
-                    ['Matriculado' => 'Matriculado', 'No matriculado' => 'No matriculado'],
-                    ['prompt' => 'Selecciona el estado de matrícula']
-                ) ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'estado_matricula')->label($model->getAttributeLabel('estado_matricula'))->dropDownList(
+                        ['Matriculado' => 'Matriculado', 'No matriculado' => 'No matriculado'],
+                        ['prompt' => 'Selecciona el estado de matrícula']
+                    ) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'id_portatil')->label($model->getAttributeLabel('id_portatil'))->dropDownList(
+                        Portatiles::getPortatilesDisponibles(),
+                        ['prompt'=>'Selecciona un portátil', 'class' => 'form-control']
+                    ) ?>
+                </div>
             </div>
 
-            <div>
-                <label class="control-label">Curso de mañana</label>
-                <?= Html::dropDownList(
-                    'cursoManana',
-                    null,
-                    Cursos::getListaCursosManana(),
-                    ['prompt' => 'Selecciona un curso de mañana', 'class' => 'form-control']
-                ) ?>
-            </div>
-
-            <div>
-                <label class="control-label">Cursos de tarde</label>
-                <?= Html::dropDownList(
-                    'cursoTarde',
-                    null,
-                    Cursos::getListaCursosTarde(),
-                    ['prompt' => 'Selecciona un curso de tarde', 'class' => 'form-control']
-                ) ?>
-            </div>
-
-            <div>
-                <?= $form->field($model, 'id_portatil')->label($model->getAttributeLabel('id_portatil'))->dropDownList(
-                    Portatiles::getPortatilesDisponibles(),
-                    ['prompt'=>'Selecciona un portátil', 'class' => 'form-control']
-                ) ?>
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label class="control-label">Curso de mañana</label>
+                    <?= Html::dropDownList(
+                        'cursoManana',
+                        null,
+                        Cursos::getListaCursosManana(),
+                        ['prompt' => 'Selecciona un curso de mañana', 'class' => 'form-control']
+                    ) ?>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label class="control-label">Cursos de tarde</label>
+                    <?= Html::dropDownList(
+                        'cursoTarde',
+                        null,
+                        Cursos::getListaCursosTarde(),
+                        ['prompt' => 'Selecciona un curso de tarde', 'class' => 'form-control']
+                    ) ?>
+                </div>
             </div>
 
             <div class="row d-flex justify-content-around">

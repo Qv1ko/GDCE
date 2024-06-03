@@ -10,6 +10,8 @@ use app\models\Portatiles;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * AlumnosController implements the CRUD actions for Alumnos model.
@@ -51,8 +53,14 @@ class AlumnosController extends Controller {
         $searchModel = new AlumnosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Alumnos();
+        $cursoActualManana = $model->cursoManana;
+        $cursoActualTarde = $model->cursoTarde;
 
-        if ($this->request->isPost) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } elseif ($this->request->isPost) {
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
                 if ($model->estado_matricula == 'Matriculado') {
@@ -84,9 +92,13 @@ class AlumnosController extends Controller {
                     $model->save();
                 }
 
+                Yii::$app->session->setFlash('success', 'El alumno se ha añadido correctamente.');
                 return $this->redirect(['index']);
 
+            } else {
+                Yii::$app->session->setFlash('error', 'Ha ocurrido un error al añadir el alumno.');
             }
+
         } else {
             $model->loadDefaultValues();
         }
@@ -95,6 +107,8 @@ class AlumnosController extends Controller {
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'model' => $model,
+            'cursoActualManana' => $cursoActualManana,
+            'cursoActualTarde' => $cursoActualTarde,
         ]);
 
     }
@@ -116,71 +130,80 @@ class AlumnosController extends Controller {
         $cursoActualManana = $model->cursoManana;
         $cursoActualTarde = $model->cursoTarde;
 
-        if ($this->request->isPost) {
-            
-            if ($model->load($this->request->post()) && $model->save()) {
-
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } else {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 if ($model->estado_matricula == 'Matriculado') {
-
                     $cursoManana = Yii::$app->request->post('cursoManana');
                     $cursoTarde = Yii::$app->request->post('cursoTarde');
 
                     if (!empty($cursoManana) || !empty($cursoTarde)) {
-
                         if (!empty($cursoManana)) {
-                            if (($cursoActualManana) ? $cursoManana != $cursoActualManana->id_curso : true) {
+                            if (!$cursoActualManana || $cursoManana != $cursoActualManana->id_curso) {
                                 $modelCursa = new Cursan();
                                 $modelCursa->id_curso = $cursoManana;
                                 $modelCursa->id_alumno = $model->id_alumno;
                                 $modelCursa->curso_academico = Cursan::getCursoActual();
                                 $modelCursa->save();
                                 if ($cursoActualManana) {
-                                    Cursan::find()->where(['id_curso' => $cursoActualManana->id_curso])->andWhere(['id_alumno' => $model->id_alumno])->one()->delete();
+                                    Cursan::deleteAll(['id_curso' => $cursoActualManana->id_curso, 'id_alumno' => $model->id_alumno]);
                                 }
                             }
                         } else if ($cursoActualManana) {
-                            Cursan::find()->where(['id_curso' => $cursoActualManana->id_curso])->andWhere(['id_alumno' => $model->id_alumno])->one()->delete();
+                            Cursan::deleteAll(['id_curso' => $cursoActualManana->id_curso, 'id_alumno' => $model->id_alumno]);
                         }
 
                         if (!empty($cursoTarde)) {
-                            if (($cursoActualTarde) ? $cursoTarde != $cursoActualTarde->id_curso : true) {
+                            if (!$cursoActualTarde || $cursoTarde != $cursoActualTarde->id_curso) {
                                 $modelCursa = new Cursan();
                                 $modelCursa->id_curso = $cursoTarde;
                                 $modelCursa->id_alumno = $model->id_alumno;
                                 $modelCursa->curso_academico = Cursan::getCursoActual();
                                 $modelCursa->save();
                                 if ($cursoActualTarde) {
-                                    Cursan::find()->where(['id_curso' => $cursoActualTarde->id_curso])->andWhere(['id_alumno' => $model->id_alumno])->one()->delete();
+                                    Cursan::deleteAll(['id_curso' => $cursoActualTarde->id_curso, 'id_alumno' => $model->id_alumno]);
                                 }
                             }
                         } else if ($cursoActualTarde) {
-                            Cursan::find()->where(['id_curso' => $cursoActualTarde->id_curso])->andWhere(['id_alumno' => $model->id_alumno])->one()->delete();
+                            Cursan::deleteAll(['id_curso' => $cursoActualTarde->id_curso, 'id_alumno' => $model->id_alumno]);
                         }
-
                     } else {
                         $model->id_portatil = null;
-                        $model->save();    
+                        $model->save();
                     }
-
                 } else {
                     $model->id_portatil = null;
                     $model->save();
                 }
 
-
-                return $this->redirect(['index']);
-
+                Yii::$app->session->setFlash('success', 'El alumno se ha actualizado correctamente.');
+                if (Yii::$app->request->isAjax) {
+                    return $this->renderAjax('update', [
+                        'model' => $model,
+                        'cursoActualManana' => $cursoActualManana,
+                        'cursoActualTarde' => $cursoActualTarde,
+                    ]);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return $this->renderAjax('update', [
+                        'model' => $model,
+                        'cursoActualManana' => $cursoActualManana,
+                        'cursoActualTarde' => $cursoActualTarde,
+                    ]);
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                        'cursoActualManana' => $cursoActualManana,
+                        'cursoActualTarde' => $cursoActualTarde,
+                    ]);
+                }
             }
-
-        } else {
-            $model->loadDefaultValues();
         }
-
-        return $this->render('update', [
-            'model' => $model,
-            'cursoActualManana' => $cursoActualManana,
-            'cursoActualTarde' => $cursoActualTarde,
-        ]);
 
     }
 

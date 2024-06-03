@@ -12,12 +12,12 @@
     $this->title = 'Gestión de alumnos';
 
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
+    $this->registerJsFile('@web/js/modalUpdate.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalCreate.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
 <div class="alumnos-index">
-
     <div class="container">
 
         <h1><?= Html::encode($this->title) ?></h1>
@@ -89,7 +89,7 @@
                                         <path d="M16 5l3 3" />
                                     </svg>
                                     <span>Editar</span>
-                                </div>', $url, ['class' => 'btn btn-primary editarCursoBoton update-modal', 'data-code' => $model->nombre . ' ' . $model->apellidos]);
+                                </div>', $url, ['class' => 'btn btn-primary', 'id' => 'botonUpdate', 'data-code' => $model->nombre . ' ' . $model->apellidos]);
                             },
                             'delete' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">
@@ -126,6 +126,25 @@
 
     </div>
 
+</div>
+
+<div class="container">
+    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h2 id="tituloModalUpdate"></h2>
+                </div>
+                <div class="modal-body">
+                    <?= $this->render('_updateForm', [
+                        'model' => $model,
+                        'cursoActualManana' => $cursoActualManana,
+                        'cursoActualTarde' => $cursoActualTarde,
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="container">

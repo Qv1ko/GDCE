@@ -5,7 +5,7 @@
     /** @var yii\web\View $this */
     /** @var app\models\Alumnos $model */
 
-    $this->title = 'Editar alumno/a ' . $model->nombreCompleto;
+    // $this->title = 'Editar alumno/a ' . $model->nombreCompleto;
 
 ?>
 

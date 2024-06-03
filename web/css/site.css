@@ -6,7 +6,7 @@ body {
 }
 
 main > .container {
-    padding: 96px 0px 32px;
+    padding: 112px 0px 32px;
 }
 
 .footer {
@@ -175,8 +175,8 @@ hr {
 }
 
 .row {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .site-panel .row {

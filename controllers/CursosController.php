@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Cursos;
 use app\models\CursosSearch;
+use app\models\Cursan;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -82,6 +83,10 @@ class CursosController extends Controller {
 
     public function actionUpdate($id_curso) {
 
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
         $model = $this->findModel($id_curso);
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
@@ -91,11 +96,7 @@ class CursosController extends Controller {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 Cursos::setSigla($model);
                 Yii::$app->session->setFlash('success', 'El curso se ha actualizado correctamente.');
-                if (Yii::$app->request->isAjax) {
-                    return $this->renderAjax('update', ['model' => $model]);
-                } else {
-                    return $this->redirect(['index']);
-                }
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->redirect(['index']);
             } else {
                 return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->render('update', ['model' => $model]);
             }
@@ -112,6 +113,11 @@ class CursosController extends Controller {
      */
     public function actionDelete($id_curso) {
 
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        Cursan::find(['id_curso' => $id_curso])->delete();
         $this->findModel($id_curso)->delete();
 
         return $this->redirect(['index']);

@@ -19,7 +19,6 @@
 ?>
 
 <div class="cursos-index">
-
     <div class="container">
 
         <h1><?= Html::encode($this->title) ?></h1>
