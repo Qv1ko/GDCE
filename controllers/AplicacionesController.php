@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * AplicacionesController implements the CRUD actions for Aplicaciones model.
@@ -46,8 +48,12 @@ class AplicacionesController extends Controller {
 
         $model = new Aplicaciones();
 
-        if ($this->request->isPost) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } elseif ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'La aplicación se ha añadido correctamente.');
                 return $this->redirect(['index']);
             }
         } else {
@@ -81,7 +87,10 @@ class AplicacionesController extends Controller {
 
         $model = $this->findModel($id_aplicacion);
 
-        if ($this->request->isPost) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } else {
         
             $nombre = $model->aplicacion;
 
@@ -96,15 +105,28 @@ class AplicacionesController extends Controller {
 
                 $model->save();
 
-                return $this->redirect(['index']);
+                Yii::$app->session->setFlash('success', 'La aplicación se ha actualizado correctamente.');
+                if (Yii::$app->request->isAjax) {
+                    return $this->renderAjax('update', [
+                        'model' => $model,
+                    ]);
+                } else {
+                    return $this->redirect(['index']);
+                }
 
+            } else {
+                if (Yii::$app->request->isAjax) {
+                    return $this->renderAjax('update', [
+                        'model' => $model,
+                    ]);
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
             }
 
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
 
     }
 

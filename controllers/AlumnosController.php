@@ -92,11 +92,11 @@ class AlumnosController extends Controller {
                     $model->save();
                 }
 
-                Yii::$app->session->setFlash('success', 'El alumno se ha añadido correctamente.');
+                Yii::$app->session->setFlash('success', 'El alumno/a se ha añadido correctamente.');
                 return $this->redirect(['index']);
 
             } else {
-                Yii::$app->session->setFlash('error', 'Ha ocurrido un error al añadir el alumno.');
+                Yii::$app->session->setFlash('error', 'Ha ocurrido un error al añadir el alumno/a.');
             }
 
         } else {
@@ -178,7 +178,7 @@ class AlumnosController extends Controller {
                     $model->save();
                 }
 
-                Yii::$app->session->setFlash('success', 'El alumno se ha actualizado correctamente.');
+                Yii::$app->session->setFlash('success', 'El alumno/a se ha actualizado correctamente.');
                 if (Yii::$app->request->isAjax) {
                     return $this->renderAjax('update', [
                         'model' => $model,

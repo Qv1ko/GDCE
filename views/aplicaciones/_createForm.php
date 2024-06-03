@@ -11,7 +11,7 @@
 
 <div class="aplicaciones-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
 
         <div>
             <?= $form->field($model, 'aplicacion', [

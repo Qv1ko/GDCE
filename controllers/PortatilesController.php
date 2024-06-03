@@ -58,7 +58,10 @@ class PortatilesController extends Controller {
         }, $model->aplicaciones);
         $cargadorActual = $model->cargador;
 
-        if ($this->request->isPost) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } elseif ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
 
                 $aplicacionesSeleccionadas = Yii::$app->request->post('aplicaciones');
@@ -83,7 +86,11 @@ class PortatilesController extends Controller {
                     }
                 }
 
+                Yii::$app->session->setFlash('success', 'El portátil se ha añadido correctamente.');
                 return $this->redirect(['index']);
+
+            } else {
+                Yii::$app->session->setFlash('error', 'Ha ocurrido un error al añadir el portátil.');
             }
         } else {
             $model->loadDefaultValues();

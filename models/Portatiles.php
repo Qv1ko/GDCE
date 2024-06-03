@@ -50,7 +50,7 @@ class Portatiles extends \yii\db\ActiveRecord {
             [['marca'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ Solo puede contener caracteres alfabéticos'],
             [['estado'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ Solo puede ser "Disponible", "No disponible" o "Averiado"'],
             [['dispositivo_almacenamiento'], 'in', 'range' => ['HDD', 'SSD'], 'message' => '⚠️ Solo puede ser "HDD" o "SSD"'],
-            [['codigo'], 'unique', 'message' => '⚠️ El portátil ya existe'],
+            [['codigo'], 'unique', 'message' => '⚠️ Ya existe'],
             [['id_almacen'], 'exist', 'skipOnError' => true, 'targetClass' => Almacenes::class, 'targetAttribute' => ['id_almacen' => 'id_almacen']],
         ];
     }
