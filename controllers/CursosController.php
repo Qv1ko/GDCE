@@ -117,7 +117,7 @@ class CursosController extends Controller {
             return $this->goHome();
         }
 
-        Cursan::find(['id_curso' => $id_curso])->delete();
+        Cursan::deleteAll(['id_curso' => $id_curso]);
         $this->findModel($id_curso)->delete();
 
         return $this->redirect(['index']);
