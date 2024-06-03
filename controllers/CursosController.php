@@ -52,14 +52,13 @@ class CursosController extends Controller {
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
-        }
-        
-        if ($this->request->isPost) {
+        } elseif ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                Cursos::setSigla($model);
                 Yii::$app->session->setFlash('success', 'El curso se ha añadido correctamente.');
                 return $this->redirect(['index']);
             } else {
-                Yii::$app->session->setFlash('error', 'Ha ocurrido un error.');
+                Yii::$app->session->setFlash('error', 'Ha ocurrido un error al añadir el curso.');
             }
         } else {
             $model->loadDefaultValues();
@@ -88,18 +87,18 @@ class CursosController extends Controller {
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
-        }
-    
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'El curso se ha actualizado correctamente.');
-            if (Yii::$app->request->isAjax) {
-                return $this->renderAjax('update', ['model' => $model]);
-            } else {
-                return $this->redirect(['index']);
-            }
         } else {
-            Yii::$app->session->setFlash('error', 'Ha ocurrido un error al actualizar el curso.');
-            return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->render('update', ['model' => $model]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Cursos::setSigla($model);
+                Yii::$app->session->setFlash('success', 'El curso se ha actualizado correctamente.');
+                if (Yii::$app->request->isAjax) {
+                    return $this->renderAjax('update', ['model' => $model]);
+                } else {
+                    return $this->redirect(['index']);
+                }
+            } else {
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->render('update', ['model' => $model]);
+            }
         }
 
     }

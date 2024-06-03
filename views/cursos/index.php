@@ -106,14 +106,20 @@
 
 </div>
 
-<?php
-    Modal::begin([
-        'id' => 'modalUpdate',
-        // 'size' => 'modal-lg',
-        'title' => '<h2 id="tituloModalUpdate"></h2>',
-    ]);
-    Modal::end();
-?>
+<div class="container">
+    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h2 id="tituloModalUpdate"></h2>
+                </div>
+                <div class="modal-body">
+                    <?= $this->render('_updateForm', ['model' => $model]) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

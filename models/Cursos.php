@@ -36,7 +36,7 @@ class Cursos extends \yii\db\ActiveRecord {
             [['nombre', 'curso', 'turno', 'aula', 'tutor'], 'required', 'message' => '⚠️ Campo obligatorio'],
             [['nombre'], 'string', 'max' => 96],
             [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ Solo puede contener caracteres alfabéticos'],
-            [['nombre'], 'match', 'pattern' => '/[A-ZÁÉÍÓÚÑ]/', 'message' => '⚠️ Tiene que contener letras en mayúscula'],
+            [['nombre'], 'match', 'pattern' => '/[A-ZÁÉÍÓÚÑ]/', 'message' => '⚠️ La primera letra de cada palabra tiene que ser mayúscula'],
             [['sigla', 'turno'], 'string', 'max' => 8],
             [['sigla'], 'match', 'pattern' => '/^[A-Z]+$/', 'message' => '⚠️ Solo puede contener caracteres alfabéticos en mayúscula'],
             [['curso'], 'string', 'max' => 16],
@@ -96,25 +96,20 @@ class Cursos extends \yii\db\ActiveRecord {
         });
     }
 
-    public function beforeSave($insert) {
+    public static function setSigla($model) {
 
-        if (parent::beforeSave($insert)) {
+        $nombreCurso = $model->nombre;
+        $nombreCurso = str_replace(['Á', 'á', 'É', 'é', 'Í', 'í', 'Ó', 'ó', 'Ú', 'ú', 'Ñ'], ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'N'], $nombreCurso);
+        $sigla = '';
 
-            $sigla = '';
-
-            foreach (str_split($this->nombre) as $letra) {
-                if (ctype_upper($letra)) {
-                    $sigla .= str_replace(['Á', 'É', 'Í', 'Ó', 'Ú'], ['A', 'E', 'I', 'O', 'U'], $letra);
-                }
+        foreach (str_split($nombreCurso) as $letra) {
+            if (ctype_upper($letra)) {
+                $sigla .= $letra;
             }
-
-            $this->sigla = $sigla;
-            
-            return true;
-
         }
 
-        return false;
+        $model->sigla = $sigla;
+        $model->save();
 
     }
 
