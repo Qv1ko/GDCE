@@ -108,7 +108,7 @@ class Cursos extends \yii\db\ActiveRecord {
             }
         }
 
-        $model->sigla = $sigla;
+        $model->sigla = substr($sigla, 0, 8);
         $model->save();
 
     }
