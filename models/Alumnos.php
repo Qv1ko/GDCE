@@ -36,7 +36,7 @@ class Alumnos extends \yii\db\ActiveRecord {
         return [
             [['dni', 'nombre', 'estado_matricula'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['dni'], 'string', 'max' => 9],
-            [['dni'], 'match', 'pattern' => '/^[XYZ]\d{8}[A-Z]$|^\d{8}[A-Z]$/', 'message' => '⚠️ El formato del DNI/NIE es incorrecto (ej: 12345678Z, X12345678Z)'],
+            [['dni'], 'match', 'pattern' => '/^[XYZ]\d{7}[A-Z]$|^\d{8}[A-Z]$/', 'message' => '⚠️ El formato del DNI/NIE es incorrecto (ej: 12345678Z, X12345678Z)'],
             [['dni'], 'validarDni'],
             [['nombre'], 'string', 'max' => 24],
             [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre solo puede contener caracteres alfabéticos'],
@@ -83,13 +83,14 @@ class Alumnos extends \yii\db\ActiveRecord {
         $letraInicial = substr($nie, 0, 1);
         $numero = substr($nie, 1, -1);
         $letra = substr($nie, -1);
-        $letraCorrecta = $this->getLetraDni($numero);
 
         if ($letraInicial == 'X' || $letraInicial == 'Y' || $letraInicial == 'Z') {
             $letraInicial = str_replace(['X', 'Y', 'Z'], ['0', '1', '2'], $letraInicial);
             $numero = $letraInicial . $numero;
         }
-    
+
+        $letraCorrecta = $this->getLetraDni($numero);
+        
         return $letra == $letraCorrecta;
 
     }

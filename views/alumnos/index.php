@@ -51,9 +51,9 @@
 
                                 foreach ($model->cursos as $curso) {
                                     if ($numCursos === 2) {
-                                        $estado .= ' y ' . $curso->sigla;
+                                        $estado .= ' y ' . (($curso->curso === "Primer curso") ? '1º ' : '2º ') . ' ' .$curso->sigla;
                                     } else {
-                                        $estado .= $curso->sigla;
+                                        $estado .= (($curso->curso === "Primer curso") ? '1º ' : '2º ') . ' ' . $curso->sigla;
                                     }
                                     $numCursos++;
                                 }
