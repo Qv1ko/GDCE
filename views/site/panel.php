@@ -146,16 +146,27 @@
                         'dataProvider' => $listadoPortatilesDisponibles,
                         'columns' => [
                             [
-                                'attribute' => 'codigo',
                                 'label' => 'Portátil',
                                 'value' => function ($model) {
                                     return 'Portátil ' . $model->codigo;
+                                },
+                                'headerOptions' => ['style' => 'color: #489FB5;'],
+                                'contentOptions' => function ($model, $key, $index, $column) {
+                                    return [
+                                        'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                    ];
                                 },
                             ],
                             [
                                 'label' => 'Almacén',
                                 'value' => function ($model) {
-                                    return empty($model->almacen->id_almacen)? '⚠️ Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                    return empty($model->almacen->id_almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                },
+                                'headerOptions' => ['style' => 'color: #489FB5;'],
+                                'contentOptions' => function ($model, $key, $index, $column) {
+                                    return [
+                                        'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                    ];
                                 },
                             ],
                         ],
@@ -205,16 +216,27 @@
                         'dataProvider' => $listadoCargadoresDisponibles,
                         'columns' => [
                             [
-                                'attribute' => 'codigo',
                                 'label' => 'Cargador',
                                 'value' => function ($model) {
                                     return 'Cargador ' . $model->codigo;
+                                },
+                                'headerOptions' => ['style' => 'color: #489FB5;'],
+                                'contentOptions' => function ($model, $key, $index, $column) {
+                                    return [
+                                        'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                    ];
                                 },
                             ],
                             [
                                 'label' => 'Almacén',
                                 'value' => function ($model) {
-                                    return empty($model->almacen->id_almacen)? '⚠️ Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                    return empty($model->almacen->id_almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                },
+                                'headerOptions' => ['style' => 'color: #489FB5;'],
+                                'contentOptions' => function ($model, $key, $index, $column) {
+                                    return [
+                                        'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                    ];
                                 },
                             ],
                         ],
@@ -250,66 +272,84 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <?= GridView::widget([
-                        'dataProvider' => $listadoPortatilesAveriados,
-                        'columns' => [
-                            [
-                                'attribute' => 'codigo',
-                                'label' => 'Portátil',
-                                'value' => function ($model) {
-                                    return 'Portátil ' . $model->codigo;
-                                },
-                            ],
-                            [
-                                'attribute' => 'marca',
-                                'label' => 'Módelo',
-                                'value' => function ($model) {
-                                    return empty($model->marca)? 'Sin definir' : $model->marca . ' ' . $model->modelo;
-                                },
-                            ],
-                            [
-                                'attribute' => 'procesador',
-                                'label' => 'CPU',
-                                'value' => function ($model) {
-                                    return empty($model->procesador)? 'Sin definir' : $model->procesador;
-                                },
-                            ],
-                            [
-                                'attribute' => 'memoria_ram',
-                                'label' => 'RAM',
-                                'value' => function ($model) {
-                                    return empty($model->memoria_ram)? 'Sin definir' : $model->memoria_ram . ' GB';
-                                },
-                            ],
-                        ],
-                        'summary' => '',
-                    ]); ?>
-                    <?= GridView::widget([
-                        'dataProvider' => $listadoCargadoresAveriados,
-                        'columns' => [
-                            [
-                                'attribute' => 'codigo',
-                                'label' => 'Cargador',
-                                'value' => function ($model) {
-                                    return 'Cargador ' . $model->codigo;
-                                },
-                            ],
-                            [
-                                'attribute' => 'potencia',
-                                'label' => 'Potencia',
-                                'value' => function ($model) {
-                                    return empty($model->potencia)? 'Sin definir' : $model->potencia . ' W';
-                                },
-                            ],
-                            [
-                                'label' => 'Almacén',
-                                'value' => function ($model) {
-                                    return empty($model->almacen)? '⚠️ Sin almacén' : 'Almacén ' . $model->almacen->aula;
-                                },
-                            ],
-                        ],
-                        'summary' => '',
-                    ]); ?>
+                    <div class="row">
+                        <div class="col-8">
+                            <?= GridView::widget([
+                                'dataProvider' => $listadoPortatilesAveriados,
+                                'columns' => [
+                                    [
+                                        'label' => 'Portátil',
+                                        'value' => function ($model) {
+                                            return 'Portátil ' . $model->codigo;
+                                        },
+                                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                                        'contentOptions' => function ($model, $key, $index, $column) {
+                                            return [
+                                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                            ];
+                                        },
+                                    ],
+                                    [
+                                        'label' => 'Módelo',
+                                        'value' => function ($model) {
+                                            return empty($model->marca)? 'Sin definir' : $model->marca . ' ' . $model->modelo;
+                                        },
+                                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                                        'contentOptions' => function ($model, $key, $index, $column) {
+                                            return [
+                                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                            ];
+                                        },
+                                    ],
+                                    [
+                                        'label' => 'Almacén',
+                                        'value' => function ($model) {
+                                            return empty($model->almacen->id_almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                        },
+                                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                                        'contentOptions' => function ($model, $key, $index, $column) {
+                                            return [
+                                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                            ];
+                                        },
+                                    ]
+                                ],
+                                'summary' => '',
+                            ]); ?>
+                        </div>
+                        <div class="col-4">
+                            <?= GridView::widget([
+                                'dataProvider' => $listadoCargadoresAveriados,
+                                'columns' => [
+                                    [
+                                        'label' => 'Cargador',
+                                        'value' => function ($model) {
+                                            return 'Cargador ' . $model->codigo;
+                                        },
+                                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                                        'contentOptions' => function ($model, $key, $index, $column) {
+                                            return [
+                                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                            ];
+                                        },
+                                    ],
+                                    [
+                                        'label' => 'Almacén',
+                                        'value' => function ($model) {
+                                            return empty($model->almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                        },
+                                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                                        'contentOptions' => function ($model, $key, $index, $column) {
+                                            return [
+                                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                            ];
+                                        },
+                                    ],
+                                ],
+                                'summary' => '',
+                            ]); ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -350,6 +390,16 @@
             plugins: {
                 legend: {
                     display: false,
+                },
+                tooltip: {
+                    titleFont: {
+                        size: 16,
+                        family: 'Roboto'
+                    },
+                    bodyFont: {
+                        size: 14,
+                        family: 'Roboto'
+                    }
                 }
             }
         }
@@ -400,9 +450,10 @@
                 title: {
                     display: true,
                     text: 'Capacidad total y actual por almacén',
+                    color: '#16697A',
                     font: {
-                        size: 16,
-                        family: 'Roboto'
+                        size: 18,
+                        family: 'Roboto',
                     },
                     padding: {
                         bottom: 8
@@ -413,11 +464,11 @@
                 },
                 tooltip: {
                     titleFont: {
-                        size: 14,
+                        size: 16,
                         family: 'Roboto'
                     },
                     bodyFont: {
-                        size: 12,
+                        size: 14,
                         family: 'Roboto'
                     }
                 }
@@ -427,7 +478,10 @@
                     beginAtZero: true,
                     suggestedMax: Math.max(...capacidad) + 5,
                     pointLabels: {
-                        fontSize: 300 // Tamaño de la fuente de las etiquetas
+                        font: {
+                            size: 14,
+                            family: 'Roboto'
+                        }
                     }
                 }
             }
@@ -458,8 +512,9 @@
                 title: {
                     display: true,
                     text: 'Uso de portátiles por ciclo formativo',
+                    color: '#16697A',
                     font: {
-                        size: 16,
+                        size: 18,
                         family: 'Roboto'
                     },
                     padding: {
@@ -469,10 +524,25 @@
                 legend: {
                     display: false,
                 },
+                tooltip: {
+                    titleFont: {
+                        size: 16,
+                        family: 'Roboto'
+                    },
+                    bodyFont: {
+                        size: 14,
+                        family: 'Roboto'
+                    }
+                }
             },
             scales: {
                 y: {
                     beginAtZero: true,
+                },
+                x: {
+                    ticks: {
+                        maxTicksLimit: 8,
+                    },
                 }
             }
         }
