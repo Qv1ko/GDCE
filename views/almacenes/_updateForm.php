@@ -13,22 +13,23 @@
     <div class="container">
         <?php $form = ActiveForm::begin(); ?>
     
-            <div>
-                <?= $form->field($model, 'aula', [
-                    'inputOptions' => [
-                        'placeholder' => 'ej: 001A',
-                        'class' => 'form-control',
-                    ],
-                ])->label($model->getAttributeLabel('aula'))->textInput(['maxlength' => true]) ?>
-            </div>
-    
-            <div>
-                <?= $form->field($model, 'capacidad', [
-                    'inputOptions' => [
-                        'placeholder' => 'ej: 50',
-                        'class' => 'form-control',
-                    ],
-                ])->label($model->getAttributeLabel('capacidad'))->textInput() ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'aula', [
+                        'inputOptions' => [
+                            'placeholder' => 'ej: 001A',
+                            'class' => 'form-control',
+                        ],
+                    ])->label($model->getAttributeLabel('aula'))->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'capacidad', [
+                        'inputOptions' => [
+                            'placeholder' => 'ej: 50',
+                            'class' => 'form-control',
+                        ],
+                    ])->label($model->getAttributeLabel('capacidad'))->textInput() ?>
+                </div>
             </div>
     
             <div class="row d-flex justify-content-around">
@@ -47,7 +48,7 @@
                         <path d="M9 9l6 6m0 -6l-6 6" />
                     </svg>
                     <span>Cancelar</span>
-                </div>', ['index'], ['class' => 'btn btn-secondary']) ?>
+                </div>', ['index'], ['class' => 'btn btn-secondary', 'data-dismiss' => 'modal', 'aria-label' => 'Close']) ?>
             </div>
     
         <?php ActiveForm::end(); ?>

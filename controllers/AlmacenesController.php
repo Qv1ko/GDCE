@@ -10,6 +10,8 @@ use app\models\Portatiles;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * AlmacenesController implementa las acciones CRUD para el modelo Almacenes.
@@ -47,9 +49,15 @@ class AlmacenesController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Almacenes();
 
-        if ($this->request->isPost) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } elseif ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'El almacén se ha añadido correctamente.');
                 return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('error', 'Ha ocurrido un error al añadir el almacén.');
             }
         } else {
             $model->loadDefaultValues();
@@ -78,13 +86,24 @@ class AlmacenesController extends Controller {
 
         $model = $this->findModel($id_almacen);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } else {
+            if ($model->load($this->request->post()) && $model->save()) {
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+                if ($model->capacidad < Almacenes::getOcupacion($model->id_almacen)) {
+                    Portatiles::updateAll(['id_almacen' => null], ['id_almacen' => $id_almacen]);
+                    Cargadores::updateAll(['id_almacen' => null], ['id_almacen' => $id_almacen]);
+                }
+
+                Yii::$app->session->setFlash('success', 'El almacén se ha actualizado correctamente.');
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->redirect(['index']);
+
+            } else {
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->render('update', ['model' => $model]);
+            }
+        }
 
     }
 

@@ -31,10 +31,10 @@ class Almacenes extends \yii\db\ActiveRecord {
         return [
             [['aula'], 'required', 'message' => '⚠️ Campo obligatorio'],
             [['aula'], 'string', 'max' => 4],
-            [['aula'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ Formato del aula incorrecto (ej: 123N)'],
-            [['aula'], 'unique', 'message' => '⚠️ El almacén ya existe'],
-            [['capacidad'], 'integer', 'message' => '⚠️ Formato incorrecto (ej: 50)'],
-            [['capacidad'], NumberValidator::class, 'min' => 0, 'message' => '⚠️ No se admiten valores negativos'],
+            [['aula'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ Formato incorrecto'],
+            [['aula'], 'unique', 'message' => '⚠️ Ya existe'],
+            [['capacidad'], 'integer', 'message' => '⚠️ Formato incorrecto'],
+            [['capacidad'], NumberValidator::class, 'min' => 0, 'tooSmall' => '⚠️ Valores negativos'],
         ];
     }
 
@@ -45,7 +45,7 @@ class Almacenes extends \yii\db\ActiveRecord {
         return [
             'id_almacen' => 'Almacén',
             'aula' => 'Código del aula',
-            'capacidad' => 'Capacidad máxima del almacén',
+            'capacidad' => 'Capacidad máxima',
         ];
     }
 

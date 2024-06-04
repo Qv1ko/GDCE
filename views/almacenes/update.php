@@ -5,8 +5,6 @@
     /** @var yii\web\View $this */
     /** @var app\models\Almacenes $model */
 
-    $this->title = 'Editar almacén ' . $model->aula;
-
 ?>
 
 <div class="almacenes-update">

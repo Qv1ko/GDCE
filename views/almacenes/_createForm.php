@@ -11,24 +11,25 @@
 
 <div class="almacenes-form">
     <div class="container">
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
     
-            <div>
-                <?= $form->field($model, 'aula', [
-                    'inputOptions' => [
-                        'placeholder' => 'ej: 001A',
-                        'class' => 'form-control',
-                    ],
-                ])->label($model->getAttributeLabel('aula'))->textInput(['maxlength' => true]) ?>
-            </div>
-
-            <div>
-                <?= $form->field($model, 'capacidad', [
-                    'inputOptions' => [
-                        'placeholder' => 'ej: 50',
-                        'class' => 'form-control',
-                    ],
-                ])->label($model->getAttributeLabel('capacidad'))->textInput() ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'aula', [
+                        'inputOptions' => [
+                            'placeholder' => 'ej: 001A',
+                            'class' => 'form-control',
+                        ],
+                    ])->label($model->getAttributeLabel('aula'))->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'capacidad', [
+                        'inputOptions' => [
+                            'placeholder' => 'ej: 50',
+                            'class' => 'form-control',
+                        ],
+                    ])->label($model->getAttributeLabel('capacidad'))->textInput() ?>
+                </div>
             </div>
     
             <div class="row d-flex justify-content-around">
