@@ -27,11 +27,11 @@ class Aplicaciones extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['aplicacion'], 'required', 'message' => '⚠️ Campo es obligatorio'],
+            [['aplicacion'], 'required', 'message' => '⚠️ Campo obligatorio'],
             [['id_portatil'], 'integer'],
             [['aplicacion'], 'string', 'max' => 32],
             [['aplicacion'], 'match', 'pattern' => '/^[^\/:*?"<>|]*[^\/:*?"<>|\.\s]$/', 'message' => '⚠️ Contiene caracteres invalidos'],
-            [['aplicacion', 'id_portatil'], 'unique', 'targetAttribute' => ['aplicacion', 'id_portatil'], 'message' => '⚠️ La aplicación ya existe'],
+            [['aplicacion', 'id_portatil'], 'unique', 'targetAttribute' => ['aplicacion', 'id_portatil'], 'message' => '⚠️ Ya existe'],
             [['id_portatil'], 'exist', 'skipOnError' => true, 'targetClass' => Portatiles::class, 'targetAttribute' => ['id_portatil' => 'id_portatil']],
         ];
     }

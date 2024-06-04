@@ -34,18 +34,17 @@ class Alumnos extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['dni', 'nombre', 'estado_matricula'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
+            [['dni', 'nombre', 'estado_matricula'], 'required', 'message' => '⚠️ Campo obligatorio'],
             [['dni'], 'string', 'max' => 9],
-            [['dni'], 'match', 'pattern' => '/^[XYZ]\d{7}[A-Z]$|^\d{8}[A-Z]$/', 'message' => '⚠️ El formato del DNI/NIE es incorrecto (ej: 12345678Z, X12345678Z)'],
+            [['dni'], 'match', 'pattern' => '/^[XYZ]\d{7}[A-Z]$|^\d{8}[A-Z]$/', 'message' => '⚠️ El formato del DNI/NIE es incorrecto'],
             [['dni'], 'validarDni'],
             [['nombre'], 'string', 'max' => 24],
-            [['nombre'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El nombre solo puede contener caracteres alfabéticos'],
+            [['nombre', 'apellidos'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ Solo puede contener caracteres alfabéticos'],
             [['apellidos'], 'string', 'max' => 48],
-            [['apellidos'], 'match', 'pattern' => '/^[a-zA-ZÁÉÍÓÚÑáéíóúñ ]+$/', 'message' => '⚠️ El apellido solo puede contener caracteres alfabéticos'],
             [['estado_matricula'], 'string', 'max' => 16],
-            [['estado_matricula'], 'in', 'range' => ['Matriculado', 'No matriculado'], 'message' => '⚠️ El estado de la matrícula solo puede ser "Matriculado" o "No matriculado"'],
-            [['dni'], 'unique', 'message' => '⚠️ El DNI ya esta registrado'],
-            [['nombre', 'apellidos'], 'unique', 'targetAttribute' => ['nombre', 'apellidos'], 'message' => '⚠️ El alumno ya existe'],
+            [['estado_matricula'], 'in', 'range' => ['Matriculado', 'No matriculado'], 'message' => '⚠️ Solo puede ser "Matriculado" o "No matriculado"'],
+            [['dni'], 'unique', 'message' => '⚠️ Ya esta registrado'],
+            [['nombre', 'apellidos'], 'unique', 'targetAttribute' => ['nombre', 'apellidos'], 'message' => '⚠️ Ya existe'],
             [['id_portatil'], 'exist', 'skipOnError' => true, 'targetClass' => Portatiles::class, 'targetAttribute' => ['id_portatil' => 'id_portatil']],
         ];
     }
@@ -55,15 +54,15 @@ class Alumnos extends \yii\db\ActiveRecord {
         if (preg_match('/^[0-9]{8}[A-Z]$/', $this->$attribute)) {
             $validacion = $this->validarFormatoDni($this->$attribute);
             if ($validacion !== true) {
-                $this->addError($attribute, "⚠️ El DNI es incorrecto");
+                $this->addError($attribute, "⚠️ DNI incorrecto");
             }
         } elseif (preg_match('/^[XYZ]\d{7,8}[A-Z]$/', $this->$attribute)) {
             $validacion = $this->validarFormatoNie($this->$attribute);
             if ($validacion !== true) {
-                $this->addError($attribute, "⚠️ El NIE es incorrecto");
+                $this->addError($attribute, "⚠️ NIE incorrecto");
             }
         } else {
-            $this->addError($attribute, "⚠️ El DNI/NIE es incorrecto");
+            $this->addError($attribute, "⚠️ DNI/NIE incorrecto");
         }
 
     }
