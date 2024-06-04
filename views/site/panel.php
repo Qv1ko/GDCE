@@ -181,20 +181,8 @@
 <script>
     $(document).ready(function() {
         $('#botonModalPortatiles').click(function(e) {
-            // Cancela el envío a la nueva página
             e.preventDefault();
-            // Carga el contenido del GridView mediante AJAX
-            $.ajax({
-                url: '<?= Url::to(['site/panel']) ?>',
-                type: 'GET',
-                success: function(data) {
-                    $('#portatiles-content').html(data);
-                    $('#modalPortatiles').modal('show');
-                },
-                error: function() {
-                    alert('Error al cargar los datos del GridView.');
-                }
-            });
+            $('#modalPortatiles').modal('show');
         });
     });
 </script>
@@ -251,9 +239,7 @@
 <script>
     $(document).ready(function() {
         $('#botonModalCargadores').click(function(e) {
-            // Cancela el envio a la nueva página
             e.preventDefault();
-            // Muestra el id modalPortatiles
             $('#modalCargadores').modal('show');
         });
     });
@@ -359,9 +345,7 @@
 <script>
     $(document).ready(function() {
         $('#botonModalAveriados').click(function(e) {
-            // Cancela el envio a la nueva página
             e.preventDefault();
-            // Muestra el id modalPortatiles
             $('#modalAveriados').modal('show');
         });
     });
@@ -499,7 +483,7 @@
         data: {
             labels: nombres,
             datasets: [{
-                label: 'Alumnos usando pórtatiles',
+                label: 'Alumnos usando portátiles',
                 backgroundColor: ['#489FB5', '#82C0CC'],
                 data: cantidades
             }]
