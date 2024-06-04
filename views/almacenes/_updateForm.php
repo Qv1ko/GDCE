@@ -11,7 +11,7 @@
 
 <div class="almacenes-form">
     <div class="container">
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(['id' => 'updateForm', 'enableAjaxValidation' => true]); ?>
     
             <div class="row">
                 <div class="col-md-6">
