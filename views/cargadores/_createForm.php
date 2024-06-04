@@ -12,36 +12,40 @@
 
 <div class="cargadores-form">
     <div class="container">
-        <?php $form = ActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
 
-            <div>
-                <?= $form->field($model, 'codigo', [
-                    'inputOptions' => [
-                        'placeholder' => 'ej: 001A',
-                        'class' => 'form-control',
-                    ],
-                ])->label($model->getAttributeLabel('codigo'))->textInput(['maxlength' => true]) ?>
+        <div class="row">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'codigo', [
+                        'inputOptions' => [
+                            'placeholder' => 'ej: 001A',
+                            'class' => 'form-control',
+                        ],
+                    ])->label($model->getAttributeLabel('codigo'))->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'potencia', [
+                        'inputOptions' => [
+                            'placeholder' => 'ej: 60',
+                            'class' => 'form-control',
+                        ],
+                    ])->label($model->getAttributeLabel('potencia'))->textInput() ?>
+                </div>
             </div>
 
-            <div>
-                <?= $form->field($model, 'potencia', [
-                    'inputOptions' => [
-                        'placeholder' => 'ej: 60',
-                        'class' => 'form-control',
-                    ],
-                ])->label($model->getAttributeLabel('potencia'))->textInput() ?>
-            </div>
-
-            <?= $form->field($model, 'estado')->label($model->getAttributeLabel('estado'))->dropDownList(
-                ['Disponible' => 'Disponible', 'Averiado' => 'Averiado'],
-                ['prompt'=>'Selecciona un estado']
-            ) ?>
-
-            <div>
-                <?= $form->field($model, 'id_almacen')->dropDownList(
-                    Almacenes::getAlmacenesDisponibles(),
-                    ['prompt' => 'Selecciona un almacén']
-                ) ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'estado')->label($model->getAttributeLabel('estado'))->dropDownList(
+                        ['Disponible' => 'Disponible', 'Averiado' => 'Averiado'],
+                        ['prompt'=>'Selecciona un estado']
+                    ) ?>
+                </div>
+                <div>
+                    <?= $form->field($model, 'id_almacen')->dropDownList(
+                        Almacenes::getAlmacenesDisponibles(),
+                        ['prompt' => 'Selecciona un almacén']
+                    ) ?>
+                </div>
             </div>
 
             <div class="row d-flex justify-content-around">

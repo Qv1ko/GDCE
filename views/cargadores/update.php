@@ -5,8 +5,6 @@
     /** @var yii\web\View $this */
     /** @var app\models\Cargadores $model */
 
-    $this->title = 'Editar cargador ' . $model->codigo;
-
 ?>
 
 <div class="cargadores-update">

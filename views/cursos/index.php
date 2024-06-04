@@ -66,7 +66,7 @@
                                         <path d="M16 5l3 3" />
                                     </svg>
                                     <span>Editar</span>
-                                </div>', $url, ['class' => 'btn btn-primary', 'id' => 'botonUpdate', 'data-code' => (($model->curso === "Primer curso") ? '1º ' : '2º ') . $model->nombre]);
+                                </div>', $url, ['class' => 'btn btn-primary', 'id' => 'botonUpdate', 'data-code' => 'Editar ' . (($model->curso === "Primer curso") ? '1º ' : '2º ') . $model->nombre]);
                             },
                             'delete' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">

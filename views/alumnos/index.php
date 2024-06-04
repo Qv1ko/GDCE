@@ -68,7 +68,7 @@
                     [
                         'label' => 'Portátil',
                         'value' => function ($model) {
-                            return ($model->portatil == null) ? 'Sin portátil' : 'Portátil ' . $model->portatil->codigo;
+                            return ($model->portatil == null) ? 'Sin portátil' : $model->portatil->codigo;
                         },
                     ],
                     [

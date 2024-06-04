@@ -38,10 +38,10 @@ class Cargadores extends \yii\db\ActiveRecord {
             [['potencia', 'id_almacen'], 'integer'],
             [['potencia'], NumberValidator::class, 'min' => 1, 'message' => '⚠️ El valor no puede ser menor de 1'],
             [['codigo'], 'string', 'max' => 4],
-            [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ El código debe seguir el siguiente formato de ejemplo: "123A"'],
+            [['codigo'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ Formano incorrecto'],
             [['estado'], 'string', 'max' => 24],
-            [['estado'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ El estado solo puede ser "Disponible", "No disponible" o "Averiado"'],
-            [['codigo'], 'unique', 'message' => '⚠️ El cargador ya existe'],
+            [['estado'], 'in', 'range' => ['Disponible', 'No disponible', 'Averiado'], 'message' => '⚠️ Solo puede ser "Disponible", "No disponible" o "Averiado"'],
+            [['codigo'], 'unique', 'message' => '⚠️ Ya existe'],
             [['id_almacen'], 'exist', 'skipOnError' => true, 'targetClass' => Almacenes::class, 'targetAttribute' => ['id_almacen' => 'id_almacen']],
         ];
     }

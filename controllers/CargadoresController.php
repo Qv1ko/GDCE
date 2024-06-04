@@ -10,6 +10,8 @@ use app\models\Portatiles;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * CargadoresController implements the CRUD actions for Cargadores model.
@@ -52,9 +54,15 @@ class CargadoresController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Cargadores();
 
-        if ($this->request->isPost) {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } elseif ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'El cargador se ha añadido correctamente.');
                 return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('error', 'Ha ocurrido un error al añadir el cargador.');
             }
         } else {
             $model->loadDefaultValues();
@@ -83,13 +91,17 @@ class CargadoresController extends Controller {
 
         $model = $this->findModel($id_cargador);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        } else {
+            if ($model->load($this->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'El cargador se ha actualizado correctamente.');
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->redirect(['index']);
+            } else {
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->render('update', ['model' => $model]);
+            }
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
 
     }
 
