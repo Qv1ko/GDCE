@@ -215,6 +215,8 @@ class AlumnosController extends Controller {
 
         Alumnos::updateAll(['id_portatil' => $idPortatil], ['id_alumno' => [$idAlumnoManana, $idAlumnoTarde]]);
 
+        Yii::$app->session->setFlash('success', 'El portátil a sido reservado correctamente.');
+
     }
 
     /**
@@ -238,6 +240,7 @@ class AlumnosController extends Controller {
 
         $this->findModel($id_alumno)->delete();
 
+        Yii::$app->session->setFlash('success', 'El alumno/a se ha eliminado correctamente.');
         return $this->redirect(['index']);
 
     }
@@ -259,7 +262,7 @@ class AlumnosController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('❌ El alumno/a no existe');
+        throw new NotFoundHttpException('El alumno/a no existe');
 
     }
 

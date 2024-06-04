@@ -44,38 +44,10 @@ class CursanController extends Controller {
 
         $dataProvider = new ActiveDataProvider([
             'query' => Cursan::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id_cursa' => SORT_DESC,
-                ]
-            ],
-            */
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-        ]);
-
-    }
-
-    /**
-     * Displays a single Cursan model.
-     * @param int $id_cursa Id Cursa
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id_cursa) {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        return $this->render('view', [
-            'model' => $this->findModel($id_cursa),
         ]);
 
     }
@@ -95,7 +67,7 @@ class CursanController extends Controller {
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_cursa' => $model->id_cursa]);
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -123,7 +95,7 @@ class CursanController extends Controller {
         $model = $this->findModel($id_cursa);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_cursa' => $model->id_cursa]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -160,7 +132,7 @@ class CursanController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('No existe una relación entre el alumno y el curso');
+        throw new NotFoundHttpException('No existe la relación entre el alumno y el curso');
 
     }
 

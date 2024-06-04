@@ -124,6 +124,7 @@ class CargadoresController extends Controller {
 
         $this->findModel($id_cargador)->delete();
 
+        Yii::$app->session->setFlash('success', 'El cargador se ha eliminado correctamente.');
         return $this->redirect(['index']);
 
     }
@@ -145,7 +146,7 @@ class CargadoresController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('❌ El cargador no existe');
+        throw new NotFoundHttpException('El cargador no existe');
 
     }
 

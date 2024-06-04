@@ -235,6 +235,7 @@ class PortatilesController extends Controller {
 
         $this->findModel($id_portatil)->delete();
 
+        Yii::$app->session->setFlash('success', 'El portátil se ha eliminado correctamente.');
         return $this->redirect(['index']);
 
     }

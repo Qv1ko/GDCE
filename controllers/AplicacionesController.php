@@ -55,6 +55,8 @@ class AplicacionesController extends Controller {
             if ($model->load($this->request->post()) && $model->save()) {
                 Yii::$app->session->setFlash('success', 'La aplicación se ha añadido correctamente.');
                 return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('error', 'Ha ocurrido un error al añadir la aplicación.');
             }
         } else {
             $model->loadDefaultValues();
@@ -106,24 +108,10 @@ class AplicacionesController extends Controller {
                 $model->save();
 
                 Yii::$app->session->setFlash('success', 'La aplicación se ha actualizado correctamente.');
-                if (Yii::$app->request->isAjax) {
-                    return $this->renderAjax('update', [
-                        'model' => $model,
-                    ]);
-                } else {
-                    return $this->redirect(['index']);
-                }
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->redirect(['index']);
 
             } else {
-                if (Yii::$app->request->isAjax) {
-                    return $this->renderAjax('update', [
-                        'model' => $model,
-                    ]);
-                } else {
-                    return $this->render('update', [
-                        'model' => $model,
-                    ]);
-                }
+                return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->render('update', ['model' => $model]);
             }
 
         }
@@ -149,6 +137,7 @@ class AplicacionesController extends Controller {
             $aplicacion->delete();
         }
 
+        Yii::$app->session->setFlash('success', 'La aplicación se ha eliminado correctamente.');
         return $this->redirect(['index']);
 
     }
@@ -170,7 +159,7 @@ class AplicacionesController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('❌ La aplicación no existe');
+        throw new NotFoundHttpException('La aplicación no existe');
 
     }
 

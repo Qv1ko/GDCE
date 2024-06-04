@@ -126,6 +126,7 @@ class AlmacenesController extends Controller {
         // Elimina el almacén
         $this->findModel($id_almacen)->delete();
 
+        Yii::$app->session->setFlash('success', 'El almacén se ha eliminado correctamente.');
         return $this->redirect(['index']);
 
     }
@@ -147,7 +148,7 @@ class AlmacenesController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('❌ El almacén no existe');
+        throw new NotFoundHttpException('El almacén no existe');
 
     }
 

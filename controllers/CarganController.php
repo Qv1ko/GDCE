@@ -44,38 +44,10 @@ class CarganController extends Controller {
 
         $dataProvider = new ActiveDataProvider([
             'query' => Cargan::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id_carga' => SORT_DESC,
-                ]
-            ],
-            */
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-        ]);
-
-    }
-
-    /**
-     * Displays a single Cargan model.
-     * @param int $id_carga Id Carga
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id_carga) {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        return $this->render('view', [
-            'model' => $this->findModel($id_carga),
         ]);
 
     }
@@ -95,7 +67,7 @@ class CarganController extends Controller {
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_carga' => $model->id_carga]);
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -123,7 +95,7 @@ class CarganController extends Controller {
         $model = $this->findModel($id_carga);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_carga' => $model->id_carga]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -150,6 +122,8 @@ class CarganController extends Controller {
             $model->id_cargador = $cargador;
             $model->id_portatil = $portatil;
             $model->save();
+
+            Yii::$app->session->setFlash('success', 'El cargador se ha vinculado correctamente.');
 
         } elseif ($cargador !== null && $portatil === null) {
 
@@ -199,7 +173,7 @@ class CarganController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('No existe esta carga');
+        throw new NotFoundHttpException('No existe la relación entre el cargador y el portátil');
 
     }
 

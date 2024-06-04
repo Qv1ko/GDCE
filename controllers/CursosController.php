@@ -120,6 +120,7 @@ class CursosController extends Controller {
         Cursan::deleteAll(['id_curso' => $id_curso]);
         $this->findModel($id_curso)->delete();
 
+        Yii::$app->session->setFlash('success', 'El curso se ha eliminado correctamente.');
         return $this->redirect(['index']);
 
     }
@@ -137,7 +138,7 @@ class CursosController extends Controller {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('El curso no existe');
 
     }
 
