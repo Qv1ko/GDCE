@@ -32,58 +32,102 @@
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     [
-                        'attribute' => 'codigo',
                         'label' => 'Portátil',
+                        'value' => function ($model) {
+                            return $model->codigo;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'marca',
                         'label' => 'Modelo',
                         'value' => function ($model) {
                             return empty($model->marca)? 'Sin definir' : $model->marca . ' ' . $model->modelo;
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'procesador',
                         'label' => 'CPU',
                         'value' => function ($model) {
                             return empty($model->procesador)? 'Sin definir' : $model->procesador;
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'memoria_ram',
                         'label' => 'RAM',
                         'value' => function ($model) {
                             return empty($model->memoria_ram)? 'Sin definir' : $model->memoria_ram . ' GB';
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'capacidad',
                         'label' => 'Capacidad',
                         'value' => function ($model) {
                             return empty($model->capacidad)? 'Sin definir' : $model->capacidad. ' GB ' . $model->dispositivo_almacenamiento;
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'estado',
                         'label' => 'Estado',
                         'value' => function ($model) {
                             return (($model->estado === 'Averiado')? '⚠️ ' : '') . $model->estado;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
                         },
                     ],
                     [
                         'label' => 'Cargador',
                         'value' => function ($model) {
-                            return empty($model->cargador->codigo)? '⚠️ Sin cargador' : $model->cargador->codigo;
+                            return empty($model->cargador->codigo)? 'Sin cargador' : $model->cargador->codigo;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
                         },
                     ],
                     [
                         'label' => 'Almacén',
                         'value' => function ($model) {
-                            return empty($model->almacen->id_almacen)? '⚠️ Sin almacén' : $model->almacen->aula;
+                            return empty($model->almacen->id_almacen)? 'Sin almacén' : $model->almacen->aula;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
                         },
                     ],
                     [
-                        'header' => 'Botones de gestión',
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, Portatiles $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id_portatil' => $model->id_portatil]);
@@ -127,7 +171,7 @@
                                         <path d="M17 17l3 0" />
                                         <path d="M20 17l0 3" />
                                     </svg>
-                                </div>', $url, ['class' => 'btn btn-info', 'download' => 'portatil_' . $model->codigo . '.png']);
+                                </div>', $url, ['class' => 'btn btn-primary', 'download' => 'portatil_' . $model->codigo . '.png']);
                             },
                             'update' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">
@@ -151,9 +195,14 @@
                                         <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                                         <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                     </svg>
-                                </div>', $url, ['class' => 'btn btn-danger', 'data-confirm' => '¿Estás seguro de que quieres borrar este portátil?', 'data-method' => 'post']);
+                                </div>', $url, ['class' => 'btn btn-primary', 'data-confirm' => '¿Estás seguro de que quieres borrar este portátil?', 'data-method' => 'post']);
                             }
-                        ]
+                        ],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'text-align: center; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                 ],
                 'summary' => '',
@@ -227,7 +276,7 @@
 </div>
 
 <script>
-    $('.botonAplicaciones').on('click', function() {
+    $('.botonAplicaciones').on('hiddenk', function() {
         var id = $(this).data('id');
         $.ajax({
             url: '<?= Url::to(['portatiles/aplicaciones']) ?>',

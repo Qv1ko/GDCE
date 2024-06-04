@@ -196,6 +196,7 @@ hr {
 .btn-primary {
     background-color: #16697A !important;
     border: none;
+    margin: 2px 2px 2px 2px;
 }
 
 /* .btn:focus, .btn:active {

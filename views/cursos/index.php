@@ -30,26 +30,54 @@
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     [
-                        'attribute' => 'nombre',
                         'label' => 'Curso',
                         'value' => function ($model) {
                             return (($model->curso === "Primer curso") ? '1º ' : '2º ') . $model->nombre . ' (' . $model->sigla . ')';
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'turno',
                         'label' => 'Turno',
+                        'value' => function ($model) {
+                            return $model->turno;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'aula',
                         'label' => 'Aula',
+                        'value' => function ($model) {
+                            return $model->aula;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'tutor',
                         'label' => 'Tutor',
+                        'value' => function ($model) {
+                            return $model->tutor;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'header' => 'Botones de gestión',
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, Cursos $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id_curso' => $model->id_curso]);
@@ -80,9 +108,14 @@
                                         <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                     </svg>
                                     <span>Eliminar</span>
-                                </div>', $url, ['class' => 'btn btn-danger', 'data-confirm' => '¿Estás seguro de que quieres borrar este curso?', 'data-method' => 'post']);
+                                </div>', $url, ['class' => 'btn btn-primary', 'data-confirm' => '¿Estás seguro de que quieres borrar este curso?', 'data-method' => 'post']);
                             }
-                        ]
+                        ],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'text-align: center; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                 ],
                 'summary' => '',

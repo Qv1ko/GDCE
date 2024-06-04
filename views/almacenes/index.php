@@ -31,30 +31,42 @@
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     [
-                        'attribute' => 'aula',
                         'label' => 'Aula',
-                        // 'headerOptions' => ['style' => 'text-align:center'],
-                        // 'contentOptions' => ['style' => 'text-align:center'],
+                        'value' => function ($model) {
+                            return $model->aula;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'capacidad',
                         'label' => 'Capacidad máxima',
                         'value' => function ($model) {
                             return ($model->capacidad != null) ? $model->capacidad . ' dispositivos' : 'Sin definir';
                         },
-                        // 'headerOptions' => ['style' => 'text-align:center'],
-                        // 'contentOptions' => ['style' => 'text-align:center'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
                         'label' => 'Dispositivos almacenados',
                         'value' => function ($model) {
                             return Almacenes::getOcupacion($model->id_almacen) . ' dispositivos';
                         },
-                        // 'headerOptions' => ['style' => 'text-align:center'],
-                        // 'contentOptions' => ['style' => 'text-align:center'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'header' => 'Botones de gestión',
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, Almacenes $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id_almacen' => $model->id_almacen]);
@@ -83,11 +95,14 @@
                                         <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                     </svg>
                                     <span>Eliminar</span>
-                                </div>', $url, ['class' => 'btn btn-danger', 'data-confirm' => '¿Estás seguro de que quieres borrar este almacén?', 'data-method' => 'post']);
+                                </div>', $url, ['class' => 'btn btn-primary', 'data-confirm' => '¿Estás seguro de que quieres borrar este almacén?', 'data-method' => 'post']);
                             }
                         ],
-                        'headerOptions' => ['style' => 'text-align:center'],
-                        'contentOptions' => ['style' => 'text-align:center'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'text-align: center; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                 ],
                 'summary' => '',

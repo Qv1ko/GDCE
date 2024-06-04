@@ -31,7 +31,7 @@
                             <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                         </svg>
                     </div>', ['delete', 'id_aplicacion' => $model->id_aplicacion], [
-                        'class' => 'btn btn-danger',
+                        'class' => 'btn btn-primary',
                         'data' => [
                             'confirm' => '¿Estás seguro de que quieres eliminar esta aplicación?',
                             'method' => 'post',

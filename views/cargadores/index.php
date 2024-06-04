@@ -30,21 +30,39 @@
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     [
-                        'attribute' => 'codigo',
                         'label' => 'Código',
+                        'value' => function ($model) {
+                            return $model->codigo;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'potencia',
                         'label' => 'Potencia',
                         'value' => function ($model) {
                             return empty($model->potencia)? 'Sin definir' : $model->potencia . ' W';
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'estado',
                         'label' => 'Estado',
                         'value' => function ($model) {
                             return (($model->estado === 'Averiado')? '⚠️ ' : '') . $model->estado;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
                         },
                     ],
                     [
@@ -52,9 +70,14 @@
                         'value' => function ($model) {
                             return empty($model->almacen->id_almacen)? 'Sin almacén' : $model->almacen->aula;
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'header' => 'Botones de gestión',
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, Cargadores $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id_cargador' => $model->id_cargador]);
@@ -85,7 +108,7 @@
                                         <path d="M20 17l0 3" />
                                     </svg>
                                     <span>Descargar QR</span>
-                                </div>', $url, ['class' => 'btn btn-info', 'download' => 'cargador_' . $model->codigo . '.png']);
+                                </div>', $url, ['class' => 'btn btn-primary', 'download' => 'cargador_' . $model->codigo . '.png']);
                             },
                             'update' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">
@@ -109,9 +132,14 @@
                                         <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                     </svg>
                                     <span>Eliminar</span>
-                                </div>', $url, ['class' => 'btn btn-danger', 'data-confirm' => '¿Estás seguro de que quieres borrar este cargador?', 'data-method' => 'post']);
+                                </div>', $url, ['class' => 'btn btn-primary', 'data-confirm' => '¿Estás seguro de que quieres borrar este cargador?', 'data-method' => 'post']);
                             }
-                        ]
+                        ],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'text-align: center; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],                    
                 ],
                 'summary' => '',

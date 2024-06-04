@@ -29,18 +29,30 @@
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     [
-                        'attribute' => 'dni',
                         'label' => 'DNI',
+                        'value' => function ($model) {
+                            return $model->dni;
+                        },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'nombre',
                         'label' => 'Alumno',
                         'value' => function ($model) {
                             return $model->nombre . ' ' . $model->apellidos;
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'attribute' => 'estado_matricula',
                         'label' => 'Matriculación',
                         'value' => function ($model) {
                             if ($model->estado_matricula === 'Matriculado' && !empty($model->cursos)) {
@@ -64,15 +76,26 @@
                                 return 'No matriculado/a';
                             }
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
                         'label' => 'Portátil',
                         'value' => function ($model) {
                             return ($model->portatil == null) ? 'Sin portátil' : $model->portatil->codigo;
                         },
+                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                     [
-                        'header' => 'Botones de gestión',
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, Alumnos $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id_alumno' => $model->id_alumno]);
@@ -103,9 +126,15 @@
                                         <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                                     </svg>
                                     <span>Eliminar</span>
-                                </div>', $url, ['class' => 'btn btn-danger', 'data-confirm' => '¿Estás seguro de que quieres borrar este alumno/a?', 'data-method' => 'post']);
+                                </div>', $url, ['class' => 'btn btn-primary', 'data-confirm' => '¿Estás seguro de que quieres borrar este alumno/a?', 'data-method' => 'post']);
                             }
-                        ]
+                        ],
+                        'headerOptions' => ['style' => 'text-align: center; color: #489FB5;'],
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'text-align: center; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
                     ],
                 ],
                 'summary' => '',
