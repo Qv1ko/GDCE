@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-md-6">
                     <?= $form->field($model, 'id_portatil')->label($model->getAttributeLabel('id_portatil'))->dropDownList(
-                        Portatiles::getPortatilesDisponibles(),
+                        Portatiles::getCargadoresLibresmpa($model->id_portatil),
                         ['prompt'=>'Selecciona un portátil', 'class' => 'form-control']
                     ) ?>
                 </div>

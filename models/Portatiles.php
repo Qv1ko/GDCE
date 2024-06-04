@@ -122,6 +122,10 @@ class Portatiles extends \yii\db\ActiveRecord {
         return ArrayHelper::map(Portatiles::find()->where(['estado' => 'Disponible'])->andWhere(['alumnos.id_alumno' => null])->leftJoin('alumnos', 'portatiles.id_portatil = alumnos.id_portatil')->all(), 'id_portatil', 'codigo');
     }
 
+    public static function getCargadoresLibresmpa($idPortatil) {
+        return ArrayHelper::map(Portatiles::find()->leftJoin('alumnos', 'portatiles.id_portatil = alumnos.id_portatil')->where(['estado' => 'Disponible', 'alumnos.id_alumno' => null])->orWhere(['portatiles.id_portatil' => $idPortatil])->all(), 'id_portatil', 'codigo');
+    }
+
     // Portátiles sin cargador
     public static function getListaPortatilesSinCargador($idPortatilActual) {
         return ArrayHelper::map(Portatiles::find()->leftJoin('cargan', 'portatiles.id_portatil = cargan.id_portatil')->where(['cargan.id_carga' => null])->andWhere(['!=', 'portatiles.estado', 'Averiado'])->union(Portatiles::find()->where(['portatiles.id_portatil' => $idPortatilActual]))->all(), 'id_portatil', 'codigo');
