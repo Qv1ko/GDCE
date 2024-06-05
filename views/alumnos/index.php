@@ -29,7 +29,7 @@
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     [
-                        'label' => 'DNI',
+                        'label' => 'DNI / NIE',
                         'value' => function ($model) {
                             return $model->dni;
                         },

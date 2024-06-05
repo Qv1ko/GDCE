@@ -30,7 +30,7 @@
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     [
-                        'label' => 'Código',
+                        'label' => 'Cargador',
                         'value' => function ($model) {
                             return $model->codigo;
                         },
