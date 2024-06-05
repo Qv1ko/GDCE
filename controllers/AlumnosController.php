@@ -211,11 +211,26 @@ class AlumnosController extends Controller {
 
         $idPortatil = Yii::$app->request->post('portatil');
         $idAlumnoManana = Yii::$app->request->post('alumnoManana');
+        if ($idAlumnoManana == null) {
+            $cursosAlumnoManana = 0;
+        } else {
+            $alumnoManana = $this->findModel($idAlumnoManana);
+            $cursosAlumnoManana = count($alumnoManana->cursos);
+        }
         $idAlumnoTarde = Yii::$app->request->post('alumnoTarde');
+        if ($idAlumnoTarde == null) {
+            $cursosAlumnoTarde = 0;
+        } else {
+            $alumnoTarde = $this->findModel($idAlumnoTarde);
+            $cursosAlumnoTarde = count($alumnoTarde->cursos);
+        }
 
-        Alumnos::updateAll(['id_portatil' => $idPortatil], ['id_alumno' => [$idAlumnoManana, $idAlumnoTarde]]);
-
-        Yii::$app->session->setFlash('success', 'El portátil a sido reservado correctamente.');
+        if (($cursosAlumnoManana > 1 || $cursosAlumnoTarde > 1) && $idAlumnoManana === $idAlumnoTarde) {
+            Yii::$app->session->setFlash('error', 'Un alumno seleccionado necesita el portátil durante el turno de mañana y tarde.');
+        } else {
+            Alumnos::updateAll(['id_portatil' => $idPortatil], ['id_alumno' => [$idAlumnoManana, $idAlumnoTarde]]);    
+            Yii::$app->session->setFlash('success', 'El portátil ha sido reservado correctamente.');
+        }
 
     }
 

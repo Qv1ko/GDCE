@@ -9,7 +9,6 @@
 ?>
 
 <div class="container">
-
     <div class="d-flex flex-row justify-content-around align-items-center">
 
         <div class="col-4 d-flex flex-column align-items-center" style="margin: 16px 0;">
@@ -64,24 +63,26 @@
     <div class="d-flex flex-column justify-content-center align-items-center">
         <?php if ($portatil->estado !== 'Averiado'): ?>
             <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunrise">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunrise" style="margin-right: 8px;">
                     <title>Alumno de mañana</title>
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M3 17h1m16 0h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7m-9.7 5.7a4 4 0 0 1 8 0" />
                     <path d="M3 21l18 0" />
                     <path d="M12 9v-6l3 3m-6 0l3 -3" />
                 </svg>
                 <?php
-                    if ($alumnoManana) {
-                        echo '<p style="margin-left: 8px;">Alumno de mañana: ' . $alumnoManana . '</p>';
+                    if ($alumnoManana == false && $alumnoTarde == false) {
+                        echo Html::dropDownList('alumnosTarde', null, $listaAlumnosManana, ['prompt' => 'Reservar alumno de tarde', 'class' => 'form-control', 'onchange' => 'var idTarde = $(this).val();']);
+                    } elseif ($alumnoManana != false) {
+                        echo '<p>Alumno de mañana: ' . $alumnoManana->nombreCompleto . '</p>';
                     } else {
-                        echo Html::dropDownList('alumnosManana', null, $listaAlumnosManana, ['prompt' => 'Reservar alumno de mañana', 'class' => 'form-control', 'onchange' => 'var idManana = $(this).val();']);
+                        echo Html::dropDownList('alumnosManana', null, $listaAlumnosSoloManana, ['prompt' => 'Reservar alumno de mañana', 'class' => 'form-control', 'onchange' => 'var idManana = $(this).val();']);
                     }
                 ?>
             </div>
 
-            <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunset">
+            <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunset" style="margin-right: 8px;">
                     <title>Alumno de tarde</title>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M3 17h1m16 0h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7m-9.7 5.7a4 4 0 0 1 8 0" />
@@ -89,10 +90,12 @@
                     <path d="M12 3v6l3 -3m-6 0l3 3" />
                 </svg>
                 <?php
-                    if ($alumnoTarde) {
-                        echo '<p style="margin-left: 8px">Alumno de tarde: ' . $alumnoTarde . '</p>';
-                    } else {
+                    if ($alumnoTarde == false && $alumnoManana == false) {
                         echo Html::dropDownList('alumnosTarde', null, $listaAlumnosTarde, ['prompt' => 'Reservar alumno de tarde', 'class' => 'form-control', 'onchange' => 'var idTarde = $(this).val();']);
+                    } elseif ($alumnoTarde != false) {
+                        echo '<p>Alumno de tarde: ' . $alumnoTarde->nombreCompleto . '</p>';
+                    } else {
+                        echo Html::dropDownList('alumnosTarde', null, $listaAlumnosSoloTarde, ['prompt' => 'Reservar alumno de tarde', 'class' => 'form-control', 'onchange' => 'var idTarde = $(this).val();']);
                     }
                 ?>
             </div>
@@ -136,8 +139,8 @@
                 type: "POST",
                 data: {
                     portatil: <?= $portatil->id_portatil ?>,
-                    alumnoManana: idManana,
-                    alumnoTarde: idTarde
+                    alumnoManana: (idManana == null) ? <?= ($alumnoManana == null) ? 'null' : $alumnoManana->id_alumno ?> : idManana,
+                    alumnoTarde: (idTarde == null) ? <?= ($alumnoTarde == null) ? 'null' : $alumnoTarde->id_alumno ?> : idTarde
                 },
                 success: function(response) {
                     alert('Portátil <?= $portatil->codigo ?> reservado');
