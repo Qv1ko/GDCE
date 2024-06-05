@@ -7,6 +7,7 @@ use app\models\Alumnos;
 use app\models\AlumnosSearch;
 use app\models\Cursan;
 use app\models\Portatiles;
+use app\models\Cursos;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -47,8 +48,8 @@ class AlumnosController extends Controller {
         }
 
         Portatiles::sincronizarPortatiles();
-        Alumnos::sincronizarAlumnos();
         Cursan::sincronizarCursan();
+        Alumnos::sincronizarAlumnos();
 
         $searchModel = new AlumnosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

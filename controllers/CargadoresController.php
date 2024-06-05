@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Almacenes;
 use Yii;
 use app\models\Cargadores;
 use app\models\CargadoresSearch;

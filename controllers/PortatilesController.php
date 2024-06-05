@@ -7,6 +7,7 @@ use app\models\Portatiles;
 use app\models\PortatilesSearch;
 use app\models\Aplicaciones;
 use app\models\Alumnos;
+use app\models\Cargadores;
 use app\models\Cargan;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -46,9 +47,10 @@ class PortatilesController extends Controller {
             return $this->goHome();
         }
 
-        Portatiles::sincronizarPortatiles();
         Aplicaciones::sincronizarAplicaciones();
+        Cargadores::sincronizarCargadores();
         Cargan::sincronizarCargan();
+        Portatiles::sincronizarPortatiles();
 
         $searchModel = new PortatilesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
