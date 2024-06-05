@@ -1,7 +1,7 @@
 ## Reglas de negocio
 
 - La capacidad máxima de un almacén nunca podrá ser un número negativo.
-- No puede haber dos alumnos con el mismo nombre y apellidos o con el mismo DNI.
+- No puede haber dos alumnos con el mismo nombre y apellidos o con el mismo DNI/NIE.
 - El DNI debe tener un formato correcto.
 - Los alumnos que no cursen ningún curso no podrán tener un portátil.
 - Si el portátil de un alumno pasa a estado averiado, el alumno perderá el portátil.
