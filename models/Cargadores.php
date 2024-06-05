@@ -107,16 +107,8 @@ class Cargadores extends \yii\db\ActiveRecord {
             if ($cargador->estado === 'Averiado') {
                 continue;
             }
-        
-            $portatilNoDisponible = false;
-            foreach ($cargador->portatil as $portatil) {
-                if ($portatil->estado === "No disponible") {
-                    $portatilNoDisponible = true;
-                    break;
-                }
-            }
-        
-            $cargador->estado = $portatilNoDisponible ? 'No disponible' : 'Disponible';
+
+            $cargador->estado = ($cargador->portatil) ? 'No disponible' : 'Disponible';
             $cargador->save();
 
         }
