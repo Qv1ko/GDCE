@@ -31,6 +31,7 @@
                     <div class="d-flex justify-content-around">
                         <?= Html::a('<div class="d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list" style="margin-right: 4px;">
+                                <title>Ver listado</title>
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M9 6l11 0" />
                                 <path d="M9 12l11 0" />
@@ -59,6 +60,7 @@
                     <div class="d-flex justify-content-around">
                         <?= Html::a('<div class="d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list" style="margin-right: 4px;">
+                                <title>Ver listado</title>
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M9 6l11 0" />
                                 <path d="M9 12l11 0" />
@@ -87,6 +89,7 @@
                     <div class="d-flex justify-content-around">
                         <?= Html::a('<div class="d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list" style="margin-right: 4px;">
+                                <title>Ver listado</title>
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M9 6l11 0" />
                                 <path d="M9 12l11 0" />

@@ -74,7 +74,7 @@ use yii\helpers\Html;
                     <path d="M3 19l18 0" />
                     <path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" />
                 </svg>
-                <p style="margin-left: 8px">Portatil <?= $portatil->codigo ?></p>
+                <p style="margin-left: 8px">Portátil <?= $portatil->codigo ?></p>
             </div>
         <?php endif; ?>
     </div>
@@ -82,6 +82,7 @@ use yii\helpers\Html;
     <div class="row d-flex justify-content-around">
         <?= Html::button('<div class="d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-plus" style="margin-right: 4px;">
+                <title>Guardar</title>
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M9 12h6" />
                 <path d="M12 9v6" />
@@ -91,6 +92,7 @@ use yii\helpers\Html;
         </div>', ['class' => 'btn btn-success', 'id' => 'guardarBtn']) ?>
         <?= Html::button('<div class="d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-x" style="margin-right: 4px;">
+                <title>Cancelar</title>    
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
                 <path d="M9 9l6 6m0 -6l-6 6" />

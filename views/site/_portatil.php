@@ -40,6 +40,7 @@
 
         <div class="col-4 d-flex flex-column align-items-center" style="margin: 16px 0;">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse">
+                <title>Almacén</title>
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M3 21v-13l9 -4l9 4v13" />
                 <path d="M13 13h4v8h-10v-6h6" />
@@ -50,6 +51,7 @@
 
         <div class="col-4 d-flex flex-column align-items-center" style="margin: 16px 0;">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-battery-charging">
+                <title>Cargador</title>    
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M16 7h1a2 2 0 0 1 2 2v.5a.5 .5 0 0 0 .5 .5a.5 .5 0 0 1 .5 .5v3a.5 .5 0 0 1 -.5 .5a.5 .5 0 0 0 -.5 .5v.5a2 2 0 0 1 -2 2h-2" />
                 <path d="M8 7h-2a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h1" />
@@ -108,6 +110,7 @@
     <div class="row d-flex justify-content-around">
         <?= Html::button('<div class="d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-plus" style="margin-right: 4px;">
+                <title>Guardar</title>    
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M9 12h6" />
                 <path d="M12 9v6" />
@@ -117,6 +120,7 @@
         </div>', ['class' => 'btn btn-success', 'id' => 'guardarBtn']) ?>
         <?= Html::button('<div class="d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-x" style="margin-right: 4px;">
+                <title>Cancelar</title>    
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
                 <path d="M9 9l6 6m0 -6l-6 6" />
