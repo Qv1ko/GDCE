@@ -34,7 +34,7 @@ class Almacenes extends \yii\db\ActiveRecord {
             [['aula'], 'match', 'pattern' => '/^\d{3}[A-Z]$/', 'message' => '⚠️ Formato incorrecto'],
             [['aula'], 'unique', 'message' => '⚠️ Ya existe'],
             [['capacidad'], 'integer', 'message' => '⚠️ Formato incorrecto'],
-            [['capacidad'], NumberValidator::class, 'min' => 0, 'tooSmall' => '⚠️ Valores negativos'],
+            [['capacidad'], NumberValidator::class, 'min' => 0, 'max' => 150, 'tooSmall' => '⚠️ Valores negativos', 'tooBig' => '⚠️ El valor máximo es 150'],
         ];
     }
 
