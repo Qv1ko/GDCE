@@ -11,7 +11,7 @@
 <div class="container">
     <div class="d-flex flex-row justify-content-around align-items-center">
 
-        <div class="col-4 d-flex flex-column align-items-center" style="margin: 16px 0;">
+        <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
             <?php if ($estado === "Disponible") : ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-check">
                     <title>Estado del dispositivo</title>
@@ -38,7 +38,7 @@
             <p style="margin-top: 8px"><?= $estado ?></p>
         </div>
 
-        <div class="col-4 d-flex flex-column align-items-center" style="margin: 16px 0;">
+        <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse">
                 <title>Almacén</title>
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -49,7 +49,7 @@
             <p style="margin-top: 8px;">Aula <?= $almacen ?></p>
         </div>
 
-        <div class="col-4 d-flex flex-column align-items-center" style="margin: 16px 0;">
+        <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-battery-charging">
                 <title>Cargador</title>    
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -74,7 +74,7 @@
                 </svg>
                 <?php
                     if ($alumnoManana == false && $alumnoTarde == false) {
-                        echo Html::dropDownList('alumnosTarde', null, $listaAlumnosManana, ['prompt' => 'Reservar alumno de tarde', 'class' => 'form-control', 'onchange' => 'var idTarde = $(this).val();']);
+                        echo Html::dropDownList('alumnosManana', null, $listaAlumnosManana, ['prompt' => 'Reservar alumno de mañana', 'class' => 'form-control', 'onchange' => 'var idManana = $(this).val();']);
                     } elseif ($alumnoManana != false) {
                         echo '<p>Alumno de mañana: ' . $alumnoManana->nombreCompleto . '</p>';
                     } else {

@@ -26,7 +26,7 @@
             
             <div class="col-md-12 col-10 d-flex justify-content-center">
                 <!-- Crear una columna para el lector de códigos QR -->
-                <div id="reader"></div>
+                <div id="reader" style="margin: 8px 0;"></div>
             </div>
 
         </div>
@@ -41,11 +41,11 @@
             </div>
 
             <!-- Crear una columna para el grupo de entrada -->
-            <div class="col-md-2 col-sd-3 col-6">
+            <div class="col-7 col-xl-2 col-lg-3 col-md-3 col-sm-4" style="margin: 8px 0;">
                 <!-- Crear un grupo de entrada -->
                 <div class="input-group">
 
-                    <input type="text" id="searchInput" class="form-control" placeholder="(ej. 123A)">
+                    <input type="text" id="searchInput" class="form-control" placeholder="ej. 123A">
 
                     <div class="input-group-append">
                         <!-- Crear un botón para escanear el código QR o ingresar el código de portátil -->

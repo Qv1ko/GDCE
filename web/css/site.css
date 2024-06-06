@@ -242,7 +242,7 @@ table th, table td {
 @media (max-width: 767px) {
 
     main > .container {
-        padding: 128px 0px 64px; /* Ajustado para compensar el pie de página fijo */
+        padding: 80px 0px 24px; /* Ajustado para compensar el pie de página fijo */
     }
 
     .nav li > form > button.logout {

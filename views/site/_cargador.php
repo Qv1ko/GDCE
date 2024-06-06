@@ -14,7 +14,7 @@ use yii\helpers\Html;
 
     <div class="d-flex flex-row justify-content-around align-items-center">
 
-        <div class="col-4 d-flex flex-column align-items-center" style="margin: 16px 0;">
+        <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
             <?php if ($estado === "Disponible") : ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-check">
                     <title>Estado del dispositivo</title>
@@ -41,7 +41,7 @@ use yii\helpers\Html;
             <p style="margin-top: 8px"><?= $estado ?></p>
         </div>
 
-        <div class="col-4 d-flex flex-column align-items-center" style="margin: 16px 0;">
+        <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse">
                 <title>Almacén</title>
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -55,7 +55,7 @@ use yii\helpers\Html;
 
     <div class="d-flex flex-column justify-content-center align-items-center">
         <?php if ($cargador->estado === 'Disponible'): ?>
-            <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0;">
+            <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center text-center" style="margin: 16px 0;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-laptop" style="margin-right: 8px;">
                     <title>Portátil</title>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -67,7 +67,7 @@ use yii\helpers\Html;
 
             </div>
         <?php elseif ($cargador->estado === 'No disponible'): ?>
-            <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0;">
+            <div class="col-lg-8 d-flex flex-row justify-content-center align-items-center" style="margin: 16px 0;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-laptop">
                     <title>Portátil</title>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
