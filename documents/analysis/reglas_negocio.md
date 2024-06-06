@@ -10,3 +10,4 @@
 - Si un portátil o un cargador cambia su estado a averiado, se eliminará su relación con el otro dispositivo.
 - Un alumno podrá estar en varios cursos durante el mismo año, siempre que estos no tengan el mismo turno.
 - Si un alumno cursa un curso en el turno de mañana, su portátil estará en estado no disponible durante el turno de mañana, y lo mismo aplicará para el turno de tarde si el curso se imparte por las tardes.
+- Un alumno que esté matriculado en un curso de mañana y otro de tarde solo podrá reservar portátiles que estén disponibles en ambos turnos.
