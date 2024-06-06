@@ -1,0 +1,16 @@
+## Bibliografía
+
+- [Animación botones cabecera](https://uiverse.io/WhiteNervosa/popular-ladybug-27)
+- [Certificado SSL en XAMPP](https://www.youtube.com/watch?v=zrbaE1Wdviw)
+- [ChatGPT](https://openai.com/chatgpt)
+- [Copilot](https://copilot.microsoft.com/)
+- [Escáner de códigos QR](https://openjavascript.info/2022/12/10/qr-code-scanner-with-html5-qrcode-js/)
+- [Formulario de búsqueda](https://stackoverflow.com/questions/32900328/how-to-implement-single-search-form-in-yii2)
+- [Generador y validador de DNI/NIE](https://www.generador-de-dni.com)
+- [Gráficos](https://www.chartjs.org/)
+- [Implementación de los gráficos](https://www.w3schools.com/ai/ai_chartjs.asp)
+- [Mensaje flash](https://stackoverflow.com/questions/32793569/how-to-set-a-flash-message-in-yii2)
+- [Perplexity](https://perplexity.ai)
+- [Restringir vista por usuario](https://forum.yiiframework.com/t/restrict-view-for-role-or-user/79967)
+- [Tipografía](https://fonts.google.com/specimen/Roboto)
+- [Validaciones](https://www.yiiframework.com/doc/guide/2.0/en/tutorial-core-validators)
