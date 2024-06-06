@@ -21,8 +21,18 @@
                 'dataProvider' => $dataProvider,
                 'showHeader' => false,
                 'columns' => [
-                    'aplicacion',
+                    [
+                        'value' => function ($aplicaciones) {
+                            return $aplicaciones->aplicacion;
+                        },
+                        'contentOptions' => function ($model, $key, $index, $column) {
+                            return [
+                                'style' => 'background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                            ];
+                        },
+                    ],
                 ],
+                'emptyText' => 'No tiene aplicaciones.',
                 'summary' => '',
             ]); ?>
         </div>

@@ -18,6 +18,11 @@
 
 ?>
 
+<style>
+    .container, .container-sm, .container-md, .container-lg, .container-xl {
+        max-width: 80%;
+    }
+</style>
 
 <div class="almacenes-index">
     <div class="container">

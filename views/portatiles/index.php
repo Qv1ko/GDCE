@@ -5,8 +5,6 @@
     use yii\helpers\Url;
     use yii\grid\ActionColumn;
     use yii\grid\GridView;
-    use yii\widgets\ListView;
-    use yii\helpers\ArrayHelper;
     use Endroid\QrCode\QrCode;
 
     /** @var yii\web\View $this */
@@ -20,8 +18,14 @@
 
 ?>
 
+<style>
+    .container, .container-sm, .container-md, .container-lg, .container-xl {
+        max-width: 95%;
+    }
+</style>
+
 <div class="portatiles-index">
-    <div class="container">
+    <div class="container" id="container-portatiles">
 
         <h1><?= Html::encode($this->title) ?></h1>
 
@@ -277,7 +281,7 @@
 </div>
 
 <script>
-    $('.botonAplicaciones').on('hiddenk', function() {
+    $('.botonAplicaciones').on('click', function() {
         var id = $(this).data('id');
         $.ajax({
             url: '<?= Url::to(['portatiles/aplicaciones']) ?>',

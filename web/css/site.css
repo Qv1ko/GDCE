@@ -184,7 +184,6 @@ hr {
     padding-bottom: 16px;
 }
 
-/* Estilos para cajas - página de portatil */
 .caja {
     border: 2px solid #16697A32;
     border-radius: 8px;
@@ -227,6 +226,16 @@ hr {
     padding: 16px;
     border-radius: 8px;
     text-align: center;
+}
+
+table {
+    width: 100%; /* Ancho de la tabla */
+    border-collapse: collapse; /* Colapsa los bordes de la tabla */
+    word-wrap: break-word; /* Permite el ajuste de palabras */
+}
+
+table th, table td {
+    white-space: nowrap; /* No permite el cambio de línea en las celdas */
 }
 
 /* Estilos para tamaños de pantalla pequeños */
