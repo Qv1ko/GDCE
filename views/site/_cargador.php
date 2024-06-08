@@ -125,7 +125,6 @@ use yii\helpers\Html;
                 location.href = '<?= Url::to(['index']) ?>';
             },
             error: function(xhr, status, error) {
-                <?= Yii::$app->session->setFlash('error', 'Ha ocurrido un error al intentar vincular el cargador'); ?>
             }
         });
         

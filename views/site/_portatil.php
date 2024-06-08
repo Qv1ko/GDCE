@@ -158,7 +158,6 @@
                     location.href = '<?= Url::to(['index']) ?>';
                 },
                 error: function(xhr, status, error) {
-                    <?= Yii::$app->session->setFlash('error', 'Ha ocurrido un error al intentar reservar el portátil'); ?>
                 }
             });
         } else {
