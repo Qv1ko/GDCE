@@ -46,7 +46,11 @@
                 <path d="M13 13h4v8h-10v-6h6" />
                 <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
             </svg>
-            <p style="margin-top: 8px;">Aula <?= $almacen ?></p>
+            <?php if ($almacen) : ?>
+                <p style="margin-top: 8px;">Aula <?= $almacen ?></p>
+            <?php else : ?>
+                <p style="margin-top: 8px;">Sin almacén</p>
+            <?php endif; ?>
         </div>
 
         <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
@@ -57,7 +61,11 @@
                 <path d="M8 7h-2a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h1" />
                 <path d="M12 8l-2 4h3l-2 4" />
             </svg>
-            <p style="margin-top: 8px;">Cargador <?= $cargador ?></p>
+            <?php if ($cargador) : ?>
+                <p style="margin-top: 8px;">Cargador <?= $cargador ?></p>
+            <?php else : ?>
+                <p style="margin-top: 8px;">Sin cargador</p>
+            <?php endif; ?>
         </div>
 
     </div>
@@ -102,7 +110,7 @@
                 ?>
             </div>
         <?php else: ?>
-            <h3>El portátil no se puede reservar porque esta averiado</h3>
+            <h3 style="margin: 24px 0;">El portátil no se puede reservar porque esta averiado</h3>
         <?php endif; ?>
 
     </div>
@@ -147,11 +155,10 @@
                     alumnoTarde: (idTarde == null) ? <?= ($alumnoTarde == null) ? 'null' : $alumnoTarde->id_alumno ?> : idTarde
                 },
                 success: function(response) {
-                    alert('Portátil <?= $portatil->codigo ?> reservado');
                     location.href = '<?= Url::to(['index']) ?>';
                 },
                 error: function(xhr, status, error) {
-                    alert('Error: ' + error);
+                    <?= Yii::$app->session->setFlash('error', 'Ha ocurrido un error al intentar reservar el portátil'); ?>
                 }
             });
         } else {

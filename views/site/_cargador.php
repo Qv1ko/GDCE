@@ -49,7 +49,11 @@ use yii\helpers\Html;
                 <path d="M13 13h4v8h-10v-6h6" />
                 <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
             </svg>
-            <p style="margin-top: 8px">Aula <?= $almacen ?></p>
+            <?php if ($almacen) : ?>
+                <p style="margin-top: 8px;">Aula <?= $almacen ?></p>
+            <?php else : ?>
+                <p style="margin-top: 8px;">Sin almacén</p>
+            <?php endif; ?>
         </div>    
     </div>
 
@@ -63,7 +67,7 @@ use yii\helpers\Html;
                     <path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" />
                 </svg>
 
-                <?= Html::dropDownList('portatilSeleccionado', $portatil->id_portatil, Portatiles::getListaPortatilesSinCargador($portatil->id_portatil), ['prompt' => 'Selecciona un portátil', 'class' => 'form-control', 'id' => 'portatilSeleccionado']); ?>
+                <?= Html::dropDownList('portatilSeleccionado', null, Portatiles::getListaPortatilesSinCargador(), ['prompt' => 'Selecciona un portátil', 'class' => 'form-control', 'id' => 'portatilSeleccionado']); ?>
 
             </div>
         <?php elseif ($cargador->estado === 'No disponible'): ?>
@@ -76,6 +80,8 @@ use yii\helpers\Html;
                 </svg>
                 <p style="margin-left: 8px">Portátil <?= $portatil->codigo ?></p>
             </div>
+        <?php else : ?>
+            <h3 style="margin: 24px 0;">El cargador no se puede vincular porque esta averiado</h3>
         <?php endif; ?>
     </div>
 
@@ -116,13 +122,10 @@ use yii\helpers\Html;
                 portatil: portatil,
             },
             success: function(response) {
-                alert('Cambios guardados correctamente');
                 location.href = '<?= Url::to(['index']) ?>';
             },
             error: function(xhr, status, error) {
-                console.log('Error: ' + error);
-                console.log('Status: ' + status);
-                console.log(xhr);
+                <?= Yii::$app->session->setFlash('error', 'Ha ocurrido un error al intentar vincular el cargador'); ?>
             }
         });
         
