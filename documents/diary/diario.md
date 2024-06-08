@@ -3,14 +3,38 @@
 **12/11/2023**
 - Entrega del proyecto inicial.
 
-**21/12/2023**
-- Entrega del anteproyecto.
+**28/12/2023**
+- Desarrollo de la portada, encabezado y puntos principales del anteproyecto.
+
+**29/12/2023**
+ -Elaboración de la presentación del problema planteado.
+
+**30/12/2023**
+- Desarrollo del análisis DAFO y descripción de la documentación a entregar.
+
+**31/12/2023**
+- Redacción de la descripción técnica.
+
+**04/01/2024**
+- Definición y desarrollo de los objetivos.
+
+**05/01/2024**
+- Creación del diagrama de Gantt.
+
+**07/01/2024**
+- Planificación del trabajo y estimación temporal.
+
+**08/01/2024**
+- Implementación del DAFO, corrección de la descripción técnica, y mejora de los objetivos y la planificación del trabajo.
+
+**09/01/2024**
+- Mejora del diagrama de Gantt y ajuste de la planificación del trabajo.
 
 **15/01/2024**
-- Modificación del nombre de la tabla de `Aplicaciones` debido a un problema durante la creación del CRUD.
+- Modificación del nombre de la tabla de Aplicaciones debido a un problema durante la creación del CRUD.
 
 **26/01/2024**
-- Creación de la tabla de `Cursos` para mejorar la implementación de turnos para los alumnos.
+- Creación de la tabla de Cursos para mejorar la implementación de turnos para los alumnos.
 
 **31/01/2024**
 - Entrega del primer prototipo de la aplicación con CRUD.
@@ -19,15 +43,15 @@
 - Creación del proyecto en GitLab.
 
 **21/02/2024**
-- Eliminación de la tabla "Ratones" por falta de utilidad en la aplicación.
-- Modificación del diagrama entidad-relación para incluir el conjunto de entidades "Cursos" y eliminar el conjunto "Ratones".
+- Eliminación de la tabla Ratones por falta de utilidad en la aplicación.
+- Modificación del diagrama entidad-relación para incluir el conjunto de entidades Cursos y eliminar el conjunto Ratones.
 - Búsqueda y selección de una portada para la documentación.
-- Cambio de la tipografía de "Dosis" a "Roboto" para mejorar la visibilidad y alinearla con la interfaz de la aplicación.
+- Cambio de la tipografía de Dosis a Roboto para mejorar la visibilidad y alinearla con la interfaz de la aplicación.
 
 **23/02/2024**
-- Actualización del diagrama relacional incluyendo las tablas "Cursos", "Cursan" y "Cargan", mientras se elimina la tabla "Ratones".
-- Modificación del script de creación de la base de datos para reflejar los cambios en las tablas y eliminar la tabla "Ratones".
-- Simplificación de la relación entre las tablas en los diagramas entidad-relación y relacional, eliminando la relación entre "Cargadores" y "Alumnos".
+- Actualización del diagrama relacional incluyendo las tablas Cursos, Cursan y Cargan, eliminando la tabla Ratones.
+- Modificación del script de creación de la base de datos para reflejar los cambios en las tablas y eliminar la tabla Ratones.
+- Simplificación de la relación entre las tablas en los diagramas entidad-relación y relacional, eliminando la relación entre Cargadores y Alumnos.
 - Creación de scripts para la estructura y el llenado de la base de datos con datos de ejemplo.
 
 **26/02/2024**
@@ -40,396 +64,435 @@
 - Ajustes en los colores debido a problemas de contexto en su elección.
 
 **28/02/2024**
-- Desarrollo del grafico de "estado de portatiles" para la página de inicio.
-- Modificación de la estructura de la base de datos para hacer tanto el nombre como el año del curso como clave única.
+- Desarrollo del gráfico de "estado de portátiles" para la página de inicio.
+- Modificación de la estructura de la base de datos para hacer tanto el nombre como el año del curso clave única.
 - Cambio del color principal por ser demasiado oscuro.
 
 **29/02/2024**
-- Desarrollo del grafico de "estado de cargadores" para la página de inicio.
+- Desarrollo del gráfico de "estado de cargadores" para la página de inicio.
 
 **02/03/2024**
-- Desarrollo del grafico de "uso por cursos" para la página de inicio.
+- Desarrollo del gráfico de "uso por cursos" para la página de inicio.
 
 **03/03/2024**
 - Creación de la estructura básica de la documentación.
-- Corrección de dimensiones del DAFO.
+- Corrección de las dimensiones del DAFO.
 - Desarrollo adicional de gráficos para la página de inicio.
-- Implementación de la libreria de 2amigos "chartjs".
+- Implementación de la librería 2amigos/chartjs.
 - Modificación de la interfaz en Figma.
 
 **04/03/2024**
-- Configuración de las páginas y del logotipo en el header.
+- Configuración de páginas y logotipo en el encabezado.
 - Configuración del favicon.
 
 **05/03/2024**
-- Reestructuración de los elementos del footer.
-- Cambio en la alineación del header.
+- Reestructuración de elementos del pie de página.
+- Cambio en la alineación del encabezado.
 - Búsqueda de información sobre FontAwesome y su widget para Yii2.
 
 **06/03/2024**
-- Configuración de los colores del header.
-- Configuración de iconos en el footer con enlaces.
-- Cambio de logotipo debido a problemas de visibilidad.
-- Cambio de favicon y corrección de la ruta para que se visualice en todas las páginas.
+- Configuración de colores del encabezado.
+- Configuración de iconos en el pie de página con enlaces.
+- Cambio de logotipo por problemas de visibilidad.
+- Cambio del favicon y corrección de la ruta para que se visualice en todas las páginas.
 
 **07/03/2024**
-- Configuración de los graficos de tipo pie
-- Cambio de la configuración del grafico pie de PHP a JavaScript, ya que los labels no se muestran correctamente en este tipo de gráfico.
-- Gráfico de los almacenes añadido.
+- Configuración de gráficos tipo pie.
+- Cambio de la configuración del gráfico pie de PHP a JavaScript por problemas con los labels.
+- Añadido el gráfico de los almacenes.
 
 **08/03/2024**
-- Cambio en la visualización de los items del header para diferenciar el acceso entre usuarios invitados y registrados.
+- Ajuste en la visualización de items del encabezado para diferenciar acceso entre usuarios invitados y registrados.
 
 **09/03/2024**
-- Añadida una separación entre las secciones de los gráficos.
-- Página de inicio cambiada y los gráficos trasladados a otra página, dejando la página de inicio para la sección de QR, que es la parte principal de la aplicación.
+- Añadida separación entre secciones de gráficos.
+- Página de inicio modificada: gráficos trasladados a otra página, dejando la página de inicio para la sección de QR, la parte principal de la aplicación.
 
 **10/03/2024**
-- Desarrollo de una redirección a la página de inicio cuando el usuario sea invitado.
+- Desarrollo de redirección a la página de inicio para usuarios invitados.
 
 **11/03/2024**
-- Cambio en las redirecciones pasando de usar una cadena con la ruta a una variable.
-- Reestructuración de la página de gráficos y títulos añadidos.
+- Cambio en las redirecciones de cadenas a variables.
+- Reestructuración de la página de gráficos y añadidos títulos.
 - Cambio de la interfaz del inicio de sesión.
 - Desarrollo del gráfico de la capacidad de los almacenes.
 
 **12/03/2024**
-- Cambio en la gráfica de la capacidad de los almacenes debido a un error en el widget, ya que los labels y el valor mínimo del gráfico se representaba incorrectamente.
-- Cancelado el gráfico de uso anual debido a la falta de implementación en la base de datos.
+- Corrección del gráfico de capacidad de los almacenes debido a errores en el widget (problemas con labels y el valor mínimo).
+- Cancelación del gráfico de uso anual por falta de implementación en la base de datos.
 
 **13/03/2024**
-- Búsqueda de información para desarrollar el lector de códigos QR.
-- Búsqueda de ejemplos de dashboards para cambiar la página de gráficos.
-- Cambio en la página de gestión de portátiles.
+- Investigación para desarrollar lector de códigos QR.
+- Búsqueda de ejemplos de dashboards para mejorar la página de gráficos.
+- Modificación de la página de gestión de portátiles.
 
 **14/03/2024**
 - Desarrollo de una nueva interfaz en Figma.
 
 **21/03/2024**
-- Desarrollo de la documentación de la tipografía.
+- Documentación de la tipografía.
 
 **22/03/2024**
-- Desarrollo de la vista "Portatil", que permitirá al usuario ver la información del portátil que escaneó.
+- Desarrollo de la vista "Portátil" para mostrar información del dispositivo escaneado.
 
 **23/03/2024**
-- Desarrollo de la vista de "Portatil".
+- Continuación del desarrollo de la vista "Portátil".
 - Implementación de nuevos iconos para la aplicación.
-- Desarrollo de un estilo de caja para visualizar la información sobre los portátiles.
+- Desarrollo de un estilo de caja para visualizar la información de los portátiles.
 
 **24/03/2024**
-- Búsqueda de información para implementar un desplegable.
+- Investigación para implementar un desplegable.
 - Modificaciones en las columnas del grid en la página de Almacenes.
 - Documentación de la tipografía añadida a la documentación final.
-- Búsqueda de información y ejemplos para implementar un lector de código QR.
+- Búsqueda de información y ejemplos para el lector de códigos QR.
 
 **25/03/2024**
-- Pruebas en la implementación de la librería html5-qrcode utilizando código JavaScript para la función de escaneo de códigos QR.
+- Pruebas con la librería html5-qrcode para escaneo de códigos QR.
 
 **26/03/2024**
-- Añadido un bloque de búsqueda de portátiles en la página de inicio.
+- Añadido bloque de búsqueda de portátiles en la página de inicio.
 - Rediseño completo de la página de inicio para mejorar su apariencia y funcionalidad.
 
 **27/03/2024**
 - Cambio de los estilos de los iconos a estilos en línea.
-- Modificación de la estructura del buscador de portátiles debido a problemas de responsividad.
+- Modificación de la estructura del buscador de portátiles por problemas de responsividad.
 
 **28/03/2024**
-- Cambio de la estructura de la página de inicio añadiendo contenido.
-- Configuración de SSL para el localhost con el fin de probar el lector de códigos QR desde dispositivos móviles.
+- Reestructuración de la página de inicio y adición de contenido.
+- Configuración de SSL para localhost para probar el lector de códigos QR en dispositivos móviles.
 
 **29/03/2024**
 - Configuración de SSL y DNS personalizado para la aplicación web.
-- Realización de pruebas exitosas del lector de códigos QR en dispositivos web y móviles.
-- Cambio en la interfaz de la página de inicio para adaptarla al lector de QR.
+- Pruebas exitosas del lector de códigos QR en dispositivos móviles.
+- Modificación de la interfaz de la página de inicio para adaptarla al lector de QR.
 
 **30/03/2024**
 - Fusión del lector de códigos QR con el buscador en la página de inicio.
-- Problemas relacionados con la recarga de la página y la solicitud de permisos de cámara al escanear un código QR con un patrón incorrecto.
+- Solución de problemas con la recarga de la página y permisos de cámara al escanear códigos QR incorrectos.
 
 **31/03/2024**
 - Añadida una columna con checkbox a la página de gestión de almacenes.
 
 **01/04/2024**
-- Columna de checkboxes eliminada de la página de gestión de almacenes, para evitar que el usuario elimine toda la información por error.
-- Añadido buscador en la página de gestión de almacenes.
-- Botones de la columna derecha de la página de gestión de almacenes modificados.
-- Código de la página de inicio comentado.
-- Refactorización del código de la página de inicio y cambios en las clases de Bootstrap para hacer un código limpio y estructurado.
-- Cambio en los estilos del lector de códigos QR.
-- Pruebas con los estilos del footer para mejorar su responsabilidad en dispositivos móviles.
+- Eliminación de la columna de checkboxes en la gestión de almacenes para evitar eliminación accidental.
+- Añadido buscador y modificados los botones en la gestión de almacenes.
+- Comentarios y refactorización del código de la página de inicio y cambios en las clases Bootstrap.
+- Actualización de estilos del lector de códigos QR.
+- Pruebas y mejoras en la responsividad del footer en móviles.
 
 **02/04/2024**
-- Mejorando la responsividad en la página de inicio.
-- Botón de crear almacenes movido a la parte inferior de la página junto con dos botones de importar y exportar añadidos.
-- Añadidos iconos para las funciones principales del CRUD.
+- Mejora de la responsividad de la página de inicio.
+- Reubicación del botón de crear almacenes y añadido de botones de importar/exportar.
+- Añadidos iconos para funciones CRUD.
 
 **03/04/2024**
-- Desarrollando la función para cambiar el estado de un portátil dependiendo de la hora del día y su ocupación.
+- Desarrollo de la función para cambiar el estado de un portátil según la hora y su ocupación.
 
 **04/04/2024**
-- Configuración de disposición de las columnas y su contenido en las páginas de gestión de portátiles, cargadores y almacenes.
-- Implementación de un botón para listar las aplicaciones de cada portátil en la página de gestión de portátiles.
+- Configuración de columnas y contenido en la gestión de portátiles, cargadores y almacenes.
+- Añadido botón para listar aplicaciones de cada portátil.
 
 **05/04/2024**
-- Implementación de un botón de exportación para la página de gestión de almacenes.
+- Implementado botón de exportación en la gestión de almacenes.
 
 **07/04/2024**
-- Unión del código de la página de creación de almacenes en la página index para implementar un popup al pulsar el botón de crear almacén.
+- Integración de la creación de almacenes en la página index con popup al pulsar el botón de crear.
 
 **08/04/2024**
-- Eliminación de la leyenda en los gráficos de la página de gráficos.
-- Añadido color degradado para el fondo del gráfico del uso por ciclo.
+- Eliminación de la leyenda en gráficos y añadido de color degradado al gráfico de uso por ciclo.
 
 **09/04/2024**
-- Cambio en la maquetación y estilos de la página de gráficos, tomando como ejemplo dashboards de otras páginas web.
+- Reestructuración y cambio de estilos en la página de gráficos, inspirada en dashboards.
 
 **10/04/2024**
-- Cambio en el tipo de gráfico del gráfico de uso por ciclo.
-- Añadido texto de información sobre el gráfico de los estados.
+- Cambio de tipo de gráfico en el gráfico de uso por ciclo.
+- Añadido texto informativo en el gráfico de estados.
 
 **12/04/2024**
-- Cambio en la maquetación del dashboard.
+- Reconfiguración del diseño del dashboard.
 
 **13/04/2024**
-- Intento de implementación de un modal en la página de inicio para sustituir a la página de portátiles.
-- Cambio en los estilos de la página de gráficos.
-- Añadido contenido a la página del panel.
+- Implementación fallida de un modal en la página de inicio para reemplazar la página de portátiles.
+- Añadidos contenidos y cambios de estilos en la página de gráficos.
 
 **14/04/2024**
-- Configuración de los títulos de los gráficos.
-- Cambio en el tipo de gráfico de tipo pastel a tipo donut para una mejor visión de la información.
-- Configuración de los estilos de los encabezados y párrafos para adecuarlos al estilo de la página.
+- Configuración de títulos y cambio de tipo de gráfico a donut.
+- Ajuste de estilos para encabezados y párrafos.
 
 **15/04/2024**
-- Configuración de los gráficos de la página de los gráficos.
+- Configuración de los gráficos en la página de gráficos.
 
 **16/04/2024**
-- Eliminación de franjas blancas en la parte inferior del footer en dispositivos móviles y la franja lateral derecha parcialmente, debido a que el widget de GridView en dispositivos móviles no se hace responsive correctamente.
-- Alineación vertical de los elementos del footer.
-- Desarrollado un nuevo modal al pulsar el botón de la página de inicio.
+- Eliminación de franjas blancas en el footer en dispositivos móviles y ajuste de alineación vertical.
+- Desarrollado nuevo modal para la página de inicio.
 
 **17/04/2024**
-- Intento de implementación de un modal para el menú de inicio, falla al intentar obtener el modal de otra vista para que esta obtenga los datos del portátil buscado.
-- Fallo en la implementación de otras librerías para modificar la configuración de la exportación de los datos de la base de datos de Almacenes.
+- Problemas al implementar modal para el menú de inicio, y fallos en la configuración de exportación de datos en la gestión de almacenes.
 
 **18/04/2024**
-- Botones de importar y exportar eliminados, porque no es una función necesaria para la aplicación.
-- Configurado de nuevo un modal para el acceso al portátil escaneado/buscado sin éxito por un fallo al implementar el código del modal en la página de inicio.
+- Eliminación de botones de importar/exportar.
+- Problemas al implementar modal para el acceso a portátiles escaneados.
 
 **19/04/2024**
-- Cambio de nombre de la página de Gráficos a Panel.
-- Eliminación de los iconos de exportar e importar.
-- Implementación de botones en la página de gráficos para listar los portátiles y cargadores disponibles, además de los averiados, desde diferentes botones.
-- Implementado un modal que se mostrará al pulsar los botones de listado, con un GridView que no se adapta a las dimensiones del modal.
+- Renombrada la página de Gráficos a Panel.
+- Implementación de botones para listar portátiles y cargadores.
+- Implementación de modal con GridView, con problemas de adaptación.
 
 **20/04/2024**
-- Implementación de GridView en el modal de cada botón.
-- Configuración de GridView con Kartik, finalmente eliminada porque necesitaba implementar una librería de Bootstrap que rompía los estilos de las páginas.
-- Dificultad al implementar el GridView con una consulta de dos tablas, porque los valores de la segunda tabla no se muestran.
+- Implementación de GridView en modales.
+- Problemas al usar Kartik GridView debido a conflictos con Bootstrap.
+- Dificultades con consultas a dos tablas en GridView.
 
 **21/04/2024**
-- Configuración de los GridView de la página de Panel para que mostraran las columnas correspondientes y eliminar el summary de los GridView.
-- Documentación de la sección del prototipo de la interfaz.
+- Configuración de GridView para mostrar columnas y eliminación del summary.
+- Documentación del prototipo de la interfaz.
 
 **22/04/2024**
-- Documentación sobre los diferentes prototipos de la interfaz.
+- Documentación de diferentes prototipos de la interfaz.
 
 **23/04/2024**
 - Desarrollo del diagrama de clases.
 
 **24/04/2024**
-- Desarrollo del diagrama de casos de uso.
-- Corrección del diagrama de clases añadiendo las cardinalidades.
+- Desarrollo del diagrama de casos de uso y corrección de cardinalidades en el diagrama de clases.
 
 **25/04/2024**
-- Documentación de los prototipos y diagramas de clase y de casos de uso añadidos.
+- Documentación de prototipos y diagramas de clase y casos de uso.
 
 **26/04/2024**
-- Corrección del diagrama de casos de uso.
+- Corrección en el diagrama de casos de uso.
 
 **27/04/2024**
-- Agregado modal que visualiza la vista de información del portátil.
+- Implementación de modal para visualizar información del portátil.
 
 **28/04/2024**
-- Configuración del modal para que no aparezca el pie de página y eliminar el padding superior.
-- El modal no muestra nada en dispositivos móviles.
+- Ajustes en el modal para que no muestre el pie de página y eliminación del padding superior.
+- Problemas con la visualización del modal en dispositivos móviles.
 - Elección de la plantilla para la presentación.
 
 **29/04/2024**
-- Añadidos títulos a los iconos del pie de página para facilitar la navegación.
-- Cambio en los estilos del modal del portátil.
+- Añadidos títulos a iconos del pie de página.
+- Ajustes en los estilos del modal del portátil.
 
 **30/04/2024**
 - Estilización del modal.
 
-**01/04/2024**
-- Cambio en los estilos de los botones y otros estilos relacionados con el modal de la página de inicio.
+**01/05/2024**
+- Actualización de estilos de botones y otros elementos del modal de la página de inicio.
 
-**02/04/2024**
-- Desarrollo de las consultas necesarias para la función de actualización del estado del portátil.
+**02/05/2024**
+- Desarrollo de consultas para la función de actualización del estado del portátil.
 
 **03/05/2024**
-- Implementación y prueba de la función de actualización del estado del portátil al entrar al modal.
-- Desarrollo del selector de los alumnos de tarde con la librería select2.
+- Implementada y probada la función de actualización del estado del portátil al abrir el modal.
+- Desarrollo del selector de alumnos de tarde con la librería select2.
 
 **04/05/2024**
 - Configuración de las páginas de gestión de portátiles.
-- Desarrollo de una barra de búsqueda en la página de gestión de almacenes.
+- Desarrollo de una barra de búsqueda para la gestión de almacenes.
 
 **05/05/2024**
 - Implementación de la barra de búsqueda en la página de gestión de almacenes.
 
 **06/05/2024**
-- Creado backup de la base de datos.
-- Configurando estilos de la página de panel.
-- Implementada una función de sincronización de los alumnos que elimina el portátil asociado si no están matriculados o si el portátil está averiado.
+- Creación de un backup de la base de datos.
+- Configuración de estilos para la página del panel.
+- Implementación de una función para la sincronización de alumnos, eliminando portátiles si no están matriculados o están averiados.
 
 **07/05/2024**
-- Corrección del título del modal al escanear el código QR.
+- Corrección del título del modal al escanear un código QR.
 
 **08/05/2024**
-- Implementé el reinicio del escáner de códigos QR mediante la instanciación de la variable scanner en diferentes puntos del código, pero no funcionaba porque al mantener la cámara apuntando a un código QR, lo escaneaba continuamente.
-- Implementación de una recarga al salir del modal de la página de inicio para reiniciar el escáner de códigos QR.
+- Problemas con el reinicio del escáner de códigos QR (escanea continuamente al mantener la cámara en un QR).
+- Implementación de recarga al cerrar el modal para reiniciar el escáner de QR.
 
 **09/05/2024**
-- Intento de implementación del Dropbox sin éxito, debido a que en el modal no funcionaba y al probarlo en la página de inicio necesitaba una nueva librería de Bootstrap que rompía los estilos de la página de inicio.
+- Intento fallido de implementación de Dropbox (conflictos con Bootstrap y no funcionalidad en modal).
 
 **10/05/2024**
 - Corrección del diagrama de casos de uso.
-- Desarrollo de la documentación relacionada con el color.
-- Función para actualizar la relación entre los alumnos y los cursos, eliminando las relaciones con alumnos en estado 'No matriculado' implementada.
+- Documentación sobre color.
+- Implementación de una función para actualizar relaciones entre alumnos y cursos, eliminando relaciones con alumnos no matriculados.
 
 **11/05/2024**
-- Corrección de una ambigüedad en la función de getAlumnosManana y getAlumnosTarde que provocaba un error que impedía ejecutar correctamente el modal de la página de inicio.
-- El error de la página web/index.php que no muestra el modal es por la ruta que se usa en el método que lo ejecuta, sigo buscando soluciones.
-- Desarrollada función para que al crear un alumno, se cree automáticamente la relación con cursan.
-- Desarrollo de botones desplegables usando formularios.
-- Configuración de las reglas del modelo de Cursos y función para guardar la sigla de un nuevo curso.
+- Corrección de errores en funciones getAlumnosManana y getAlumnosTarde.
+- Error en la ruta del modal en web/index.php.
+- Desarrollo de una función para crear relaciones con cursos al crear un alumno.
+- Desarrollo de botones desplegables con formularios.
+- Configuración de reglas del modelo de Cursos y función para guardar la sigla de un nuevo curso.
 
 **12/05/2024**
-- Implementado en la página de gestión de cursos el modal de crear un nuevo curso.
-- Configurado el GridView de la página de gestión de cursos.
-- Implementado un buscador para la página de gestión de cursos.
-- Configurado el formulario de la gestión de cursos.
-- Implementación de un modal para actualizar los cursos.
+- Implementación de un modal para crear un nuevo curso en la gestión de cursos.
+- Configuración del GridView y buscador en la gestión de cursos.
+- Configuración del formulario de la gestión de cursos.
+- Implementación de un modal para actualizar cursos.
 
 **13/05/2024**
-- Ampliación de las reglas del modelo Alumnos.
-- Implementación de funciones para validar el DNI de los alumnos.
-- Descubierto un error en la base de datos: el campo del DNI de los alumnos está limitado a 8 caracteres cuando el DNI tiene 9 caracteres.
+- Ampliación de reglas del modelo Alumnos.
+- Implementación de validación de DNI.
+- Error en la base de datos: campo DNI limitado a 8 caracteres en vez de 9.
 
 **14/05/2024**
-- Edicción en la base de datos, cambiando el nombre del campo "nombre_corto" por "sigla" en la tabla Cursos y modificando la longitud del campo "dni" en la tabla Alumnos.
-- Modificación del Gridview, con problemas al intentar implementar una columna con el nombre del curso que cursa el alumno en caso de que esté matriculado.
+- Edición de la base de datos: cambio de "nombre_corto" a "sigla" en la tabla Cursos y ajuste del campo "dni" en Alumnos.
+- Modificación del GridView, con problemas al añadir columna con el nombre del curso del alumno.
 
 **15/05/2024**
-- Corrección del diagrama entidad-relación y relacional basado en los cambios del campo "nombre_corto".
-- Búsqueda de nuevos colores porque el color principal de la aplicación es muy saturado.
-- Implementación del modal de inicio con la librería Modal de Bootstrap 4.
-- Implementación del desplegable con los alumnos disponibles para reservar.
-- Pruebas de actualización de los datos en la reserva.
+- Corrección del diagrama entidad-relación y relacional.
+- Búsqueda de nuevos colores para la aplicación.
+- Implementación del modal de inicio con Bootstrap 4.
+- Implementación de desplegable para alumnos disponibles.
+- Pruebas de actualización de datos en la reserva.
 
 **16/05/2024**
 - Desarrollo de las reglas de negocio en la fase de análisis.
-- Pruebas para actualizar los alumnos al reservar el portátil con POST.
+- Pruebas de actualización de alumnos al reservar portátil con POST.
 
 **17/05/2024**
-- Añadida una sección de público objetivo y otra de nombre de la aplicación en la fase de análisis.
+- Añadida sección de público objetivo y nombre de la aplicación en la fase de análisis.
 
 **18/05/2024**
-- Implementación de la actualización de los alumnos para añadirles el portátil reservado usando JavaScript.
-- Implementación de condicionales para que los botones de selección no aparezcan si el portátil está averiado y otro condicional que no ejecuta el código Ajax si los valores son nulos, que no funciona correctamente.
-- Implementación de la función para sincronizar portátiles, cargadores y sus cargas.
-- Desarrollo de las principales reglas de los atributos de todos los modelos.
-- Corrección de la consulta que sincroniza el modelo "cursan", eliminando las relaciones que estén en el mismo curso académico y en el mismo turno cursado por el mismo alumno.
+- Implementación de actualización de alumnos para asignar portátiles reservados usando JavaScript.
+- Implementación de condicionales para ocultar botones si el portátil está averiado y para evitar ejecución de Ajax con valores nulos.
+- Implementación de función para sincronizar portátiles, cargadores y sus cargas.
+- Desarrollo de reglas de atributos de todos los modelos.
+- Corrección de consulta para sincronizar modelo "cursan".
 
 **19/05/2024**
-- Implementación de buscadores en las páginas de gestión de alumnos, portátiles y cargadores, además de modificar el número de elementos por paginación en los buscadores ya establecidos.
-- La función de sincronización de alumnos falló debido a un error en la estructura de los datos, que causaba un fallo constante.
+- Implementación de buscadores en páginas de gestión de alumnos, portátiles y cargadores.
+- Ajuste del número de elementos por paginación.
+- Fallo en la función de sincronización de alumnos por error en la estructura de datos.
 
 **20/05/2024**
-- Corregida la sincronización de los alumnos debido a que, al haber dos campos iguales, daba error y no se guardaban los cambios.
-- Maquetado el gridview de la página de gestión de alumnos.
+- Corrección de sincronización de alumnos debido a duplicación de campos.
+- Maquetación del GridView de la gestión de alumnos.
 
 **21/05/2024**
-- Corregido el método de sincronización de alumnos causado por un error en el DNI.
-- Intento de crear un label en el formulario de creación de un alumno que se relacionase con el modelo de "cursan" para crear un nuevo curso.
+- Corrección del método de sincronización de alumnos por error en el DNI.
+- Intento de creación de label en formulario de alumno para relación con el modelo "cursan".
 
 **22/05/2024**
-- Corregidas las reglas de los portátiles.
-- Corregida la reserva de los portátiles ya que el código JavaScript tenía un error.
-- Intento de implementar varios formularios en la página de creación de un nuevo alumno, para crear a su vez la relación entre el alumno y los cursos.
-- Intento de crear un selector de cursos múltiple, pero por errores con diferentes widgets probados tuvo que ser descartado.
+- Corrección de reglas de portátiles y reserva.
+- Intento de implementación de formularios múltiples en creación de alumnos para relación con cursos.
+- Problemas al implementar selector múltiple de cursos (descartado por errores con widgets).
 
 **23/05/2024**
 - Corrección y finalización del DAFO.
-- Implementación de los apartados del análisis en formato Markdown.
-- Añadida la validación y sincronización de valores NIE en el campo de DNI del modelo Alumnos.
-- Intento de implementar el formulario de creación de alumnos y la relación de "cursan" pero hay un error al crear el campo de "cursan" ya que este no se crea.
-- Dado que la implementación de modales se está complicando, solo voy a hacer modales para los formularios de creación de los modelos.
-- Configuración de la página de gestión de almacenes, incluyendo formularios, gridview, validaciones, y las operaciones de crear, actualizar y borrar.
+- Documentación del análisis en Markdown.
+- Validación y sincronización de valores NIE en el campo de DNI de Alumnos.
+- Problemas al crear campo "cursan" en formulario de creación de alumnos.
+- Decisión de usar modales solo para formularios de creación de modelos.
+- Configuración completa de la gestión de almacenes.
 
 **24/05/2024**
-- Corrección de elementos en la actualización y creación de almacenes.
-- Implementación y configuración de iconos en los botones.
-- Finalización de la configuración del CRUD de Almacenes.
-- Desarrollo del gridview de la página de gestión de cargadores.
-- Problemas al añadir nuevos cargadores al intentar guardar el valor del almacén con un dropdown.
+- Corrección en actualización y creación de almacenes.
+- Configuración de iconos en botones.
+- Finalización del CRUD de Almacenes.
+- Desarrollo del GridView de la gestión de cargadores.
+- Problemas al guardar valor de almacén en nuevos cargadores.
 
 **25/05/2024**
-- Desarrollado el modal para crear cargadores.
-- Implementado un botón para descargar los códigos QR de los cargadores.
-- Actualizada la vista para actualizar los cargadores.
-- Configurado el buscador de los cargadores.
-- Error al no mostrar el mensaje cuando hay un cargador y almacén duplicado.
-- Documentación de las pruebas.
+- Desarrollo de modal para crear cargadores.
+- Implementación de botón para descargar códigos QR de cargadores.
+- Actualización de vista para actualizar cargadores.
+- Configuración del buscador de cargadores.
+- Error al no mostrar mensaje en duplicados de cargadores y almacenes.
+- Documentación de pruebas.
 
-**26/06/2024**
-- Probando diferentes estilos de las columnas de los gridview y los botones de gestión.
-- Configuración de los botones del gridview de la página de gestión de portátiles.
-- Implementación de una sección de checkboxes para seleccionar las aplicaciones que tendrá un nuevo portátil.
-- Implementación del botón de descarga del código QR en la página de gestión de portátiles.
-- Desarrollo del formulario para la creación de portátiles.
+**26/05/2024**
+- Pruebas de estilos en columnas y botones de gestión en GridView.
+- Configuración de botones en GridView de gestión de portátiles.
+- Implementación de checkboxes para seleccionar aplicaciones de nuevos portátiles.
+- Implementación de botón de descarga de QR en gestión de portátiles.
+- Desarrollo del formulario de creación de portátiles.
 
 **27/05/2024**
-- Eliminación del botón de aplicaciones en la página de gestión de portátiles debido a las complicaciones que estaba causando. Las aplicaciones se han implementado en una columna del GridView.
-- Implementación de un ListView para la página de aplicaciones.
+- Eliminación de botón de aplicaciones en gestión de portátiles por complicaciones (implementadas en columna de GridView).
+- Implementación de ListView para página de aplicaciones.
 - Implementación de un modal para crear aplicaciones.
-- Desarrollo de una función de sincronización de aplicaciones.
+- Desarrollo de función de sincronización de aplicaciones.
 
 **28/05/2024**
-- Implementación de un modal que muestra las aplicaciones de cada portátil.
-- Implementación de funciones de actualización y eliminación de aplicaciones, con su correspondiente sincronización.
-- Desarrollo de la actualización de los portátiles.
+- Implementación de un modal para mostrar aplicaciones de cada portátil.
+- Funciones de actualización y eliminación de aplicaciones con sincronización.
+- Desarrollo de actualización de portátiles.
 
 **29/05/2024**
-- Desarrollo de la página de actualización de portátiles, incluyendo la selección de aplicaciones y cargadores.
-- Cambio de la paleta de colores.
-- Desarrollo de las reglas de negocio de la aplicación.
-- Implementación de una animación al hacer hover en la barra de navegación.
+- Desarrollo de página de actualización de portátiles, incluyendo selección de aplicaciones y cargadores.
+- Cambio de paleta de colores.
+- Desarrollo de reglas de negocio de la aplicación.
+- Implementación de animación en la barra de navegación.
 
 **30/05/2024**
-- Implementación de la función para crear alumnos.
-- Realización de pruebas sobre el modelo de alumnos.
-- Implementación de la función para actualizar alumnos.
-- Eliminación de todas las vistas de los modelos "cursan" y "cargan".
+- Implementación de una función para crear alumnos.
+- Pruebas del modelo de alumnos.
+- Implementación de una función para actualizar alumnos.
+- Eliminación de vistas de modelos "cursan" y "cargan".
 
 **31/05/2024**
-- Cambio del logo de la aplicación.
+- Cambio de logo de la aplicación.
 - Desarrollo del README.md.
-- Desarrollo de un modal que aparecera al escanear un codigo QR de un cargador.
+- Desarrollo de un modal que aparece al escanear un código QR de un cargador.
 
 **01/06/2024**
-- Implementación de la funcionalidad de vincular los cargadores con un portátil a partir de escanear el QR del cargador.
-- Cambio de colores en la documentación.
-- Corrección y finalización de la documentación sobre colores y tipografía.
+- Implementada la vinculación de cargadores a portátiles mediante escaneo de QR.
+- Actualización de colores y finalización de la documentación sobre colores y tipografía.
 
 **02/06/2024**
-- Corrección del array que pasa el listado de las aplicaciones de cada portátiles, para que si no hay aplicaciones no dé error.
-- Corrección del cálculo del porcentaje de dispositivos disponibles, ya que si algún valor era igual a 0, daba un error.
-- Añadida una regla para definir el valor mínimo de valores enteros en las tablas de portátiles, cargadores y almacenes.
-- Traducción y configuración de la maquetación del escáner de códigos QR.
-- Corrección de los GridView de la página de panel para que la información aparezca correctamente.
-- Configuración de los buscadores para que busquen determinados atributos, separando la búsqueda por cada espacio, permitiendo buscar varios atributos a la vez.
-- Implementado el mensaje de error al duplicar los valores únicos en un formulario que anteriormente no se mostraba en el modal.
-- Implementación de un modal de actualización para la gestión de cursos.
+- Corrección del array para el listado de aplicaciones en portátiles para evitar errores cuando no hay aplicaciones.
+- Arreglado el cálculo del porcentaje de dispositivos disponibles, corrigiendo errores con valores cero.
+- Añadida regla para definir valores mínimos en tablas de portátiles, cargadores y almacenes.
+- Traducción y configuración del escáner de códigos QR.
+- Ajuste de los GridView en la página del panel para mostrar la información correctamente.
+- Configuración de buscadores para búsquedas por atributos múltiples.
+- Implementación de mensaje de error en duplicación de valores únicos en formularios de modal.
+- Creación de un modal de actualización para la gestión de cursos.
+
+**03/06/2024**
+- Corrección del envío de datos por Ajax en el modal de actualización de cursos.
+- Añadida responsividad a los GridView de alumnos y cursos.
+- Corrección de caracteres con tilde en siglas.
+- Configuración de modal de actualización para alumnos y portátiles.
+- Corrección de validación del NIE.
+- Añadido al GridView la representación del año del curso de cada alumno.
+- Implementado modal de actualización para aplicaciones.
+- Ajuste en la selección de portátiles para que solo estén disponibles portátiles completamente disponibles.
+- Mejora en la maquetación de páginas de creación y actualización de portátiles para una visualización clara de errores.
+
+**04/06/2024**
+- Implementación de modal de actualización para cargadores y almacenes.
+- Desarrollada condición para eliminar la relación de almacenes con portátiles y cargadores si la capacidad máxima es menor que la ocupación.
+- Simplificación de mensajes de reglas para modelos de alumnos, aplicaciones y cursos.
+- Implementación de mensajes de notificación para operaciones en modelos.
+- Configuración de gráficos y GridViews en la vista de panel.
+- Ajuste de estilos en GridViews.
+- Corrección en la actualización de portátiles para que aparezcan en el desplegable.
+- Ajuste en la reserva de portátiles para alumnos matriculados en cursos de diferentes turnos.
+
+**05/06/2024**
+- Corrección de labels en GridViews de cargadores y alumnos.
+- Añadida cantidad máxima a la capacidad de almacenes.
+- Cambios en la sincronización de cargadores para establecer su estado como "No disponible" si están vinculados a un portátil.
+- Documentación de la planificación, análisis y diseño.
+- Añadidos títulos a los iconos.
+- Desarrollo de bibliografía.
+- Ajuste del tamaño de containers en GridViews de portátiles y almacenes.
+- Configuración para que filas de GridView no se salten de línea.
+- Disposición responsiva de iconos en el footer.
+
+**06/06/2024**
+- Documentación de la bibliografía y pruebas.
+- Alineación de registros en GridViews.
+- Corrección de documentación y diagrama de casos de uso.
+- Desarrollo de conclusiones e introducción.
+- Maquetación de la vista de login.
+- Implementación de contraseñas encriptadas.
+- Ajuste de estilos en la página de inicio y corrección de la función de reserva de portátiles.
+
+**07/06/2024**
+- Corrección de la documentación.
+- Agregada reflexión personal en conclusiones.
+- Edición de la presentación.
+
+**08/06/2024**
+- Corrección del diario de trabajo.
+- Documentación del diario.
