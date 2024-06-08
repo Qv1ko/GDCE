@@ -20,7 +20,7 @@
 
 <style>
     .container, .container-sm, .container-md, .container-lg, .container-xl {
-        max-width: 95%;
+        max-width: 96%;
     }
 </style>
 
