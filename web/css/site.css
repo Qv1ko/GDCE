@@ -1,48 +1,44 @@
+/* Estilos generales */
 body {
     font-family: "Roboto", sans-serif;
     color: #333333;
-    background-color: #e3e3e3;
+    background-color: #E3E3E3;
     font-size: 18px;
 }
 
+/* Estilos del contenedor */
 main > .container {
-    padding: 112px 0px 32px;
+    padding: 112px 0 32px;
 }
 
+/* Estilos del pie de página */
 .footer {
     background-color: #16697A;
-    color: #e3e3e3 !important;
+    color: #E3E3E3;
     font-family: "Roboto", sans-serif;
-    /* position: fixed; */
+    /* La posición fija está comentada, considere eliminar si no es necesaria */
     bottom: 0;
     width: 100%;
     padding: 16px 0;
 }
 
 .footer > .container {
-    padding-right: 15px;
-    padding-left: 15px;
+    padding: 0 15px;
 }
 
 .not-set {
-    color: #c55;
+    color: #C55;
     font-style: italic;
 }
 
-.navbar-nav {
-    font-family: "Roboto", sans-serif;
-    font-style: bold;
-    font-size: 18px;
-}
-
+/* Estilos para enlaces */
 a.asc:after, a.desc:after {
     content: "";
-    left: 3px;
     display: inline-block;
     width: 0;
     height: 0;
     border: solid 5px transparent;
-    margin: 4px 4px 2px 4px;
+    margin: 4px;
     background: transparent;
 }
 
@@ -56,193 +52,189 @@ a.desc:after {
     border-bottom-width: 0;
 }
 
+/* Estilos para tablas */
 .grid-view th {
     white-space: nowrap;
 }
 
+/* Estilos para bloques de sugerencias */
 .hint-block {
     display: block;
     margin-top: 5px;
     color: #999;
 }
 
+/* Estilos para la página de errores */
 .error-summary {
-    color: #a94442;
-    background: #fdf7f7;
-    border-left: 3px solid #eed3d7;
+    color: #A94442;
+    background: #FDF7F7;
+    border-left: 3px solid #EED3D7;
     padding: 10px 20px;
-    margin: 0 0 15px 0;
+    margin: 0 0 15px;
 }
 
+/* Estilos para el botón de logout en el encabezado */
 .nav li > form > button.logout {
     padding-top: 7px;
-    color: #e3e3e3;
+    color: #E3E3E3;
 }
 
+/* Estilos para el encabezado */
 .navbar {
     background-color: #16697A;
 }
 
+/* Estilos del encabezado */
+.navbar-nav {
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Estilos para los enlaces del encabezado */
 .nav-link {
     font-size: 18px;
-    color: #E3E3E3 !important;
+    color: #E3E3E3;
     font-family: inherit;
     font-weight: bold;
     cursor: pointer;
     position: relative;
-    border: none;
     background: none;
     text-decoration: none;
     text-transform: uppercase;
-    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition-duration: 400ms;
-    transition-property: color;
+    transition: color 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.nav-link.active, .nav-link:focus, .nav-link:hover {
-    text-decoration: none;
-    color: #82C0CC !important;
-    font-weight: bold;
-}
-
-.nav-link:focus:after, .nav-link:hover:after {
-    width: 100%;
-    left: 0%;
+.nav-link:hover, .nav-link:focus, .nav-link.active {
+    color: #82C0CC;
 }
 
 .nav-link:after {
     content: "";
-    pointer-events: none;
+    position: absolute;
     bottom: -2px;
     left: 50%;
-    position: absolute;
-    width: 0%;
+    width: 0;
     height: 2px;
     background-color: #82C0CC;
-    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition-duration: 400ms;
-    transition-property: width, left;
+    transition: width 400ms cubic-bezier(0.25, 0.8, 0.25, 1), left 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.nav > li > form > button.logout {
-    text-decoration: none;
-    color: #e3e3e3;
-    font-weight: bold;
+.nav-link:hover:after, .nav-link:focus:after {
+    width: 100%;
+    left: 0;
 }
 
-.nav > li > form > button.logout:focus, .nav > li > form > button.logout:hover {
-    text-decoration: none;
+/* Estilos para el botón de logout */
+.nav li > form > button.logout:hover, 
+.nav li > form > button.logout:focus {
     color: #489FB5;
     font-weight: bold;
 }
 
-.nav > li > form > button.logout:focus {
+.nav li > form > button.logout:focus {
     outline: none;
 }
 
+/* Estilos para iconos en botones */
 .button-icon {
-    fill: #e3e3e3;
+    fill: #E3E3E3;
 }
 
 .button-icon:hover {
     fill: #489FB5;
 }
 
+/* Estilos para iconos en el pie de página */
 .footer-icon {
-    margin-right: 8px;
-    margin-left: 8px;
+    margin: 0 8px;
 }
 
+/* Estilos para títulos */
 h1, h2, h3 {
     color: #16697A;
     font-weight: bold;
     text-align: center;
 }
 
+/* Estilos para los h2 del panel */
 .site-panel h2 {
     font-size: 18px;
 }
 
+/* Estilos para párrafos */
 p {
     font-size: 18px;
     color: #333333;
     margin: 0;
 }
 
+/* Estilos para la línea horizontal */
 hr {
     border: 1px solid #16697A32;
     margin: 32px;
 }
 
+/* Estilos para filas */
 .row {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding: 8px 0;
 }
 
+/* Estilos para las filas del panel */
 .site-panel .row {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding: 16px 0;
 }
 
+/* Estilos para la clase .caja */
 .caja {
     border: 2px solid #16697A32;
     border-radius: 8px;
     padding: 8px;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin: 16px 0;
 }
 
+/* Estilos para botones */
 .btn-primary {
-    background-color: #16697A !important;
+    background-color: #16697A;
     border: none;
-    margin: 2px 2px 2px 2px;
+    margin: 2px;
 }
-
-/* .btn:focus, .btn:active {
-    outline: none !important;
-    box-shadow: none !important;
-} */
 
 .btn-primary:hover, .btn-primary:active {
-    background-color: #489FB5 !important;
+    background-color: #489FB5;
 }
 
-/* .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    box-shadow: 0 0 5px #16697A32 !important;
-}
-
-.btn-primary:focus {
-    box-shadow: 0 0 8px #16697A32 !important;
-} */
-
+/* Tamaño del lector de codigos QR */
 #reader {
     width: 400px;
 }
 
+/* Estilos para la clase .square */
 .square {
-    max-width: auto;
-    background-color: #e3e3e3;
+    max-width: 100%;
+    background-color: #E3E3E3;
     box-shadow: 0 4px 8px #33333332;
     padding: 16px;
     border-radius: 8px;
     text-align: center;
 }
 
+/* Estilos para tablas */
 table {
-    width: 100%; /* Ancho de la tabla */
-    border-collapse: collapse; /* Colapsa los bordes de la tabla */
-    word-wrap: break-word; /* Permite el ajuste de palabras */
+    width: 100%;
+    border-collapse: collapse;
+    word-wrap: break-word;
 }
 
 table th, table td {
-    white-space: nowrap; /* No permite el cambio de línea en las celdas */
+    white-space: nowrap;
 }
 
-/* Estilos para tamaños de pantalla pequeños */
+/* Estilos para pantallas pequeñas */
 @media (max-width: 767px) {
 
     main > .container {
-        padding: 80px 0px 24px; /* Ajustado para compensar el pie de página fijo */
+        padding: 80px 0 24px;
     }
 
     .nav li > form > button.logout {
@@ -252,13 +244,8 @@ table th, table td {
         padding: 10px 0;
     }
 
-    h1 {
-        padding: 16px;
-        margin: 0;
-    }
-
-    h2 {
-        padding: 8px;
+    h1, h2 {
+        padding: 16px 8px;
         margin: 0;
     }
 
@@ -271,8 +258,7 @@ table th, table td {
     }
 
     .row {
-        padding-top: 24px;
-        padding-bottom: 24px;
+        padding: 24px 0;
     }
 
 }
