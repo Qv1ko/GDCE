@@ -60,11 +60,6 @@ class CarganController extends Controller {
      */
     public function actionCreate() {
 
-        // Redirige a la página principal si el usuario no está autenticado
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new Cargan();
 
         if ($this->request->isPost) {
@@ -89,11 +84,6 @@ class CarganController extends Controller {
      * @throws NotFoundHttpException si el modelo no se puede encontrar
      */
     public function actionUpdate($id_carga) {
-
-        // Redirige a la página principal si el usuario no está autenticado
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
         $model = $this->findModel($id_carga);
 
@@ -156,16 +146,8 @@ class CarganController extends Controller {
      * @throws NotFoundHttpException si el modelo no se puede encontrar
      */
     public function actionDelete($id_carga) {
-
-        // Redirige a la página principal si el usuario no está autenticado
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $this->findModel($id_carga)->delete();
-
         return $this->redirect(['index']);
-
     }
 
     /**
@@ -176,18 +158,10 @@ class CarganController extends Controller {
      * @throws NotFoundHttpException si el modelo no se puede encontrar
      */
     protected function findModel($id_carga) {
-
-        // Redirige a la página principal si el usuario no está autenticado
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         if (($model = Cargan::findOne(['id_carga' => $id_carga])) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('No existe la relación entre el cargador y el portátil');
-
     }
 
 }

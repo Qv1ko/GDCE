@@ -42,39 +42,38 @@ class AlumnosController extends Controller {
      */
     public function actionIndex() {
 
-        // Si el usuario no está autenticado, redirige a la página principal.
+        // Si el usuario no está autenticado, redirige a la página principal
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        // Sincroniza las tablas relacionadas.
+        // Sincroniza las tablas relacionadas
         Portatiles::sincronizarPortatiles();
         Cursan::sincronizarCursan();
         Alumnos::sincronizarAlumnos();
 
-        // Inicializa el modelo de búsqueda y el proveedor de datos.
         $searchModel = new AlumnosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Alumnos();
         $cursoActualManana = $model->cursoManana;
         $cursoActualTarde = $model->cursoTarde;
 
-        // Maneja las validaciones AJAX.
+        // Maneja las validaciones AJAX
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         } elseif ($this->request->isPost) {
-            // Procesa la solicitud POST para crear un nuevo alumno.
+            // Procesa la solicitud POST para crear un nuevo alumno
             if ($model->load($this->request->post()) && $model->save()) {
 
-                // Verifica si el alumno está matriculado.
+                // Verifica si el alumno está matriculado
                 if ($model->estado_matricula == 'Matriculado') {
 
-                    // Obtiene los cursos de la mañana y tarde.
+                    // Obtiene los cursos de la mañana y tarde
                     $cursoManana = Yii::$app->request->post('cursoManana');
                     $cursoTarde = Yii::$app->request->post('cursoTarde');
 
-                    // Asigna los cursos al alumno si están disponibles.
+                    // Asigna los cursos al alumno si están disponibles
                     if (!empty($cursoManana) || !empty($cursoTarde)) {
                         $cursos = [$cursoManana, $cursoTarde];
 
@@ -88,24 +87,23 @@ class AlumnosController extends Controller {
                             }
                         }
                     } else {
-                        $model->id_portatil = null; // Elimina la relación con el portátil si no hay cursos.
+                        $model->id_portatil = null; // Elimina la relación con el portátil si no hay cursos
                         $model->save();    
                     }
                 } else {
-                    $model->id_portatil = null; // Elimina la relación con el portátil si no está matriculado.
+                    $model->id_portatil = null; // Elimina la relación con el portátil si no está matriculado
                     $model->save();
                 }
 
                 Yii::$app->session->setFlash('success', 'El alumno/a se ha añadido correctamente.');
-                return $this->redirect(['index']); // Redirige a la vista 'index' tras el éxito.
+                return $this->redirect(['index']);
             } else {
                 Yii::$app->session->setFlash('error', 'Ha ocurrido un error al añadir el alumno/a.');
             }
         } else {
-            $model->loadDefaultValues(); // Carga los valores por defecto.
+            $model->loadDefaultValues();
         }
 
-        // Renderiza la vista 'index' con los datos.
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
@@ -113,6 +111,7 @@ class AlumnosController extends Controller {
             'cursoActualManana' => $cursoActualManana,
             'cursoActualTarde' => $cursoActualTarde,
         ]);
+
     }
 
     /**
@@ -128,67 +127,65 @@ class AlumnosController extends Controller {
         $cursoActualManana = $model->cursoManana;
         $cursoActualTarde = $model->cursoTarde;
 
-        // Maneja las validaciones AJAX.
+        // Maneja las validaciones AJAX
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         } else {
-            // Procesa la solicitud POST para actualizar el alumno.
+            // Procesa la solicitud POST para actualizar el alumno
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-                // Verifica si el alumno está matriculado.
+                // Verifica si el alumno está matriculado
                 if ($model->estado_matricula == 'Matriculado') {
                     $cursoManana = Yii::$app->request->post('cursoManana');
                     $cursoTarde = Yii::$app->request->post('cursoTarde');
 
-                    // Actualiza la relación de cursos del alumno.
+                    // Actualiza la relación de cursos del alumno
                     if (!empty($cursoManana) || !empty($cursoTarde)) {
                         if (!empty($cursoManana)) {
-                            // Asigna nuevo curso de mañana si es diferente al actual.
+                            // Asigna nuevo curso de mañana si es diferente al actual
                             if (!$cursoActualManana || $cursoManana != $cursoActualManana->id_curso) {
                                 $modelCursa = new Cursan();
                                 $modelCursa->id_curso = $cursoManana;
                                 $modelCursa->id_alumno = $model->id_alumno;
                                 $modelCursa->curso_academico = Cursan::getCursoActual();
                                 $modelCursa->save();
-                                // Elimina la relación con el curso anterior.
+                                // Elimina la relación con el curso anterior
                                 if ($cursoActualManana) {
                                     Cursan::deleteAll(['id_curso' => $cursoActualManana->id_curso, 'id_alumno' => $model->id_alumno]);
                                 }
                             }
                         } else if ($cursoActualManana) {
-                            // Elimina la relación con el curso de la mañana si está vacío.
+                            // Elimina la relación con el curso de la mañana si está vacío
                             Cursan::deleteAll(['id_curso' => $cursoActualManana->id_curso, 'id_alumno' => $model->id_alumno]);
                         }
-
                         if (!empty($cursoTarde)) {
-                            // Asigna nuevo curso de tarde si es diferente al actual.
+                            // Asigna nuevo curso de tarde si es diferente al actual
                             if (!$cursoActualTarde || $cursoTarde != $cursoActualTarde->id_curso) {
                                 $modelCursa = new Cursan();
                                 $modelCursa->id_curso = $cursoTarde;
                                 $modelCursa->id_alumno = $model->id_alumno;
                                 $modelCursa->curso_academico = Cursan::getCursoActual();
                                 $modelCursa->save();
-                                // Elimina la relación con el curso anterior.
+                                // Elimina la relación con el curso anterior
                                 if ($cursoActualTarde) {
                                     Cursan::deleteAll(['id_curso' => $cursoActualTarde->id_curso, 'id_alumno' => $model->id_alumno]);
                                 }
                             }
                         } else if ($cursoActualTarde) {
-                            // Elimina la relación con el curso de la tarde si está vacío.
+                            // Elimina la relación con el curso de la tarde si está vacío
                             Cursan::deleteAll(['id_curso' => $cursoActualTarde->id_curso, 'id_alumno' => $model->id_alumno]);
                         }
                     } else {
-                        $model->id_portatil = null; // Elimina la relación con el portátil si no hay cursos.
+                        $model->id_portatil = null; // Elimina la relación con el portátil si no hay cursos
                         $model->save();
                     }
                 } else {
-                    $model->id_portatil = null; // Elimina la relación con el portátil si no está matriculado.
+                    $model->id_portatil = null; // Elimina la relación con el portátil si no está matriculado
                     $model->save();
                 }
 
                 Yii::$app->session->setFlash('success', 'El alumno/a se ha actualizado correctamente.');
-                // Renderiza la vista 'update' en AJAX o redirige a 'index'.
                 if (Yii::$app->request->isAjax) {
                     return $this->renderAjax('update', [
                         'model' => $model,
@@ -198,6 +195,7 @@ class AlumnosController extends Controller {
                 } else {
                     return $this->redirect(['index']);
                 }
+
             } else {
                 // Renderiza la vista 'update' en AJAX o la vista normal.
                 if (Yii::$app->request->isAjax) {
@@ -223,7 +221,7 @@ class AlumnosController extends Controller {
      */
     public function actionReservar() {
 
-        // Obtiene los datos del portátil y los alumnos de la solicitud POST.
+        // Obtiene los datos del portátil y los alumnos de la solicitud POST
         $idPortatil = Yii::$app->request->post('portatil');
         $idAlumnoManana = Yii::$app->request->post('alumnoManana');
         if ($idAlumnoManana == null) {
@@ -240,11 +238,11 @@ class AlumnosController extends Controller {
             $cursosAlumnoTarde = count($alumnoTarde->cursos);
         }
 
-        // Verifica si el mismo alumno necesita el portátil en ambos turnos.
+        // Verifica si el mismo alumno necesita el portátil en ambos turnos
         if (($cursosAlumnoManana > 1 || $cursosAlumnoTarde > 1) && $idAlumnoManana === $idAlumnoTarde) {
             Yii::$app->session->setFlash('error', 'Un alumno seleccionado necesita el portátil durante el turno de mañana y tarde.');
         } else {
-            // Actualiza la relación de portátil con los alumnos.
+            // Actualiza la relación de portátil con los alumnos
             Alumnos::updateAll(['id_portatil' => $idPortatil], ['id_alumno' => [$idAlumnoManana, $idAlumnoTarde]]);    
             Yii::$app->session->setFlash('success', 'El portátil ha sido reservado correctamente.');
         }

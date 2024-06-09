@@ -266,14 +266,11 @@ class PortatilesController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id_portatil) {
-
         // Busca el modelo de portátil por su ID
         if (($model = Portatiles::findOne(['id_portatil' => $id_portatil])) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('El portátil no existe');
-
     }
 
 }

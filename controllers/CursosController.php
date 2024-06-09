@@ -3,13 +3,12 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Cursan;
 use app\models\Cursos;
 use app\models\CursosSearch;
-use app\models\Cursan;
-use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -36,9 +35,9 @@ class CursosController extends Controller {
     }
 
     /**
-     * Lists all Cursos models.
-     *
-     * @return string
+     * Muestra todos los modelos de `Cursos`.
+     * Maneja la búsqueda y filtrado de cursos y la creación de nuevos cursos.
+     * @return string Renderiza la vista 'index' con la lista de cursos.
      */
     public function actionIndex() {
 
@@ -50,12 +49,13 @@ class CursosController extends Controller {
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $model = new Cursos();
 
+        // Validación y creación del curso en caso de solicitud AJAX o POST
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
+            return ActiveForm::validate($model); // Devuelve la validación en formato JSON
         } elseif ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                Cursos::setSigla($model);
+                Cursos::setSigla($model); // Asigna la sigla del curso
                 Yii::$app->session->setFlash('success', 'El curso se ha añadido correctamente.');
                 return $this->redirect(['index']);
             } else {
@@ -74,27 +74,23 @@ class CursosController extends Controller {
     }
 
     /**
-     * Updates an existing Cursos model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id_curso Id Curso
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * Actualiza un modelo `Cursos` existente.
+     * Redirige a la vista 'index' después de una actualización exitosa.
+     * @param int $id_curso Id del curso a actualizar.
+     * @return string|\yii\web\Response Renderiza la vista 'update' o redirige a 'index'.
+     * @throws NotFoundHttpException si el modelo no se puede encontrar.
      */
-
     public function actionUpdate($id_curso) {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
         $model = $this->findModel($id_curso);
 
+        // Validación y actualización del curso en caso de solicitud AJAX o POST
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate($model);
+            return ActiveForm::validate($model); // Devuelve la validación en formato JSON
         } else {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Cursos::setSigla($model);
+                Cursos::setSigla($model); // Asigna la sigla del curso
                 Yii::$app->session->setFlash('success', 'El curso se ha actualizado correctamente.');
                 return (Yii::$app->request->isAjax) ? $this->renderAjax('update', ['model' => $model]) : $this->redirect(['index']);
             } else {
@@ -105,20 +101,17 @@ class CursosController extends Controller {
     }
 
     /**
-     * Deletes an existing Cursos model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id_curso Id Curso
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * Elimina un modelo `Cursos` existente.
+     * Redirige a la vista 'index' después de una eliminación exitosa.
+     * @param int $id_curso Id del curso a eliminar.
+     * @return \yii\web\Response Redirige a la vista 'index'.
+     * @throws NotFoundHttpException si el modelo no se puede encontrar.
      */
     public function actionDelete($id_curso) {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        Cursan::deleteAll(['id_curso' => $id_curso]); // Elimina todas las relaciones del curso con alumnos
 
-        Cursan::deleteAll(['id_curso' => $id_curso]);
-        $this->findModel($id_curso)->delete();
+        $this->findModel($id_curso)->delete(); // Elimina el curso
 
         Yii::$app->session->setFlash('success', 'El curso se ha eliminado correctamente.');
         return $this->redirect(['index']);
@@ -126,20 +119,17 @@ class CursosController extends Controller {
     }
 
     /**
-     * Finds the Cursos model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id_curso Id Curso
-     * @return Cursos the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * Encuentra el modelo `Cursos` basado en su clave primaria.
+     * Lanza una excepción 404 si el modelo no se encuentra.
+     * @param int $id_curso Id del curso.
+     * @return Cursos El modelo cargado.
+     * @throws NotFoundHttpException si el modelo no se puede encontrar.
      */
     protected function findModel($id_curso) {
-
         if (($model = Cursos::findOne(['id_curso' => $id_curso])) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('El curso no existe');
-
     }
 
 }

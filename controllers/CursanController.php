@@ -5,9 +5,9 @@ namespace app\controllers;
 use Yii;
 use app\models\Cursan;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CursanController implements the CRUD actions for Cursan model.
@@ -32,13 +32,13 @@ class CursanController extends Controller {
     }
 
     /**
-     * Lists all Cursan models.
-     *
-     * @return string
+     * Lista todas las relaciones `Cursan`.
+     * 
+     * @return string Renderiza la vista 'index' con la lista de relaciones.
      */
     public function actionIndex() {
 
-        if(Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
@@ -53,15 +53,12 @@ class CursanController extends Controller {
     }
 
     /**
-     * Creates a new Cursan model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * Crea una nueva relación `Cursan`.
+     * Si la creación es exitosa, redirige a la página de índice.
+     * 
+     * @return string|\yii\web\Response Renderiza la vista 'create' o redirige al índice tras la creación.
      */
     public function actionCreate() {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
         $model = new Cursan();
 
@@ -80,19 +77,16 @@ class CursanController extends Controller {
     }
 
     /**
-     * Updates an existing Cursan model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id_cursa Id Cursa
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * Actualiza una relación `Cursan` existente.
+     * Si la actualización es exitosa, redirige a la página de índice.
+     * 
+     * @param int $id_cursa Identificador de la relación.
+     * @return string|\yii\web\Response Renderiza la vista 'update' o redirige al índice tras la actualización.
+     * @throws NotFoundHttpException si la relación no se encuentra.
      */
     public function actionUpdate($id_cursa) {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = $this->findModel($id_cursa);
+        $model = $this->findModel($id_cursa); // Encuentra la relación `Cursan` por su ID
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -105,35 +99,31 @@ class CursanController extends Controller {
     }
 
     /**
-     * Deletes an existing Cursan model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id_cursa Id Cursa
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * Elimina una relación `Cursan` existente.
+     * Si la eliminación es exitosa, redirige a la página de índice.
+     * 
+     * @param int $id_cursa Identificador de la relación.
+     * @return \yii\web\Response Redirige a la vista 'index' tras la eliminación.
+     * @throws NotFoundHttpException si la relación no se encuentra.
      */
     public function actionDelete($id_cursa) {
-
-        $this->findModel($id_cursa)->delete();
-
+        $this->findModel($id_cursa)->delete(); // Encuentra y elimina la relación `Cursan` por su ID
         return $this->redirect(['index']);
-
     }
 
     /**
-     * Finds the Cursan model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id_cursa Id Cursa
-     * @return Cursan the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * Encuentra el modelo `Cursan` basado en su clave primaria.
+     * Si el modelo no se encuentra, lanza una excepción 404.
+     * 
+     * @param int $id_cursa Identificador de la relación.
+     * @return Cursan El modelo cargado.
+     * @throws NotFoundHttpException si la relación no se encuentra.
      */
     protected function findModel($id_cursa) {
-
         if (($model = Cursan::findOne(['id_cursa' => $id_cursa])) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('No existe la relación entre el alumno y el curso');
-
     }
 
 }

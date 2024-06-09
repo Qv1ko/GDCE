@@ -83,11 +83,6 @@ class AlmacenesController extends Controller {
      */
     public function actionUpdate($id_almacen) {
 
-        // Redirige a la página principal si el usuario no está autenticado
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = $this->findModel($id_almacen);
 
         // Maneja las validaciones AJAX
@@ -146,20 +141,11 @@ class AlmacenesController extends Controller {
      * @throws NotFoundHttpException si el modelo no se puede encontrar.
      */
     protected function findModel($id_almacen) {
-
-        // Redirige a la página principal si el usuario no está autenticado
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        // Busca el modelo
         if (($model = Almacenes::findOne(['id_almacen' => $id_almacen])) !== null) {
             return $model; // Devuelve el modelo encontrado.
         }
-
         // Lanza una excepción si no se encuentra el modelo
         throw new NotFoundHttpException('El almacén no existe');
-
     }
 
 }
