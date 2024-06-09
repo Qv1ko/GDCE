@@ -7,23 +7,37 @@
 
     use yii\helpers\Html;
 
+    // Título de la página
     $this->title = $name;
     
 ?>
 
-<div class="site-error">
+<div class="site-error container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+            <!-- Título de la página -->
+            <h1 class="text-center mb-4"><?= Html::encode($this->title) ?></h1>
 
-    <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
+            <!-- Mensaje de error -->
+            <div class="alert alert-danger mb-4">
+                <?= nl2br(Html::encode($message)) ?>
+            </div>
+
+            <p class="mb-4 text-center">
+                Se produjo un error al procesar su solicitud
+            </p>
+
+            <!-- Enlace de contacto -->
+            <p class="mb-4 text-center">
+                <?= Html::a('Contáctanos', 'https://github.com/Qv1ko/GDCE/issues', ['target' => '_blank']) ?> si el error persiste
+            </p>
+
+            <!-- Enlace para volver al inicio -->
+            <p class="text-center">
+                <?= Html::a('Volver al inicio', ['site/index'], ['class' => 'btn btn-primary']) ?>
+            </p>
+
+        </div>
     </div>
-
-    <p>
-        The above error occurred while the Web server was processing your request.
-    </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
-
 </div>
