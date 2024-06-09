@@ -17,3 +17,10 @@ Para concluir este proyecto voy a resaltar los objetivos alcanzados y las posibl
 - Crear una tabla en la base de datos para gestionar las aulas, optimizando así la administración de los almacenes y los cursos.
 - Extender la gestión a otros dispositivos como regletas, ratones e incluso dispositivos WiFi, para ofrecer una administración de todos los recursos tecnológicos del centro educativo.
 - La ampliación más importante sería llevar a cabo la implementación de la aplicación en un entorno real, integrándola completamente en el día a día del centro. Esto implicaría realizar pruebas, brindar capacitación a los usuarios y ajustar la aplicación según el feedback recibido para asegurar la efectividad del usuario.
+
+## Reflexiones personales sobre el proyecto
+
+Este proyecto ha representado una clara curva de aprendizaje para mí. Al principio, desarrollaba código sencillo sin refactorizar y con errores, pero con el tiempo he ido entendiendo las funciones de Yii2 y su organización, estructurando mejor el código y haciéndolo más eficiente.
+He aprendido a comprender el código, modelar gráficos, incorporar librerías externas para facilitar el trabajo, y utilizar JavaScript para crear funcionalidades sobre la maquetación. Pero, sobre todo, he aprendido cómo funciona Yii2 y su patrón de diseño MVC.
+He superado las dificultades buscando información en internet, consultando a inteligencias artificiales y desarrollando las partes más complejas de la aplicación mediante prueba y error.
+Si comenzara el proyecto desde cero, cambiaría el enfoque de desarrollo. Simplificaría las relaciones en la base de datos para hacer más fácil el control y la vinculación de cargadores y portátiles. Mi prioridad sería establecer validaciones y formularios para garantizar la precisión de los datos, y luego implementaría las funciones adicionales. También me esforzaría por organizar las tareas diarias de forma más eficiente para evitar la acumulación de trabajo y asegurar un avance constante y ordenado. Por último, mencionar que implementaría la aplicación con TypeScript para mejorar la calidad y mantenibilidad del código.
