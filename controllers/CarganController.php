@@ -5,9 +5,9 @@ namespace app\controllers;
 use Yii;
 use app\models\Cargan;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CarganController implements the CRUD actions for Cargan model.
@@ -32,12 +32,13 @@ class CarganController extends Controller {
     }
 
     /**
-     * Lists all Cargan models.
+     * Lista todos los modelos de Cargan.
      *
      * @return string
      */
     public function actionIndex() {
 
+        // Redirige a la página principal si el usuario no está autenticado
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -53,12 +54,13 @@ class CarganController extends Controller {
     }
 
     /**
-     * Creates a new Cargan model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Crea un nuevo modelo de Cargan.
+     * Si la creación es exitosa, redirige a la página index.
      * @return string|\yii\web\Response
      */
     public function actionCreate() {
 
+        // Redirige a la página principal si el usuario no está autenticado
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -80,44 +82,52 @@ class CarganController extends Controller {
     }
 
     /**
-     * Updates an existing Cargan model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * Actualiza un modelo existente de Cargan.
+     * Si la actualización es exitosa, redirige a la página 'index'.
      * @param int $id_carga Id Carga
      * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException si el modelo no se puede encontrar
      */
     public function actionUpdate($id_carga) {
 
+        // Redirige a la página principal si el usuario no está autenticado
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = $this->findModel($id_carga);
 
+        // Maneja el envío del formulario
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
+        // Renderiza la vista 'update' con el modelo
         return $this->render('update', [
             'model' => $model,
         ]);
 
     }
     
+    /**
+     * Vincula un cargador a un portátil.
+     * @return void
+     */
     public function actionVincular() {
 
         $cargador = Yii::$app->request->post('cargador');
         $portatil = Yii::$app->request->post('portatil');
 
-
         if ($cargador !== null && $portatil !== null) {
 
+            // Elimina las relaciones antiguas
             $antiguasCargas = Cargan::find()->where(['id_cargador' => $cargador])->orWhere(['id_portatil' => $portatil])->all();
     
             foreach ($antiguasCargas as $carga) {
                 $carga->delete();
             }
     
+            // Crea una nueva relación
             $model = new Cargan();
             $model->id_cargador = $cargador;
             $model->id_portatil = $portatil;
@@ -127,6 +137,7 @@ class CarganController extends Controller {
 
         } elseif ($cargador !== null && $portatil === null) {
 
+            // Elimina las relaciones antiguas del cargador
             $antiguasCargas = Cargan::find()->where(['id_cargador' => $cargador])->all();
     
             foreach ($antiguasCargas as $carga) {
@@ -138,14 +149,15 @@ class CarganController extends Controller {
     }
 
     /**
-     * Deletes an existing Cargan model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * Elimina un modelo existente de Cargan.
+     * Si la eliminación es exitosa, redirige a la página index.
      * @param int $id_carga Id Carga
      * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @throws NotFoundHttpException si el modelo no se puede encontrar
      */
     public function actionDelete($id_carga) {
 
+        // Redirige a la página principal si el usuario no está autenticado
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -157,14 +169,15 @@ class CarganController extends Controller {
     }
 
     /**
-     * Finds the Cargan model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
+     * Encuentra el modelo Cargan basado en su clave primaria.
+     * Si el modelo no se encuentra, se lanza una excepción HTTP 404.
      * @param int $id_carga Id Carga
-     * @return Cargan the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return Cargan el modelo cargado
+     * @throws NotFoundHttpException si el modelo no se puede encontrar
      */
     protected function findModel($id_carga) {
 
+        // Redirige a la página principal si el usuario no está autenticado
         if(Yii::$app->user->isGuest) {
             return $this->goHome();
         }

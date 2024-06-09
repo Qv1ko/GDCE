@@ -3,20 +3,19 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
-use app\models\LoginForm;
-use app\models\ContactForm;
 use app\models\Almacenes;
 use app\models\Alumnos;
 use app\models\Cargadores;
 use app\models\Cargan;
 use app\models\Cursan;
 use app\models\Cursos;
+use app\models\LoginForm;
 use app\models\Portatiles;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\Response;
 
 class SiteController extends Controller {
 
@@ -61,18 +60,22 @@ class SiteController extends Controller {
     }
 
     /**
-     * Displays homepage.
+     * Mostrar la página de inicio.
      *
      * @return string
      */
     public function actionIndex() {
-
         return $this->render('index');
-
     }
 
+    /**
+     * Mostrar la información de un portátil.
+     *
+     * @param string $codigo Código del portátil
+     * @return string
+     */
     public function actionPortatil($codigo) {
-        
+
         $this->layout = '/main_nofooter';
 
         Cargan::sincronizarCargan();
@@ -105,14 +108,20 @@ class SiteController extends Controller {
             ]);
 
         } else {
-            Yii::$app->session->setFlash('error', 'No se encontro ningun portátil con código ' . $codigo);
+            Yii::$app->session->setFlash('error', 'No se encontró ningún portátil con código ' . $codigo);
             return $this->redirect(['index']);
         }
 
     }
 
+    /**
+     * Mostrar la información de un cargador.
+     *
+     * @param string $codigo Código del cargador
+     * @return string
+     */
     public function actionCargador($codigo) {
-        
+
         $this->layout = '/main_nofooter';
 
         Cargan::sincronizarCargan();
@@ -121,7 +130,7 @@ class SiteController extends Controller {
         $cargador = Cargadores::find()->where(['codigo' => $codigo])->one();
 
         if ($cargador) {
-            
+
             $portatil = Portatiles::find()->innerJoin(Cargan::tableName(), 'portatiles.id_portatil = cargan.id_portatil')->innerJoin(Cargadores::tableName(), 'cargan.id_cargador = cargadores.id_cargador')->where(['cargadores.id_cargador' => $cargador->id_cargador])->one();
             $almacen = Almacenes::find()->select('almacenes.aula')->distinct()->innerJoin(Cargadores::tableName(), 'almacenes.id_almacen = cargadores.id_almacen')->where(['cargadores.codigo' => $codigo])->scalar();
     
@@ -133,15 +142,20 @@ class SiteController extends Controller {
             ]);
 
         } else {
-            Yii::$app->session->setFlash('error', 'No se encontro ningun cargador con código ' . $codigo);
+            Yii::$app->session->setFlash('error', 'No se encontró ningún cargador con código ' . $codigo);
             return $this->redirect(['index']);
         }
 
     }
 
+    /**
+     * Acción para mostrar el panel principal con datos estadísticos.
+     *
+     * @return string
+     */
     public function actionPanel() {
 
-        if(Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
@@ -152,13 +166,16 @@ class SiteController extends Controller {
         $portatilesDisponibles = Portatiles::find()->where('estado = "Disponible"')->count();
         $portatilesNoDisponibles = Portatiles::find()->where('estado = "No disponible"')->count();
         $portatilesAveriados = Portatiles::find()->where('estado = "Averiado"')->count();
+
         $porcentajePortatilesDisponibles = ($portatilesDisponibles == 0) ? 0 : number_format((float)(($portatilesDisponibles * 100) / ($portatilesDisponibles + $portatilesNoDisponibles + $portatilesAveriados)), 2, '.', '');
+
         $listadoPortatilesDisponibles = new ActiveDataProvider([
             'query' => Portatiles::find()->where(['estado' => 'Disponible'])->with('almacen'),
             'pagination' => [
                 'pageSize' => false,
             ],
         ]);
+
         $listadoPortatilesAveriados = new ActiveDataProvider([
             'query' => Portatiles::find()->distinct()->where(['estado' => 'Averiado']),
             'pagination' => false,
@@ -167,13 +184,16 @@ class SiteController extends Controller {
         $cargadoresDisponibles = Cargadores::find()->where('estado = "Disponible"')->count();
         $cargadoresNoDisponibles = Cargadores::find()->where('estado = "No disponible"')->count();
         $cargadoresAveriados = Cargadores::find()->where('estado = "Averiado"')->count();
+
         $porcentajeCargadoresDisponibles = ($cargadoresDisponibles == 0) ? 0 : number_format((float)(($cargadoresDisponibles * 100) / ($cargadoresDisponibles + $cargadoresNoDisponibles + $cargadoresAveriados)), 2, '.', '');
+
         $listadoCargadoresDisponibles = new ActiveDataProvider([
             'query' => Cargadores::find()->where(['estado' => 'Disponible'])->with('almacen'),
             'pagination' => [
                 'pageSize' => false,
             ],
         ]);
+
         $listadoCargadoresAveriados = new ActiveDataProvider([
             'query' => Cargadores::find()->distinct()->where(['estado' => 'Averiado']),
             'pagination' => false,
@@ -203,7 +223,7 @@ class SiteController extends Controller {
     }
 
     /**
-     * Login action.
+     * Acción de login.
      *
      * @return Response|string
      */
@@ -214,6 +234,7 @@ class SiteController extends Controller {
         }
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
@@ -226,13 +247,12 @@ class SiteController extends Controller {
     }
 
     /**
-     * Logout action.
+     * Acción de logout.
      *
      * @return Response
      */
     public function actionLogout() {
         Yii::$app->user->logout();
-        //change goHome
         return $this->goHome();
     }
 

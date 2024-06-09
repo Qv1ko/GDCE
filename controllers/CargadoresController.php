@@ -43,10 +43,6 @@ class CargadoresController extends Controller {
      */
     public function actionIndex() {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         Portatiles::sincronizarPortatiles();
         Cargan::sincronizarCargan();
         Cargadores::sincronizarCargadores();
@@ -86,10 +82,6 @@ class CargadoresController extends Controller {
      */
     public function actionUpdate($id_cargador) {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = $this->findModel($id_cargador);
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
@@ -115,10 +107,6 @@ class CargadoresController extends Controller {
      */
     public function actionDelete($id_cargador) {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         foreach ($this->findModel($id_cargador)->cargan as $cargan) {
             $cargan->delete();
         }
@@ -138,10 +126,6 @@ class CargadoresController extends Controller {
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id_cargador) {
-
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
 
         if (($model = Cargadores::findOne(['id_cargador' => $id_cargador])) !== null) {
             return $model;

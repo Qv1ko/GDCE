@@ -3,15 +3,15 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Portatiles;
-use app\models\PortatilesSearch;
-use app\models\Aplicaciones;
 use app\models\Alumnos;
+use app\models\Aplicaciones;
 use app\models\Cargadores;
 use app\models\Cargan;
+use app\models\Portatiles;
+use app\models\PortatilesSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
  * PortatilesController implements the CRUD actions for Portatiles model.
  */
 class PortatilesController extends Controller {
+    
     /**
      * @inheritDoc
      */
@@ -43,10 +44,12 @@ class PortatilesController extends Controller {
      */
     public function actionIndex() {
 
+        // Verifica si el usuario no ha iniciado sesión
         if(Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->goHome(); // Redirige a la página principal
         }
 
+        // Sincroniza datos con otros modelos
         Aplicaciones::sincronizarAplicaciones();
         Cargadores::sincronizarCargadores();
         Cargan::sincronizarCargan();
@@ -60,12 +63,15 @@ class PortatilesController extends Controller {
         }, $model->aplicaciones);
         $cargadorActual = $model->cargador;
 
+        // Validación de formularios a través de AJAX
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         } elseif ($this->request->isPost) {
+            // Creación de nuevos registros de portátiles
             if ($model->load($this->request->post()) && $model->save()) {
 
+                // Aplicaciones seleccionadas
                 $aplicacionesSeleccionadas = Yii::$app->request->post('aplicaciones');
 
                 if (is_array($aplicacionesSeleccionadas)) {
@@ -77,6 +83,7 @@ class PortatilesController extends Controller {
                     }
                 }
 
+                // Si el portátil no está averiado, maneja el cargador seleccionado
                 if ($model->estado !== 'Averiado') {
                     $cargador = Yii::$app->request->post('cargador');
     
@@ -117,10 +124,6 @@ class PortatilesController extends Controller {
      */
     public function actionUpdate($id_portatil) {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = $this->findModel($id_portatil);
         $aplicacionesInstaladas = array_map(function($app) {
             return $app->aplicacion;
@@ -128,16 +131,20 @@ class PortatilesController extends Controller {
         $aplicacionesActuales = $model->aplicaciones;
         $cargadorActual = $model->cargador;
 
+        // Validación de formularios a través de AJAX
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         } else {
+            // Actualiza el modelo y sus relaciones
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
+                // Maneja las aplicaciones seleccionadas
                 $aplicacionesSeleccionadas = Yii::$app->request->post('aplicaciones');
 
                 if (is_array($aplicacionesSeleccionadas)) {
 
+                    // Agrega las nuevas aplicaciones
                     foreach ($aplicacionesSeleccionadas as $aplicacion) {
                         if (!in_array($aplicacion, $aplicacionesActuales)) {
                             $aplicacionModel = new Aplicaciones();
@@ -147,6 +154,7 @@ class PortatilesController extends Controller {
                         }
                     }
 
+                    // Elimina aplicaciones no seleccionadas
                     foreach ($aplicacionesActuales as $app) {
     
                         $aplicacionModel = Aplicaciones::findOne(['aplicacion' => $app->aplicacion, 'id_portatil' => $model->id_portatil]);
@@ -159,6 +167,7 @@ class PortatilesController extends Controller {
 
                 }
 
+                // Si el portátil no está averiado, maneja el cargador seleccionado
                 if ($model->estado !== 'Averiado') {
 
                     $cargador = Yii::$app->request->post('cargador');
@@ -212,29 +221,26 @@ class PortatilesController extends Controller {
      */
     public function actionDelete($id_portatil) {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
+        // Elimina las aplicaciones asociadas al portátil
         $aplicaciones = Aplicaciones::find()->where(['id_portatil' => $id_portatil])->all();
-
         foreach ($aplicaciones as $aplicacion) {
             $aplicacion->delete();
         }
 
+        // Elimina las relaciones de carga del portátil
         $cargas = Cargan::find()->where(['id_portatil' => $id_portatil])->all();
-
         foreach ($cargas as $carga) {
             $carga->delete();
         }
 
+        // Desasocia a los alumnos del portátil
         $alumnos = Alumnos::find()->where(['id_portatil' => $id_portatil])->all();
-
         foreach ($alumnos as $alumno) {
             $alumno->id_portatil = null;
             $alumno->save();
         }
 
+        // Elimina el modelo portátil
         $this->findModel($id_portatil)->delete();
 
         Yii::$app->session->setFlash('success', 'El portátil se ha eliminado correctamente.');
@@ -242,6 +248,11 @@ class PortatilesController extends Controller {
 
     }
 
+    /**
+     * Renderiza una vista parcial con las aplicaciones instaladas en un portátil.
+     * @param int $id Id del portátil
+     * @return string
+     */
     public function actionAplicaciones($id) {
         $model = Portatiles::findOne($id);
         return $this->renderAjax('_aplicaciones', ['model' => $model]);
@@ -256,10 +267,7 @@ class PortatilesController extends Controller {
      */
     protected function findModel($id_portatil) {
 
-        if(Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
+        // Busca el modelo de portátil por su ID
         if (($model = Portatiles::findOne(['id_portatil' => $id_portatil])) !== null) {
             return $model;
         }
