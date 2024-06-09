@@ -4,7 +4,7 @@
     <br>
 </p>
 
-GDCE es una aplicación web creada para gestionar la reserva de portátiles en centros de estudio.
+GDCE es una aplicación web creada para gestionar la reserva de portátiles en centros de estudios.
 
 La aplicación se basa en una sección inicial para todos los usuarios donde podrán escanear el código QR de los portátiles y reservarlos. Por otra parte, a los usuarios administradores se les añade el acceso a un panel con información y gráficas, así como a las páginas para gestionar los dispositivos, alumnos, cursos y almacenes.
 

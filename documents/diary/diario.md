@@ -494,5 +494,19 @@
 - Edición de la presentación.
 
 **08/06/2024**
-- Corrección del diario de trabajo.
-- Documentación del diario.
+- Corrección y documentación del diario de trabajo.
+- Mejora de la interfaz de los modales para la reserva de portátiles y vinculación de cargadores.
+- Comentarios y refactorización del código.
+- Finalización de la fase de desarrollo en la presentación.
+- Maquetación de la página de error.
+- Desarrollo de la base de la presentación.
+
+**09/06/2024**
+- Continuación de los comentarios y la refactorización del código.
+- Ampliación de las conclusiones y añadido encabezado a la documentación.
+- Corrección y simplificación de apartados de la presentación.
+- Implementación de estilos al panel para formato de pantalla pequeña.
+- Eliminación de la condición de autenticación que impedía reservar portátiles y vincular cargadores.
+- Actualización del backup.
+- Ordenamiento alfabético de los listados de selección.
+- Finalización de la presentación.
