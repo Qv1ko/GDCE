@@ -1,8 +1,6 @@
 <?php
 
     use app\models\Almacenes;
-    use app\models\Portatiles;
-    use app\models\Cargadores;
     use yii\helpers\Html;
     use yii\helpers\Url;
     use yii\grid\ActionColumn;
@@ -11,7 +9,7 @@
     // Título de la página
     $this->title = 'Gestión de almacenes';
 
-    // Archivos JavaScript
+    // Registro de archivos JavaScript
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalUpdate.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalCreate.js', ['position' => \yii\web\View::POS_HEAD]);
@@ -27,11 +25,14 @@
 <div class="almacenes-index">
     <div class="container">
 
+        <!-- Título de la página -->
         <h1><?= Html::encode($this->title) ?></h1>
 
+        <!-- Formulario de búsqueda -->
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
         <div class="table-responsive">
+            <!-- GridView para mostrar los datos de los almacenes -->
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
@@ -72,6 +73,7 @@
                         },
                     ],
                     [
+                        // Botones de actualización y eliminación
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, Almacenes $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id_almacen' => $model->id_almacen]);
@@ -112,10 +114,11 @@
                         },
                     ],
                 ],
-                'summary' => '',
+                'summary' => '', // Quita el resumen
             ]); ?>
         </div>
 
+        <!-- Botón para añadir un nuevo almacén -->
         <div class="row d-flex justify-content-around">
             <?= Html::a('<div class="d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-plus" style="margin-right: 4px;">
@@ -132,6 +135,7 @@
     </div>
 </div>
 
+<!-- Modal para actualizar almacenes -->
 <div class="container">
     <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -149,6 +153,7 @@
     </div>
 </div>
 
+<!-- Modal para crear nuevos almacenes -->
 <div class="container">
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

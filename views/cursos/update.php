@@ -1,16 +1,6 @@
-<?php
-
-    use yii\helpers\Html;
-
-    /** @var yii\web\View $this */
-    /** @var app\models\Cursos $model */
-
-?>
-
 <div class="cursos-update">
-
+    <!-- Renderiza el formulario de actualización -->
     <?= $this->render('_updateForm', [
         'model' => $model,
     ]) ?>
-
 </div>

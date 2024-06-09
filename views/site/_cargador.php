@@ -2,20 +2,20 @@
 
     /** @var yii\web\View $this */
 
-use app\models\Portatiles;
-use yii\helpers\Html;
+    use app\models\Portatiles;
+    use yii\helpers\Html;
     use yii\helpers\Url;
 
+    // Registra el archivo de JavaScript de jQuery
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
 <div class="container">
-
     <div class="d-flex flex-row justify-content-around align-items-center">
-
         <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
             <?php if ($estado === "Disponible") : ?>
+                <!-- Icono de estado disponible -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-check">
                     <title>Estado del dispositivo</title>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -23,6 +23,7 @@ use yii\helpers\Html;
                     <path d="M9 12l2 2l4 -4" />
                 </svg>
             <?php elseif ($estado === "No disponible") : ?>
+                <!-- Icono de estado no disponible -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-x">
                     <title>Estado del dispositivo</title>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -30,6 +31,7 @@ use yii\helpers\Html;
                     <path d="M9 9l6 6m0 -6l-6 6" />
                 </svg>
             <?php elseif ($estado === "Averiado") : ?>
+                <!-- Icono de estado averiado -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-square">
                     <title>Estado del dispositivo</title>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -40,8 +42,8 @@ use yii\helpers\Html;
             <?php endif; ?>
             <p style="margin-top: 8px"><?= $estado ?></p>
         </div>
-
         <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
+            <!-- Icono de almacén -->
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse">
                 <title>Almacén</title>
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -49,29 +51,31 @@ use yii\helpers\Html;
                 <path d="M13 13h4v8h-10v-6h6" />
                 <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
             </svg>
+            <!-- Información del almacén -->
             <?php if ($almacen) : ?>
                 <p style="margin-top: 8px;">Aula <?= $almacen ?></p>
             <?php else : ?>
                 <p style="margin-top: 8px;">Sin almacén</p>
             <?php endif; ?>
-        </div>    
+        </div>
     </div>
 
     <div class="d-flex flex-column justify-content-center align-items-center">
         <?php if ($cargador->estado === 'Disponible'): ?>
             <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center text-center" style="margin: 16px 0;">
+                <!-- Icono de portátil -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-laptop" style="margin-right: 8px;">
                     <title>Portátil</title>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M3 19l18 0" />
                     <path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" />
                 </svg>
-
+                <!-- Dropdown para seleccionar portátil -->
                 <?= Html::dropDownList('portatilSeleccionado', null, Portatiles::getListaPortatilesSinCargador(), ['prompt' => 'Selecciona un portátil', 'class' => 'form-control', 'id' => 'portatilSeleccionado']); ?>
-
             </div>
         <?php elseif ($cargador->estado === 'No disponible'): ?>
             <div class="col-lg-8 d-flex flex-row justify-content-center align-items-center" style="margin: 16px 0;">
+                <!-- Icono de portátil no disponible -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-laptop">
                     <title>Portátil</title>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -86,6 +90,7 @@ use yii\helpers\Html;
     </div>
 
     <div class="row d-flex justify-content-around">
+        <!-- Botón para guardar -->
         <?= Html::button('<div class="d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-plus" style="margin-right: 4px;">
                 <title>Guardar</title>
@@ -96,9 +101,10 @@ use yii\helpers\Html;
             </svg>
             <span>Guardar</span>
         </div>', ['class' => 'btn btn-success', 'id' => 'guardarBtn']) ?>
+        <!-- Botón para cancelar -->
         <?= Html::button('<div class="d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-x" style="margin-right: 4px;">
-                <title>Cancelar</title>    
+                <title>Cancelar</title>
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                 <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
                 <path d="M9 9l6 6m0 -6l-6 6" />
@@ -110,10 +116,11 @@ use yii\helpers\Html;
 </div>
 
 <script>
+    // Maneja el evento de clic del botón de guardar
     $("#guardarBtn").click(function() {
+        var portatil = document.getElementById('portatilSeleccionado').value; // Obtiene el portátil seleccionado
 
-        var portatil = document.getElementById('portatilSeleccionado').value;
-
+        // Envía una solicitud AJAX para vincular el cargador
         $.ajax({
             url: '<?= Url::to(['cargan/vincular']) ?>',
             type: "POST",
@@ -122,11 +129,10 @@ use yii\helpers\Html;
                 portatil: portatil,
             },
             success: function(response) {
-                location.href = '<?= Url::to(['index']) ?>';
+                location.href = '<?= Url::to(['index']) ?>'; // Redirige en caso de éxito
             },
             error: function(xhr, status, error) {
             }
         });
-        
     });
 </script>

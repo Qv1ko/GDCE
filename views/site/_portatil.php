@@ -1,16 +1,20 @@
 <?php
 
     /** @var yii\web\View $this */
+
     use yii\helpers\Html;
     use yii\helpers\Url;
+    use yii\web\View;
 
-    $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
+    // Registro del archivo JavaScript jQuery
+    $this->registerJsFile('@web/js/jquery.js', ['position' => View::POS_HEAD]);
 
 ?>
 
 <div class="container">
     <div class="d-flex flex-row justify-content-around align-items-center">
 
+        <!-- Columna para mostrar el estado del dispositivo -->
         <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
             <?php if ($estado === "Disponible") : ?>
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-check">
@@ -38,6 +42,7 @@
             <p style="margin-top: 8px"><?= $estado ?></p>
         </div>
 
+        <!-- Columna para mostrar el almacén -->
         <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse">
                 <title>Almacén</title>
@@ -46,13 +51,12 @@
                 <path d="M13 13h4v8h-10v-6h6" />
                 <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
             </svg>
-            <?php if ($almacen) : ?>
-                <p style="margin-top: 8px;">Aula <?= $almacen ?></p>
-            <?php else : ?>
-                <p style="margin-top: 8px;">Sin almacén</p>
-            <?php endif; ?>
+            <p style="margin-top: 8px;">
+                <?= $almacen ? 'Aula ' . Html::encode($almacen) : 'Sin almacén' ?>
+            </p>
         </div>
 
+        <!-- Columna para mostrar el estado del cargador -->
         <div class="col-4 d-flex flex-column align-items-center text-center" style="margin: 16px 0;">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-battery-charging">
                 <title>Cargador</title>    
@@ -61,17 +65,16 @@
                 <path d="M8 7h-2a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h1" />
                 <path d="M12 8l-2 4h3l-2 4" />
             </svg>
-            <?php if ($cargador) : ?>
-                <p style="margin-top: 8px;">Cargador <?= $cargador ?></p>
-            <?php else : ?>
-                <p style="margin-top: 8px;">Sin cargador</p>
-            <?php endif; ?>
+            <p style="margin-top: 8px;">
+                <?= $cargador ? 'Cargador ' . Html::encode($cargador) : 'Sin cargador' ?>
+            </p>
         </div>
 
     </div>
 
     <div class="d-flex flex-column justify-content-center align-items-center">
         <?php if ($portatil->estado !== 'Averiado'): ?>
+            <!-- Reserva de alumno de mañana -->
             <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunrise" style="margin-right: 8px;">
                     <title>Alumno de mañana</title>
@@ -81,16 +84,24 @@
                     <path d="M12 9v-6l3 3m-6 0l3 -3" />
                 </svg>
                 <?php
-                    if ($alumnoManana == false && $alumnoTarde == false) {
-                        echo Html::dropDownList('alumnosManana', null, $listaAlumnosManana, ['prompt' => 'Reservar alumno de mañana', 'class' => 'form-control', 'onchange' => 'var idManana = $(this).val();']);
-                    } elseif ($alumnoManana != false) {
-                        echo '<p>Alumno de mañana: ' . $alumnoManana->nombreCompleto . '</p>';
-                    } else {
-                        echo Html::dropDownList('alumnosManana', null, $listaAlumnosSoloManana, ['prompt' => 'Reservar alumno de mañana', 'class' => 'form-control', 'onchange' => 'var idManana = $(this).val();']);
-                    }
+                if (!$alumnoManana && !$alumnoTarde) {
+                    echo Html::dropDownList('alumnosManana', null, $listaAlumnosManana, [
+                        'prompt' => 'Reservar alumno de mañana', 
+                        'class' => 'form-control',
+                        'onchange' => 'var idManana = $(this).val();'
+                    ]);
+                } elseif ($alumnoManana) {
+                    echo '<p>Alumno de mañana: ' . Html::encode($alumnoManana->nombreCompleto) . '</p>';
+                } else {
+                    echo Html::dropDownList('alumnosManana', null, $listaAlumnosSoloManana, [
+                        'prompt' => 'Reservar alumno de mañana',
+                        'class' => 'form-control',
+                        'onchange' => 'var idManana = $(this).val();'
+                    ]);
+                }
                 ?>
             </div>
-
+            <!-- Reserva de alumno de tarde -->
             <div class="col-lg-8 d-flex flex-row justify-content-start align-items-center" style="margin: 16px 0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sunset" style="margin-right: 8px;">
                     <title>Alumno de tarde</title>
@@ -100,17 +111,25 @@
                     <path d="M12 3v6l3 -3m-6 0l3 3" />
                 </svg>
                 <?php
-                    if ($alumnoTarde == false && $alumnoManana == false) {
-                        echo Html::dropDownList('alumnosTarde', null, $listaAlumnosTarde, ['prompt' => 'Reservar alumno de tarde', 'class' => 'form-control', 'onchange' => 'var idTarde = $(this).val();']);
-                    } elseif ($alumnoTarde != false) {
-                        echo '<p>Alumno de tarde: ' . $alumnoTarde->nombreCompleto . '</p>';
-                    } else {
-                        echo Html::dropDownList('alumnosTarde', null, $listaAlumnosSoloTarde, ['prompt' => 'Reservar alumno de tarde', 'class' => 'form-control', 'onchange' => 'var idTarde = $(this).val();']);
-                    }
+                if (!$alumnoTarde && !$alumnoManana) {
+                    echo Html::dropDownList('alumnosTarde', null, $listaAlumnosTarde, [
+                        'prompt' => 'Reservar alumno de tarde', 
+                        'class' => 'form-control',
+                        'onchange' => 'var idTarde = $(this).val();'
+                    ]);
+                } elseif ($alumnoTarde) {
+                    echo '<p>Alumno de tarde: ' . Html::encode($alumnoTarde->nombreCompleto) . '</p>';
+                } else {
+                    echo Html::dropDownList('alumnosTarde', null, $listaAlumnosSoloTarde, [
+                        'prompt' => 'Reservar alumno de tarde', 
+                        'class' => 'form-control',
+                        'onchange' => 'var idTarde = $(this).val();'
+                    ]);
+                }
                 ?>
             </div>
         <?php else: ?>
-            <h3 style="margin: 24px 0;">El portátil no se puede reservar porque esta averiado</h3>
+            <h3 style="margin: 24px 0;">El portátil no se puede reservar porque está averiado</h3>
         <?php endif; ?>
 
     </div>
@@ -140,28 +159,32 @@
 </div>
 
 <script>
+    // Evento de clic para el botón de guardar
     $("#guardarBtn").click(function() {
 
+        // Obtener los valores seleccionados para alumnos de mañana y tarde
         var idManana = $('select[name="alumnosManana"]').val();
         var idTarde = $('select[name="alumnosTarde"]').val();
 
-        if (idManana != null || idTarde != null) {
+        // Verificar si al menos uno de los select tiene un valor seleccionado
+        if (idManana !== null || idTarde !== null) {
+            // Enviar datos a través de una solicitud AJAX
             $.ajax({
                 url: '<?= Url::to(['alumnos/reservar']) ?>',
                 type: "POST",
                 data: {
                     portatil: <?= $portatil->id_portatil ?>,
-                    alumnoManana: (idManana == null) ? <?= ($alumnoManana == null) ? 'null' : $alumnoManana->id_alumno ?> : idManana,
-                    alumnoTarde: (idTarde == null) ? <?= ($alumnoTarde == null) ? 'null' : $alumnoTarde->id_alumno ?> : idTarde
+                    alumnoManana: (idManana === null) ? <?= $alumnoManana === null ? 'null' : $alumnoManana->id_alumno ?> : idManana,
+                    alumnoTarde: (idTarde === null) ? <?= $alumnoTarde === null ? 'null' : $alumnoTarde->id_alumno ?> : idTarde
                 },
                 success: function(response) {
-                    location.href = '<?= Url::to(['index']) ?>';
+                    location.href = '<?= Url::to(['index']) ?>'; // Redirigir al índice tras la respuesta exitosa
                 },
                 error: function(xhr, status, error) {
                 }
             });
         } else {
-            location.href = '<?= Url::to(['index']) ?>';
+            location.href = '<?= Url::to(['index']) ?>'; // Redirigir al índice si no hay selección
         }
         
     });

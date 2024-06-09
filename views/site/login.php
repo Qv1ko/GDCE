@@ -7,6 +7,7 @@
     use yii\bootstrap4\ActiveForm;
     use yii\bootstrap4\Html;
 
+    // Título de la página
     $this->title = 'Iniciar sesión';
 
 ?>
@@ -37,6 +38,7 @@
 <div class="site-login">
     <div class="container">
 
+        <!-- Título de la página -->
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?php $form = ActiveForm::begin([
@@ -50,6 +52,7 @@
             ],
         ]); ?>
 
+            <!-- Campo para el nombre de usuario -->
             <?= $form->field($model, 'username', [
                 'inputOptions' => [
                     'placeholder' => 'Escribe el nombre del usuario',
@@ -57,6 +60,7 @@
                 ],
             ])->label($model->getAttributeLabel('username'))->textInput(['autofocus' => true]) ?>
 
+            <!-- Campo para la contraseña -->
             <?= $form->field($model, 'password', [
                 'inputOptions' => [
                     'placeholder' => 'Escribe la contraseña del usuario',
@@ -64,10 +68,12 @@
                 ],
             ])->label($model->getAttributeLabel('password'))->passwordInput() ?>
 
+            <!-- Campo para "Recordarme" -->
             <?= $form->field($model, 'rememberMe')->checkbox([
                 'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
             ]) ?>
 
+            <!-- Botón de enviar -->
             <div class="form-group">
                 <?= Html::submitButton('INICIAR SESIÓN', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>

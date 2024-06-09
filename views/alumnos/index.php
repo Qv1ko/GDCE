@@ -6,11 +6,10 @@
     use yii\grid\ActionColumn;
     use yii\grid\GridView;
 
-    /** @var yii\web\View $this */
-    /** @var yii\data\ActiveDataProvider $dataProvider */
-
+    // Título de la página
     $this->title = 'Gestión de alumnos';
 
+    // Registra archivos JavaScript necesarios
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalUpdate.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalCreate.js', ['position' => \yii\web\View::POS_HEAD]);
@@ -20,8 +19,10 @@
 <div class="alumnos-index">
     <div class="container">
 
+        <!-- Título de la página -->
         <h1><?= Html::encode($this->title) ?></h1>
 
+        <!-- Formulario de búsqueda -->
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
         <div class="table-responsive">
@@ -56,11 +57,8 @@
                         'label' => 'Matriculación',
                         'value' => function ($model) {
                             if ($model->estado_matricula === 'Matriculado' && !empty($model->cursos)) {
-
                                 $estado = 'Matriculado/a en ';
-
                                 $numCursos = 1;
-
                                 foreach ($model->cursos as $curso) {
                                     if ($numCursos === 2) {
                                         $estado .= ' y ' . (($curso->curso === "Primer curso") ? '1º ' : '2º ') . ' ' .$curso->sigla;
@@ -69,9 +67,7 @@
                                     }
                                     $numCursos++;
                                 }
-
                                 return $estado;
-
                             } else {
                                 return 'No matriculado/a';
                             }
@@ -103,6 +99,7 @@
                         'template' => '{update} {delete}',
                         'buttons' => [
                             'update' => function ($url, $model, $key) {
+                                // Botón de edición
                                 return Html::a('<div class="d-flex align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit" style="margin-right: 4px;">
                                         <title>Editar</title>
@@ -115,6 +112,7 @@
                                 </div>', $url, ['class' => 'btn btn-primary', 'id' => 'botonUpdate', 'data-code' => 'Editar ' . $model->nombre . ' ' . $model->apellidos]);
                             },
                             'delete' => function ($url, $model, $key) {
+                                // Botón de eliminar
                                 return Html::a('<div class="d-flex align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash" style="margin-right: 4px;">
                                         <title>Eliminar</title>
@@ -137,14 +135,15 @@
                         },
                     ],
                 ],
-                'summary' => '',
+                'summary' => '', // Oculta el resumen
             ]); ?>
         </div>
 
+        <!-- Botón para añadir un nuevo alumno -->
         <div class="row d-flex justify-content-around">
             <?= Html::a('<div class="d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-plus" style="margin-right: 4px;">
-                    <title>Añadir</title>
+                    <title>Añadir alumno/a</title>
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M9 12h6" />
                     <path d="M12 9v6" />
@@ -153,40 +152,36 @@
                 <span>Añadir alumno/a</span>
             </div>', ['create'], ['class' => 'btn btn-success', 'id' => 'botonCreate']) ?>
         </div>
-
     </div>
-
 </div>
 
-<div class="container">
-    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header justify-content-center">
-                    <h2 id="tituloModalUpdate"></h2>
-                </div>
-                <div class="modal-body">
-                    <?= $this->render('_updateForm', [
-                        'model' => $model,
-                        'cursoActualManana' => $cursoActualManana,
-                        'cursoActualTarde' => $cursoActualTarde,
-                    ]) ?>
-                </div>
+<!-- Modal para actualizar alumno -->
+<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h2 id="tituloModalUpdate"></h2>
+            </div>
+            <div class="modal-body">
+                <?= $this->render('_updateForm', [
+                    'model' => $model,
+                    'cursoActualManana' => $cursoActualManana,
+                    'cursoActualTarde' => $cursoActualTarde,
+                ]) ?>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container">
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header justify-content-center">
-                    <h2>Añadir alumno/a</h2>
-                </div>
-                <div class="modal-body">
-                    <?= $this->render('_createForm', ['model' => $model]) ?>
-                </div>
+<!-- Modal para crear nuevo alumno -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h2>Añadir alumno/a</h2>
+            </div>
+            <div class="modal-body">
+                <?= $this->render('_createForm', ['model' => $model]) ?>
             </div>
         </div>
     </div>

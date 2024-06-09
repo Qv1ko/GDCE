@@ -1,23 +1,24 @@
 <?php
 
-    use yii\helpers\Html;
-    use yii\widgets\ActiveForm;
-    use app\models\Cursos;
-    use app\models\Portatiles;
-
     /** @var yii\web\View $this */
     /** @var app\models\Alumnos $model */
     /** @var app\models\Cursan $modelCursan */
     /** @var yii\widgets\ActiveForm $form */
 
+    use yii\helpers\Html;
+    use yii\widgets\ActiveForm;
+    use app\models\Cursos;
+    use app\models\Portatiles;
+
+    // Registra archivo de JavaScript
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
 <div class="alumnos-form">
-    <div class="container">
         <?php $form = ActiveForm::begin(['id' => 'updateForm', 'enableAjaxValidation' => true]); ?>
 
+            <!-- Campo para el DNI del alumno -->
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($model, 'dni', [
@@ -30,6 +31,7 @@
             </div>
 
             <div class="row">
+                <!-- Campo para el nombre del alumno -->
                 <div class="col-md-6">
                     <?= $form->field($model, 'nombre', [
                         'inputOptions' => [
@@ -38,6 +40,7 @@
                         ],
                     ])->label($model->getAttributeLabel('nombre'))->textInput(['maxlength' => true]) ?>
                 </div>
+                <!-- Campo para los apellidos del alumno -->
                 <div class="col-md-6">
                     <?= $form->field($model, 'apellidos', [
                         'inputOptions' => [
@@ -49,20 +52,23 @@
             </div>
 
             <div class="row">
+                <!-- Campo para el estado de la matrícula del alumno -->
                 <div class="col-md-6">
                     <?= $form->field($model, 'estado_matricula')->label($model->getAttributeLabel('estado_matricula'))->dropDownList(
                         ['Matriculado' => 'Matriculado', 'No matriculado' => 'No matriculado'],
                         ['prompt' => 'Selecciona el estado de matrícula']
                     ) ?>
                 </div>
+                <!-- Campo de selección del portátil del alumno -->
                 <div class="col-md-6">
                     <?= $form->field($model, 'id_portatil')->label($model->getAttributeLabel('id_portatil'))->dropDownList(
                         Portatiles::getCargadoresLibresmpa($model->id_portatil),
-                        ['prompt'=>'Selecciona un portátil', 'class' => 'form-control']
+                        ['prompt' => 'Selecciona un portátil', 'class' => 'form-control']
                     ) ?>
                 </div>
             </div>
 
+            <!-- Campos para la selección de cursos de mañana y tarde -->
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label class="control-label">Curso de mañana</label>
@@ -84,7 +90,9 @@
                 </div>
             </div>
 
+            <!-- Botones de acción -->
             <div class="row d-flex justify-content-around">
+                <!-- Botón de actualizar -->
                 <?= Html::submitButton('<div class="d-flex align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-refresh" style="margin-right: 4px;">
                         <title>Actualizar</title>
@@ -94,6 +102,7 @@
                     </svg>
                     <span>Actualizar</span>
                 </div>', ['class' => 'btn btn-success']) ?>
+                <!-- Botón de cancelar -->
                 <?= Html::button('<div class="d-flex align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-x" style="margin-right: 4px;">
                         <title>Cancelar</title>

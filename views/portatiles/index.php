@@ -1,143 +1,166 @@
 <?php
 
-    use app\models\Portatiles;
-    use yii\helpers\Html;
-    use yii\helpers\Url;
-    use yii\grid\ActionColumn;
-    use yii\grid\GridView;
-    use Endroid\QrCode\QrCode;
-
     /** @var yii\web\View $this */
     /** @var yii\data\ActiveDataProvider $dataProvider */
 
+    use app\models\Portatiles;
+    use Endroid\QrCode\QrCode;
+    use yii\grid\ActionColumn;
+    use yii\grid\GridView;
+    use yii\helpers\Html;
+    use yii\helpers\Url;
+
+    // Registro de archivos JavaScript necesarios
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalUpdate.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalCreate.js', ['position' => \yii\web\View::POS_HEAD]);
 
+    // Título de la página
     $this->title = 'Gestión de portátiles';
 
 ?>
 
 <style>
     .container, .container-sm, .container-md, .container-lg, .container-xl {
-        max-width: 96%;
+        max-width: 96%; /* Ajusta el ancho máximo del contenedor */
     }
 </style>
 
 <div class="portatiles-index">
     <div class="container" id="container-portatiles">
 
+        <!-- Título de la página -->
         <h1><?= Html::encode($this->title) ?></h1>
 
+        <!-- Renderiza el buscador -->
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
+        <!-- Tabla responsiva -->
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
+                    // Columna para el código del portátil
                     [
                         'label' => 'Portátil',
                         'value' => function ($model) {
                             return $model->codigo;
                         },
-                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'], // Estilo del encabezado
                         'contentOptions' => function ($model, $key, $index, $column) {
+                            // Color de fondo entre filas
                             return [
                                 'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
                             ];
                         },
                     ],
+                    // Columna para la marca y modelo del portátil
                     [
                         'label' => 'Modelo',
                         'value' => function ($model) {
-                            return empty($model->marca)? 'Sin definir' : $model->marca . ' ' . $model->modelo;
+                            return empty($model->marca) ? 'Sin definir' : $model->marca . ' ' . $model->modelo;
                         },
-                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'], // Estilo del encabezado
                         'contentOptions' => function ($model, $key, $index, $column) {
+                            // Color de fondo entre filas
                             return [
                                 'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
                             ];
                         },
                     ],
+                    // Columna para el procesador del portátil
                     [
                         'label' => 'CPU',
                         'value' => function ($model) {
-                            return empty($model->procesador)? 'Sin definir' : $model->procesador;
+                            return empty($model->procesador) ? 'Sin definir' : $model->procesador;
                         },
-                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'], // Estilo del encabezado
                         'contentOptions' => function ($model, $key, $index, $column) {
+                            // Color de fondo entre filas
                             return [
                                 'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
                             ];
                         },
                     ],
+                    // Columna para la memoria RAM del portátil
                     [
                         'label' => 'RAM',
                         'value' => function ($model) {
-                            return empty($model->memoria_ram)? 'Sin definir' : $model->memoria_ram . ' GB';
+                            return empty($model->memoria_ram) ? 'Sin definir' : $model->memoria_ram . ' GB';
                         },
-                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'], // Estilo del encabezado
                         'contentOptions' => function ($model, $key, $index, $column) {
+                            // Color de fondo entre filas
                             return [
                                 'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
                             ];
                         },
                     ],
+                    // Columna para la capacidad de almacenamiento del portátil
                     [
                         'label' => 'Capacidad',
                         'value' => function ($model) {
-                            return empty($model->capacidad)? 'Sin definir' : $model->capacidad. ' GB ' . $model->dispositivo_almacenamiento;
+                            return empty($model->capacidad) ? 'Sin definir' : $model->capacidad. ' GB ' . $model->dispositivo_almacenamiento;
                         },
-                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'], // Estilo del encabezado
                         'contentOptions' => function ($model, $key, $index, $column) {
+                            // Color de fondo entre filas
                             return [
                                 'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
                             ];
                         },
                     ],
+                    // Columna para el estado del portátil
                     [
                         'label' => 'Estado',
                         'value' => function ($model) {
-                            return (($model->estado === 'Averiado')? '⚠️ ' : '') . $model->estado;
+                            return (($model->estado === 'Averiado') ? '⚠️ ' : '') . $model->estado;
                         },
-                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'], // Estilo del encabezado
                         'contentOptions' => function ($model, $key, $index, $column) {
+                            // Color de fondo entre filas
                             return [
                                 'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
                             ];
                         },
                     ],
+                    // Columna para el código del cargador del portátil
                     [
                         'label' => 'Cargador',
                         'value' => function ($model) {
-                            return empty($model->cargador->codigo)? 'Sin cargador' : $model->cargador->codigo;
+                            return empty($model->cargador->codigo) ? 'Sin cargador' : $model->cargador->codigo;
                         },
-                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'], // Estilo del encabezado
                         'contentOptions' => function ($model, $key, $index, $column) {
+                            // Color de fondo entre filas
                             return [
                                 'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
                             ];
                         },
                     ],
+                    // Columna para el código del portátil en el almacén
                     [
                         'label' => 'Almacén',
                         'value' => function ($model) {
-                            return empty($model->almacen->id_almacen)? 'Sin almacén' : $model->almacen->aula;
+                            return empty($model->almacen->id_almacen) ? 'Sin almacén' : $model->almacen->aula;
                         },
-                        'headerOptions' => ['style' => 'color: #489FB5;'],
+                        'headerOptions' => ['style' => 'color: #489FB5;'], // Estilo del encabezado
                         'contentOptions' => function ($model, $key, $index, $column) {
+                            // Color de fondo entre filas
                             return [
                                 'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
                             ];
                         },
                     ],
+                    // Columna de botones de acción
                     [
                         'class' => ActionColumn::className(),
                         'urlCreator' => function ($action, Portatiles $model, $key, $index, $column) {
                             return Url::toRoute([$action, 'id_portatil' => $model->id_portatil]);
                         },
-                        'template' => '{apps} {qr} {update} {delete}',
+                        'template' => '{apps} {qr} {update} {delete}', // Define las acciones disponibles
                         'buttons' => [
+                            // Botón para mostrar las aplicaciones instaladas
                             'apps' => function ($url, $model, $key) {
                                 return Html::button('<div class="d-flex align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-apps">
@@ -151,6 +174,7 @@
                                     </svg>
                                 </div>', ['class' => 'btn btn-primary botonAplicaciones', 'data-id' => $model->id_portatil, 'data-toggle' => 'modal', 'data-target' => '#modalAplicaciones']);
                             },
+                            // Botón para generar un código QR
                             'qr' => function ($url, $model, $key) {
                                 $qrCode = new QrCode('P' . $model->codigo);
                                 $qrCode->setSize(240);
@@ -177,6 +201,7 @@
                                     </svg>
                                 </div>', $url, ['class' => 'btn btn-primary', 'download' => 'portatil_' . $model->codigo . '.png']);
                             },
+                            // Botón para actualizar el portátil
                             'update' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
@@ -188,6 +213,7 @@
                                     </svg>
                                 </div>', $url, ['class' => 'btn btn-primary', 'id' => 'botonUpdate', 'data-code' => 'Editar portátil ' . $model->codigo]);
                             },
+                            // Botón para eliminar el portátil
                             'delete' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
@@ -203,6 +229,7 @@
                             }
                         ],
                         'contentOptions' => function ($model, $key, $index, $column) {
+                            // Color de fondo entre filas
                             return [
                                 'style' => 'text-align: center; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
                             ];
@@ -229,16 +256,16 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="modal fade" id="modalAplicaciones" tabindex="-1" role="dialog" aria-labelledby="modalAplicacionesLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Aplicaciones</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+<!-- Modal para mostrar aplicaciones -->
+<div class="modal fade" id="modalAplicaciones" tabindex="-1" role="dialog" aria-labelledby="modalAplicacionesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Aplicaciones</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
                 <div class="modal-body">
                 </div>
             </div>
@@ -246,35 +273,32 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header justify-content-center">
-                    <h2 id="tituloModalUpdate"></h2>
-                </div>
-                <div class="modal-body">
-                    <?= $this->render('_updateForm', [
-                        'model' => $model,
-                        'aplicacionesInstaladas' => $aplicacionesInstaladas,
-                        'cargador' => $cargador,
-                    ]) ?>
-                </div>
+<!-- Modal para mostrar código QR -->
+<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h2 id="tituloModalUpdate"></h2>
+            </div>
+            <div class="modal-body">
+                <?= $this->render('_updateForm', [
+                    'model' => $model,
+                    'aplicacionesInstaladas' => $aplicacionesInstaladas,
+                    'cargador' => $cargador,
+                ]) ?>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container">
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header justify-content-center">
-                    <h2>Añadir portátil</h2>
-                </div>
-                <div class="modal-body">
-                    <?= $this->render('_createForm', ['model' => $model]) ?>
-                </div>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h2>Añadir portátil</h2>
+            </div>
+            <div class="modal-body">
+                <?= $this->render('_createForm', ['model' => $model]) ?>
             </div>
         </div>
     </div>

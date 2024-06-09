@@ -1,30 +1,36 @@
 <?php
 
-    use app\models\Cargadores;
-    use yii\helpers\Html;
-    use yii\helpers\Url;
-    use yii\grid\ActionColumn;
-    use yii\grid\GridView;
-    use Endroid\QrCode\QrCode;
-
     /** @var yii\web\View $this */
     /** @var yii\data\ActiveDataProvider $dataProvider */
 
+    use app\models\Cargadores;
+    use Endroid\QrCode\QrCode;
+    use yii\grid\ActionColumn;
+    use yii\grid\GridView;
+    use yii\helpers\Html;
+    use yii\helpers\Url;
+
+    // Título de la página
     $this->title = 'Gestión de cargadores';
 
+    // Registra archivos JavaScript necesarios para la página
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalUpdate.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/modalCreate.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
 
+
 <div class="cargadores-index">
     <div class="container">
 
+        <!-- Título de la página -->
         <h1><?= Html::encode($this->title) ?></h1>
 
+        <!-- Formulario de búsqueda -->
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
+        <!-- Tabla responsive -->
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -44,7 +50,7 @@
                     [
                         'label' => 'Potencia',
                         'value' => function ($model) {
-                            return empty($model->potencia)? 'Sin definir' : $model->potencia . ' W';
+                            return empty($model->potencia) ? 'Sin definir' : $model->potencia . ' W';
                         },
                         'headerOptions' => ['style' => 'color: #489FB5;'],
                         'contentOptions' => function ($model, $key, $index, $column) {
@@ -56,7 +62,7 @@
                     [
                         'label' => 'Estado',
                         'value' => function ($model) {
-                            return (($model->estado === 'Averiado')? '⚠️ ' : '') . $model->estado;
+                            return (($model->estado === 'Averiado') ? '⚠️ ' : '') . $model->estado;
                         },
                         'headerOptions' => ['style' => 'color: #489FB5;'],
                         'contentOptions' => function ($model, $key, $index, $column) {
@@ -68,7 +74,7 @@
                     [
                         'label' => 'Almacén',
                         'value' => function ($model) {
-                            return empty($model->almacen->id_almacen)? 'Sin almacén' : $model->almacen->aula;
+                            return empty($model->almacen->id_almacen) ? 'Sin almacén' : $model->almacen->aula;
                         },
                         'headerOptions' => ['style' => 'color: #489FB5;'],
                         'contentOptions' => function ($model, $key, $index, $column) {
@@ -84,6 +90,7 @@
                         },
                         'template' => '{qr} {update} {delete}',
                         'buttons' => [
+                            // Botón para descargar el código QR
                             'qr' => function ($url, $model, $key) {
                                 $qrCode = new QrCode('C' . $model->codigo);
                                 $qrCode->setSize(240);
@@ -111,6 +118,7 @@
                                     <span>Descargar QR</span>
                                 </div>', $url, ['class' => 'btn btn-primary', 'download' => 'cargador_' . $model->codigo . '.png']);
                             },
+                            // Botón para editar el cargador
                             'update' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit" style="margin-right: 4px;">
@@ -123,6 +131,7 @@
                                     <span>Editar</span>
                                 </div>', $url, ['class' => 'btn btn-primary', 'id' => 'botonUpdate', 'data-code' => 'Editar cargador ' . $model->codigo]);
                             },
+                            // Botón para eliminar el cargador
                             'delete' => function ($url, $model, $key) {
                                 return Html::a('<div class="d-flex align-items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash" style="margin-right: 4px;">
@@ -145,10 +154,11 @@
                         },
                     ],                    
                 ],
-                'summary' => '',
+                'summary' => '', // No muestra un resumen
             ]); ?>
         </div>
 
+        <!-- Botón para añadir un nuevo cargador -->
         <div class="row d-flex justify-content-around">
             <?= Html::a('<div class="d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-square-plus" style="margin-right: 4px;">
@@ -165,6 +175,7 @@
     </div>
 </div>
 
+<!-- Modal para actualizar el cargador -->
 <div class="container">
     <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdateLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -182,6 +193,7 @@
     </div>
 </div>
 
+<!-- Modal para crear un nuevo cargador -->
 <div class="container">
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

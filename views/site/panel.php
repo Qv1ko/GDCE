@@ -4,10 +4,11 @@
 
     use yii\grid\GridView;
     use yii\helpers\Html;
-    use yii\helpers\Url;
 
+    // Título de la página
     $this->title = 'Panel';
 
+    // Registro de archivos JS necesarios
     $this->registerJsFile('@web/js/jquery.js', ['position' => \yii\web\View::POS_HEAD]);
     $this->registerJsFile('@web/js/chart.js', ['position' => \yii\web\View::POS_HEAD]);
 
@@ -15,20 +16,23 @@
 
 <div class="site-panel">
     <div class="container">
-
         <div class="row">
 
+            <!-- Panel de portátiles disponibles -->
             <div class="col-md-3">
                 <div class="square d-flex flex-column justify-content-between" style="height:240px;">
 
                     <h2>Portátiles disponibles</h2>
 
                     <div class="d-flex flex-column justify-content-center">
-                        <p class="font-weight-bold" style="font-size:64px;height: 80px;"><?= $portatilesDisponibles ?></p>
+                        <!-- Número de portátiles disponibles -->
+                        <p class="font-weight-bold" style="font-size: 64px; height: 80px;"><?= $portatilesDisponibles ?></p>
+                        <!-- Porcentaje de portátiles disponibles -->
                         <p class="font-weight-bold" style="color: <?= $porcentajePortatilesDisponibles < 10 ? '#489FB5' : '#82C0CC' ?>;"><?= $porcentajePortatilesDisponibles ?>%</p>
                     </div>
 
                     <div class="d-flex justify-content-around">
+                        <!-- Botón para abrir el modal de listado de portátiles -->
                         <?= Html::a('<div class="d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list" style="margin-right: 4px;">
                                 <title>Ver listado</title>
@@ -47,17 +51,21 @@
                 </div>
             </div>
 
+            <!-- Panel de cargadores disponibles -->
             <div class="col-md-3">
                 <div class="square d-flex flex-column justify-content-between" style="height:240px;">
 
                     <h2>Cargadores disponibles</h2>
 
                     <div class="d-flex flex-column justify-content-center">
-                        <p class="font-weight-bold" style="font-size:64px;height: 80px;"><?= $cargadoresDisponibles ?></p>
+                        <!-- Número de cargadores disponibles -->
+                        <p class="font-weight-bold" style="font-size: 64px; height: 80px;"><?= $cargadoresDisponibles ?></p>
+                        <!-- Porcentaje de cargadores disponibles -->
                         <p class="font-weight-bold" style="color: <?= $porcentajeCargadoresDisponibles < 10 ? '#489FB5' :  '#82C0CC' ?>;"><?= $porcentajeCargadoresDisponibles ?>%</p>
                     </div>
 
                     <div class="d-flex justify-content-around">
+                        <!-- Botón para abrir el modal de listado de cargadores -->
                         <?= Html::a('<div class="d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list" style="margin-right: 4px;">
                                 <title>Ver listado</title>
@@ -76,17 +84,20 @@
                 </div>
             </div>
 
+            <!-- Panel de dispositivos averiados -->
             <div class="col-md-3">
                 <div class="square d-flex flex-column justify-content-between" style="height:240px;">
 
                     <h2>Dispositivos averiados</h2>
 
                     <div>
-                        <p><span class="font-weight-bold" style="font-size:32px;"><?= $portatilesAveriados ?></span> portátiles</p>
-                        <p><span class="font-weight-bold" style="font-size:32px;"><?= $cargadoresAveriados ?></span> cargadores</p>
+                        <!-- Número de portátiles y cargadores averiados -->
+                        <p><span class="font-weight-bold" style="font-size: 32px;"><?= $portatilesAveriados ?></span> portátiles</p>
+                        <p><span class="font-weight-bold" style="font-size: 32px;"><?= $cargadoresAveriados ?></span> cargadores</p>
                     </div>
 
                     <div class="d-flex justify-content-around">
+                        <!-- Botón para abrir el modal de dispositivos averiados -->
                         <?= Html::a('<div class="d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-list" style="margin-right: 4px;">
                                 <title>Ver listado</title>
@@ -104,26 +115,25 @@
 
                 </div>
             </div>
-
+            <!-- Panel para el gráfico del estado de los dispositivos -->
             <div class="col-md-3">
                 <div class="square" style="height:240px;">
                     <canvas id="graficoEstado"></canvas>
                 </div>
             </div>
-
         </div>
 
         <div class="row">
-
+            <!-- Panel para el gráfico de capacidad de los almacenes -->
             <div class="col-md-6">
                 <div class="square">
-                    <canvas id="graficoAlmacenes" style="height:400px;"></canvas>
+                    <canvas id="graficoAlmacenes" style="height: 400px;"></canvas>
                 </div>
             </div>
-
+            <!-- Panel para el gráfico de uso por ciclo formativo -->
             <div class="col-md-6">
                 <div class="square">
-                    <canvas id="graficoCiclos" style="height:400px;"></canvas>
+                    <canvas id="graficoCiclos" style="height: 400px;"></canvas>
                 </div>
             </div>
 
@@ -132,7 +142,7 @@
     </div>
 </div>
 
-<!-- Listado de portatil disponibles -->
+<!-- Modal de la lista de portátiles disponibles -->
 <div class="container">
     <div class="modal fade" id="modalPortatiles" tabindex="-1" role="dialog" aria-labelledby="modalPortatilesLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -145,42 +155,46 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <?= GridView::widget([
-                        'dataProvider' => $listadoPortatilesDisponibles,
-                        'columns' => [
-                            [
-                                'label' => 'Portátil',
-                                'value' => function ($model) {
-                                    return 'Portátil ' . $model->codigo;
-                                },
-                                'headerOptions' => ['style' => 'color: #489FB5;'],
-                                'contentOptions' => function ($model, $key, $index, $column) {
-                                    return [
-                                        'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
-                                    ];
-                                },
+                    <!-- GridView para mostrar el listado de portátiles disponibles -->
+                    <div class="table-responsive">
+                        <?= GridView::widget([
+                            'dataProvider' => $listadoPortatilesDisponibles,
+                            'columns' => [
+                                [
+                                    'label' => 'Portátil',
+                                    'value' => function ($model) {
+                                        return 'Portátil ' . $model->codigo;
+                                    },
+                                    'headerOptions' => ['style' => 'color: #489FB5;'],
+                                    'contentOptions' => function ($model, $key, $index, $column) {
+                                        return [
+                                            'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                        ];
+                                    },
+                                ],
+                                [
+                                    'label' => 'Almacén',
+                                    'value' => function ($model) {
+                                        return empty($model->almacen->id_almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                    },
+                                    'headerOptions' => ['style' => 'color: #489FB5;'],
+                                    'contentOptions' => function ($model, $key, $index, $column) {
+                                        return [
+                                            'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                        ];
+                                    },
+                                ],
                             ],
-                            [
-                                'label' => 'Almacén',
-                                'value' => function ($model) {
-                                    return empty($model->almacen->id_almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
-                                },
-                                'headerOptions' => ['style' => 'color: #489FB5;'],
-                                'contentOptions' => function ($model, $key, $index, $column) {
-                                    return [
-                                        'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
-                                    ];
-                                },
-                            ],
-                        ],
-                        'summary' => '',
-                    ]); ?>
+                            'summary' => '',
+                        ]); ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Mostrar modal cuando se haga clic en el botón -->
 <script>
     $(document).ready(function() {
         $('#botonModalPortatiles').click(function(e) {
@@ -190,7 +204,7 @@
     });
 </script>
 
-<!-- Listado de cargadores disponibles -->
+<!-- Modal de la lista de cargadores disponibles -->
 <div class="container">
     <div class="modal fade" id="modalCargadores" tabindex="-1" role="dialog" aria-labelledby="modalCargadoresLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -203,42 +217,46 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <?= GridView::widget([
-                        'dataProvider' => $listadoCargadoresDisponibles,
-                        'columns' => [
-                            [
-                                'label' => 'Cargador',
-                                'value' => function ($model) {
-                                    return 'Cargador ' . $model->codigo;
-                                },
-                                'headerOptions' => ['style' => 'color: #489FB5;'],
-                                'contentOptions' => function ($model, $key, $index, $column) {
-                                    return [
-                                        'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
-                                    ];
-                                },
+                    <!-- GridView para mostrar el listado de cargadores disponibles -->
+                    <div class="table-responsive">
+                        <?= GridView::widget([
+                            'dataProvider' => $listadoCargadoresDisponibles,
+                            'columns' => [
+                                [
+                                    'label' => 'Cargador',
+                                    'value' => function ($model) {
+                                        return 'Cargador ' . $model->codigo;
+                                    },
+                                    'headerOptions' => ['style' => 'color: #489FB5;'],
+                                    'contentOptions' => function ($model, $key, $index, $column) {
+                                        return [
+                                            'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                        ];
+                                    },
+                                ],
+                                [
+                                    'label' => 'Almacén',
+                                    'value' => function ($model) {
+                                        return empty($model->almacen->id_almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                    },
+                                    'headerOptions' => ['style' => 'color: #489FB5;'],
+                                    'contentOptions' => function ($model, $key, $index, $column) {
+                                        return [
+                                            'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                        ];
+                                    },
+                                ],
                             ],
-                            [
-                                'label' => 'Almacén',
-                                'value' => function ($model) {
-                                    return empty($model->almacen->id_almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
-                                },
-                                'headerOptions' => ['style' => 'color: #489FB5;'],
-                                'contentOptions' => function ($model, $key, $index, $column) {
-                                    return [
-                                        'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
-                                    ];
-                                },
-                            ],
-                        ],
-                        'summary' => '',
-                    ]); ?>
+                            'summary' => '',
+                        ]); ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Mostrar modal cuando se haga clic en el botón -->
 <script>
     $(document).ready(function() {
         $('#botonModalCargadores').click(function(e) {
@@ -248,7 +266,7 @@
     });
 </script>
 
-<!-- Listado de dispositivos averiados -->
+<!-- Modal de la lista de dispositivos averiados -->
 <div class="container">
     <div class="modal fade" id="modalAveriados" tabindex="-1" role="dialog" aria-labelledby="modalAveriadosLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
@@ -262,81 +280,86 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-8">
-                            <?= GridView::widget([
-                                'dataProvider' => $listadoPortatilesAveriados,
-                                'columns' => [
-                                    [
-                                        'label' => 'Portátil',
-                                        'value' => function ($model) {
-                                            return 'Portátil ' . $model->codigo;
-                                        },
-                                        'headerOptions' => ['style' => 'color: #489FB5;'],
-                                        'contentOptions' => function ($model, $key, $index, $column) {
-                                            return [
-                                                'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
-                                            ];
-                                        },
+                        <div class="col-12 col-md-8">
+                            <div class="table-responsive">
+                                <!-- GridViews para mostrar el listado de dispositivos averiados -->
+                                <?= GridView::widget([
+                                    'dataProvider' => $listadoPortatilesAveriados,
+                                    'columns' => [
+                                        [
+                                            'label' => 'Portátil',
+                                            'value' => function ($model) {
+                                                return 'Portátil ' . $model->codigo;
+                                            },
+                                            'headerOptions' => ['style' => 'color: #489FB5;'],
+                                            'contentOptions' => function ($model, $key, $index, $column) {
+                                                return [
+                                                    'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                                ];
+                                            },
+                                        ],
+                                        [
+                                            'label' => 'Módelo',
+                                            'value' => function ($model) {
+                                                return empty($model->marca)? 'Sin definir' : $model->marca . ' ' . $model->modelo;
+                                            },
+                                            'headerOptions' => ['style' => 'color: #489FB5;'],
+                                            'contentOptions' => function ($model, $key, $index, $column) {
+                                                return [
+                                                    'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                                ];
+                                            },
+                                        ],
+                                        [
+                                            'label' => 'Almacén',
+                                            'value' => function ($model) {
+                                                return empty($model->almacen->id_almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                            },
+                                            'headerOptions' => ['style' => 'color: #489FB5;'],
+                                            'contentOptions' => function ($model, $key, $index, $column) {
+                                                return [
+                                                    'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                                ];
+                                            },
+                                        ]
                                     ],
-                                    [
-                                        'label' => 'Módelo',
-                                        'value' => function ($model) {
-                                            return empty($model->marca)? 'Sin definir' : $model->marca . ' ' . $model->modelo;
-                                        },
-                                        'headerOptions' => ['style' => 'color: #489FB5;'],
-                                        'contentOptions' => function ($model, $key, $index, $column) {
-                                            return [
-                                                'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
-                                            ];
-                                        },
-                                    ],
-                                    [
-                                        'label' => 'Almacén',
-                                        'value' => function ($model) {
-                                            return empty($model->almacen->id_almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
-                                        },
-                                        'headerOptions' => ['style' => 'color: #489FB5;'],
-                                        'contentOptions' => function ($model, $key, $index, $column) {
-                                            return [
-                                                'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
-                                            ];
-                                        },
-                                    ]
-                                ],
-                                'summary' => '',
-                            ]); ?>
+                                    'summary' => '',
+                                ]); ?>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <?= GridView::widget([
-                                'dataProvider' => $listadoCargadoresAveriados,
-                                'columns' => [
-                                    [
-                                        'label' => 'Cargador',
-                                        'value' => function ($model) {
-                                            return 'Cargador ' . $model->codigo;
-                                        },
-                                        'headerOptions' => ['style' => 'color: #489FB5;'],
-                                        'contentOptions' => function ($model, $key, $index, $column) {
-                                            return [
-                                                'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
-                                            ];
-                                        },
+                        <div class="col-12 col-md-4">
+                            <div class="table-responsive">
+                                <?= GridView::widget([
+                                    'dataProvider' => $listadoCargadoresAveriados,
+                                    'columns' => [
+                                        [
+                                            'label' => 'Cargador',
+                                            'value' => function ($model) {
+                                                return 'Cargador ' . $model->codigo;
+                                            },
+                                            'headerOptions' => ['style' => 'color: #489FB5;'],
+                                            'contentOptions' => function ($model, $key, $index, $column) {
+                                                return [
+                                                    'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                                ];
+                                            },
+                                        ],
+                                        [
+                                            'label' => 'Almacén',
+                                            'value' => function ($model) {
+                                                return empty($model->almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
+                                            },
+                                            'headerOptions' => ['style' => 'color: #489FB5;'],
+                                            'contentOptions' => function ($model, $key, $index, $column) {
+                                                return [
+                                                    'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
+                                                ];
+                                            },
+                                        ],
                                     ],
-                                    [
-                                        'label' => 'Almacén',
-                                        'value' => function ($model) {
-                                            return empty($model->almacen)? 'Sin almacén' : 'Almacén ' . $model->almacen->aula;
-                                        },
-                                        'headerOptions' => ['style' => 'color: #489FB5;'],
-                                        'contentOptions' => function ($model, $key, $index, $column) {
-                                            return [
-                                                'style' => 'vertical-align: middle; background-color: ' . ($index % 2 === 0 ? '#82C0CC32' : '#FFFFFF32') . ';',
-                                            ];
-                                        },
-                                    ],
-                                ],
-                                'summary' => '',
-                            ]); ?>
+                                    'summary' => '',
+                                ]); ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -345,6 +368,7 @@
     </div>
 </div>
 
+<!-- Mostrar modal cuando se haga clic en el botón -->
 <script>
     $(document).ready(function() {
         $('#botonModalAveriados').click(function(e) {
@@ -355,11 +379,12 @@
 </script>
 
 <script>
+
+    // Configuración del gráfico de estado
     var ctx = document.getElementById('graficoEstado').getContext('2d');
     var graphData = [<?= $portatilesDisponibles ?>, <?= $cargadoresDisponibles ?>, <?= $portatilesNoDisponibles ?>, <?= $cargadoresNoDisponibles ?>, <?= $portatilesAveriados ?>, <?= $cargadoresAveriados ?>];
     var color = ['#82C0CC', '#82C0CC', '#489FB5', '#489FB5', '#16697A', '#16697A'];
     var etiquetas = ['Portátiles disponibles', 'Cargadores disponibles', 'Portátiles no disponibles', 'Cargadores no disponibles', 'Portátiles averiados', 'Cargadores averiados'];
-
     var graficoEstado = new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -391,21 +416,12 @@
             }
         }
     });
-</script>
 
-<script>
+    // Configuración del gráfico de capacidad de los almacenes
     var ctx = document.getElementById('graficoAlmacenes').getContext('2d');
-    var almacenes = <?php echo json_encode(array_map(function ($item) {
-                        return $item['almacen'];
-                    }, $almacenes)); ?>;
-    var capacidad = <?php echo json_encode(array_map(function ($item) {
-                        return $item['capacidad'];
-                    }, $almacenes)); ?>;
-    var dispositivos = <?php echo json_encode(array_map(function ($item) {
-                            return $item['dispositivos'];
-                        }, $almacenes)); ?>;
-    Chart.defaults.font.size = 16;
-
+    var almacenes = <?php echo json_encode(array_map(function ($item) {return $item['almacen'];}, $almacenes)); ?>;
+    var capacidad = <?php echo json_encode(array_map(function ($item) {return $item['capacidad'];}, $almacenes)); ?>;
+    var dispositivos = <?php echo json_encode(array_map(function ($item) {return $item['dispositivos'];}, $almacenes)); ?>;
     var graficoAlmacenes = new Chart(ctx, {
         type: 'radar',
         data: {
@@ -474,13 +490,11 @@
             }
         }
     });
-</script>
 
-<script>
+    // Configuración del gráfico de uso por ciclo
     var ctx = document.getElementById('graficoCiclos').getContext('2d');
     var nombres = <?php echo json_encode(array_column($usoCiclo, 'sigla')); ?>;
     var cantidades = <?php echo json_encode(array_column($usoCiclo, 'cantidad')); ?>;
-
     var graficoEstado = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -534,4 +548,5 @@
             }
         }
     });
+
 </script>
