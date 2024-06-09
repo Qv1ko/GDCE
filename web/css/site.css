@@ -261,4 +261,13 @@ table th, table td {
         padding: 24px 0;
     }
 
+    .site-panel .square {
+        padding: 16px 4px;
+        margin: 16px 0;
+    }
+
+    #w0 .mb-4 {
+        margin-bottom: 4px !important;
+    }    
+
 }
