@@ -4,10 +4,11 @@ namespace app\models;
 
 use Yii;
 use app\models\Portatiles;
+use yii\db\Query;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "alumnos".
+ * Esta es la clase modelo para la tabla "alumnos".
  *
  * @property int $id_alumno
  * @property string $dni
@@ -33,6 +34,7 @@ class Alumnos extends \yii\db\ActiveRecord {
      * {@inheritdoc}
      */
     public function rules() {
+        // Reglas de validación para los atributos del modelo
         return [
             [['dni', 'nombre', 'estado_matricula'], 'required', 'message' => '⚠️ Campo obligatorio'],
             [['dni'], 'string', 'max' => 9],
@@ -43,14 +45,14 @@ class Alumnos extends \yii\db\ActiveRecord {
             [['apellidos'], 'string', 'max' => 48],
             [['estado_matricula'], 'string', 'max' => 16],
             [['estado_matricula'], 'in', 'range' => ['Matriculado', 'No matriculado'], 'message' => '⚠️ Solo puede ser "Matriculado" o "No matriculado"'],
-            [['dni'], 'unique', 'message' => '⚠️ Ya esta registrado'],
+            [['dni'], 'unique', 'message' => '⚠️ Ya está registrado'],
             [['nombre', 'apellidos'], 'unique', 'targetAttribute' => ['nombre', 'apellidos'], 'message' => '⚠️ Ya existe'],
             [['id_portatil'], 'exist', 'skipOnError' => true, 'targetClass' => Portatiles::class, 'targetAttribute' => ['id_portatil' => 'id_portatil']],
         ];
     }
 
+    // Validación personalizada para el DNI/NIE
     public function validarDni($attribute, $params) {
-
         if (preg_match('/^[0-9]{8}[A-Z]$/', $this->$attribute)) {
             $validacion = $this->validarFormatoDni($this->$attribute);
             if ($validacion !== true) {
@@ -64,19 +66,17 @@ class Alumnos extends \yii\db\ActiveRecord {
         } else {
             $this->addError($attribute, "⚠️ DNI/NIE incorrecto");
         }
-
     }
-    
-    public function validarFormatoDni($dni) {
 
+    // Valida el formato del DNI
+    public function validarFormatoDni($dni) {
         $numero = substr($dni, 0, -1);
         $letra = substr($dni, -1);
         $letraCorrecta = $this->getLetraDni($numero);
-    
         return $letra == $letraCorrecta;
-
     }
-    
+
+    // Valida el formato del NIE
     public function validarFormatoNie($nie) {
 
         $letraInicial = substr($nie, 0, 1);
@@ -89,7 +89,6 @@ class Alumnos extends \yii\db\ActiveRecord {
         }
 
         $letraCorrecta = $this->getLetraDni($numero);
-        
         return $letra == $letraCorrecta;
 
     }
@@ -109,16 +108,17 @@ class Alumnos extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Cursan]].
+     * Obtiene la consulta para [[Cursan]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getCursan() {
+        // Relación con el modelo Cursan
         return $this->hasMany(Cursan::class, ['id_alumno' => 'id_alumno']);
     }
 
     /**
-     * Gets query for [[Cursos]].
+     * Obtiene la consulta para [[Cursos]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -126,16 +126,18 @@ class Alumnos extends \yii\db\ActiveRecord {
         return $this->hasMany(Cursos::class, ['id_curso' => 'id_curso'])->viaTable('cursan', ['id_alumno' => 'id_alumno']);
     }
 
+    // Relación con el modelo Cursos para los cursos de mañana
     public function getCursoManana() {
         return $this->hasOne(Cursos::class, ['id_curso' => 'id_curso'])->viaTable('cursan', ['id_alumno' => 'id_alumno'])->onCondition(['turno' => 'Mañana']);
     }
 
+    // Relación con el modelo Cursos para los cursos de tarde
     public function getCursoTarde() {
         return $this->hasOne(Cursos::class, ['id_curso' => 'id_curso'])->viaTable('cursan', ['id_alumno' => 'id_alumno'])->onCondition(['turno' => 'Tarde']);
     }
 
     /**
-     * Gets query for [[Portatil]].
+     * Obtiene la consulta para [[Portatil]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -143,94 +145,113 @@ class Alumnos extends \yii\db\ActiveRecord {
         return $this->hasOne(Portatiles::class, ['id_portatil' => 'id_portatil']);
     }
 
+    // Devuelve el nombre completo del alumno
     public function getNombreCompleto() {
         return $this->nombre . ' ' . $this->apellidos;
     }
 
+    // Obtiene los alumnos matriculados en los cursos de la mañana
     public static function getAlumnosManana() {
         return Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'alumnos.id_alumno', 'alumnos.id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
     }
 
+    // Obtiene los alumnos matriculados en los cursos de la tarde
     public static function getAlumnosTarde() {
         return Alumnos::find()->select(['CONCAT(alumnos.nombre, " ", alumnos.apellidos) AS alumno', 'alumnos.id_alumno', 'alumnos.id_portatil'])->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()]);
     }
 
+    // Obtiene la lista de alumnos de la mañana sin portátil asignado
     public static function getListaAlumnosManana() {
-        return ArrayHelper::map(Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null])->all(), 'id_alumno', 'nombreCompleto');
+        $lista = ArrayHelper::map(Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null])->all(), 'id_alumno', 'nombreCompleto');
+        asort($lista);
+        return $lista;
     }
 
+    // Obtiene la lista de alumnos que solo están matriculados en cursos de la mañana
     public static function getListaAlumnosSoloManana() {
-        $subquery = Alumnos::find()->select('alumnos.id_alumno')->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null]);
-        return ArrayHelper::map(Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null])->andWhere(['not in', 'alumnos.id_alumno', $subquery])->all(), 'id_alumno', 'nombreCompleto');
+        $subqueryTarde = (new Query())->select('id_alumno')->from('cursan')->leftJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'curso_academico' => Cursan::getCursoActual()])->distinct();
+        $alumnosManana = Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()])->andWhere(['not in', 'alumnos.id_alumno', $subqueryTarde])->all();
+        $lista = ArrayHelper::map($alumnosManana, 'id_alumno', 'nombreCompleto');
+        asort($lista);
+        return $lista;
     }
-    
+
+    // Obtiene la lista de alumnos de la tarde sin portátil asignado
     public static function getListaAlumnosTarde() {
-        return ArrayHelper::map(Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null])->all(), 'id_alumno', 'nombreCompleto');
+        $lista = ArrayHelper::map(Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null])->all(), 'id_alumno', 'nombreCompleto');
+        asort($lista);
+        return $lista;
     }
-    
+
+    // Obtiene la lista de alumnos que solo están matriculados en cursos de la tarde
     public static function getListaAlumnosSoloTarde() {
-        $subquery = Alumnos::find()->select('alumnos.id_alumno')->distinct()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null]);
-        return ArrayHelper::map(Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual(), 'id_portatil' => null])->andWhere(['not in', 'alumnos.id_alumno', $subquery])->all(), 'id_alumno', 'nombreCompleto');
+        $subqueryManana = (new Query())->select('id_alumno')->from('cursan')->leftJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Mañana', 'curso_academico' => Cursan::getCursoActual()])->distinct();
+        $alumnosTarde = Alumnos::find()->innerJoin('cursan', 'alumnos.id_alumno = cursan.id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where(['turno' => 'Tarde', 'estado_matricula' => 'Matriculado', 'curso_academico' => Cursan::getCursoActual()])->andWhere(['not in', 'alumnos.id_alumno', $subqueryManana])->all();
+        $lista = ArrayHelper::map($alumnosTarde, 'id_alumno', 'nombreCompleto');
+        asort($lista);
+        return $lista;
     }
 
+    // Obtiene la letra correspondiente del número del DNI
     private function getLetraDni($dni) {
-        $letras = "TRWAGMYFPDXBNJZSQVHLCKE";
-        $posicion = $dni % 23;
-        return $letras[$posicion];
+        $letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
+        $numero = (int) $dni;
+        $indice = $numero % 23;
+        return $letras[$indice];
     }
 
+    // Establece el DNI con la letra correcta
     public function setDni($dni) {
 
-        $numero = '';
-        $letraCorrecta = '';
+        $numero = substr($dni, 0, -1);
 
-        if (preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
-            $numero = substr($dni, 0, -1);
-            $letraCorrecta = $this->getLetraDni($numero);
-        } elseif (preg_match('/^[XYZ]\d{7,8}[A-Z]$/', $dni)) {
-            $letraInicial = substr($dni, 0, 1);
-            $numero = substr($dni, 1, -1);
-            $letraCorrecta = $this->getLetraDni($numero);
-
-            if ($letraInicial == 'X' || $letraInicial == 'Y' || $letraInicial == 'Z') {
-                $letraInicial = strtoupper($letraInicial);
-                $numero = $letraInicial . $numero;
-            }
+        if (!ctype_digit($numero)) {
+            $this->dni = $dni;
+            return;
         }
 
-        return $numero . $letraCorrecta;
+        $letra = substr($dni, -1);
+        $letraCorrecta = $this->getLetraDni($numero);
+
+        if ($letra !== $letraCorrecta) {
+            $this->dni = $numero . $letraCorrecta;
+        } else {
+            $this->dni = $dni;
+        }
 
     }
 
+    // Sincroniza los alumnos
     public static function sincronizarAlumnos() {
 
         $alumnos = Alumnos::find()->all();
-    
+        $alumnosMap = [];
+
         foreach ($alumnos as $alumno) {
-
-            $existe = Alumnos::find()->where(['nombre' => $alumno->nombre, 'apellidos' => $alumno->apellidos])->orWhere(['dni' => $alumno->dni])->andWhere(['!=', 'id_alumno', $alumno->id_alumno])->exists();
-
-            if ($existe) {
-                $alumno->delete();
-                continue;
+            $nombreCompleto = $alumno->nombre . ' ' . $alumno->apellidos;
+            if (isset($alumnosMap[$nombreCompleto])) {
+                // Si ya existe un alumno con el mismo nombre completo, eliminar duplicado
+                $alumnoDuplicado = $alumnosMap[$nombreCompleto];
+                if ($alumnoDuplicado->estado_matricula == 'No matriculado' && $alumno->estado_matricula == 'Matriculado') {
+                    // Si el alumno actual está matriculado y el duplicado no, actualizar el duplicado
+                    $alumnoDuplicado->estado_matricula = 'Matriculado';
+                    $alumnoDuplicado->save();
+                    $alumno->delete();
+                } elseif ($alumnoDuplicado->estado_matricula == 'Matriculado' && $alumno->estado_matricula == 'No matriculado') {
+                    // Si el duplicado está matriculado y el alumno actual no, eliminar el alumno actual
+                    $alumno->delete();
+                } elseif ($alumnoDuplicado->estado_matricula == 'Matriculado' && $alumno->estado_matricula == 'Matriculado') {
+                    // Si ambos están matriculados, eliminar el duplicado
+                    $alumnoDuplicado->delete();
+                }
+            } else {
+                // Si no existe un duplicado, añadir al mapa
+                $alumnosMap[$nombreCompleto] = $alumno;
             }
-            if (!$alumno->validarFormatoDni($alumno->dni)) {
-                $alumno->dni = $alumno->setDni($alumno->dni);
-            }
-            if (empty($alumno->cursan) || empty($alumno->cursos)) {
-                $alumno->estado_matricula = 'No matriculado';
-            }
-            if ($alumno->estado_matricula !== 'Matriculado') {
-                $alumno->id_portatil = null;
-            }
-            if ($alumno->portatil !== null && $alumno->portatil->estado === 'Averiado') {
-                $alumno->id_portatil = null;
-            }
-
-            $alumno->save();
-    
         }
-    
+
     }
 
 }
+
+?>

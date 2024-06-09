@@ -62,7 +62,7 @@
                 <!-- Campo de selección del portátil del alumno -->
                 <div class="col-md-6">
                     <?= $form->field($model, 'id_portatil')->label($model->getAttributeLabel('id_portatil'))->dropDownList(
-                        Portatiles::getCargadoresLibresmpa($model->id_portatil),
+                        Portatiles::getPortatilesLibresmpa($model->id_portatil),
                         ['prompt' => 'Selecciona un portátil', 'class' => 'form-control']
                     ) ?>
                 </div>

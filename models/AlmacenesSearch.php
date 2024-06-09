@@ -2,12 +2,13 @@
 
 namespace app\models;
 
+use app\models\Almacenes;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Almacenes;
 
 class AlmacenesSearch extends Almacenes {
 
+    // Cadena de búsqueda
     public $searchString;
 
     /**
@@ -47,18 +48,23 @@ class AlmacenesSearch extends Almacenes {
             ],
         ]);
 
+        // Carga los parámetros en el modelo y valida
         $this->load($params);
 
+        // Si la validación falla, devuelve el dataProvider sin filtrar
         if (!$this->validate()) {
             return $dataProvider;
         }
 
+        // Divide la cadena de búsqueda
         $searchTerms = explode(' ', $this->searchString);
 
+        // Añade condiciones de filtro
         foreach ($searchTerms as $term) {
             $query->orFilterWhere(['like', 'aula', $term])->orFilterWhere(['like', 'capacidad', $term]);
         }
 
+        // Devuelve los resultados de la búsqueda
         return $dataProvider;
 
     }

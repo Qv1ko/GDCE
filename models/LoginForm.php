@@ -6,48 +6,46 @@ use Yii;
 use yii\base\Model;
 
 /**
- * LoginForm is the model behind the login form.
+ * LoginForm es el modelo detrás del formulario de inicio de sesión.
  *
  * @property-read User|null $user
- *
  */
 class LoginForm extends Model {
 
     public $username;
     public $password;
     public $rememberMe = true;
-
     private $_user = false;
 
-
     /**
-     * @return array the validation rules.
+     * @return array las reglas de validación.
      */
     public function rules() {
         return [
-            // username and password are both required
             [['username', 'password'], 'required', 'message' => 'Campo obligatorio'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
 
+    /**
+     * Etiquetas de los atributos
+     * @return array las etiquetas de los atributos.
+     */
     public function attributeLabels() {
-        return array(
+        return [
             'username' => 'Nombre del usuario',
             'password' => 'Contraseña del usuario',
-            'rememberMe'=>'Recuérdame',
-        );
+            'rememberMe' => 'Recuérdame',
+        ];
     }
 
     /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
+     * Valida la contraseña.
+     * Este método sirve como validación en línea para la contraseña.
      *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     * @param string $attribute el atributo que se está validando actualmente
+     * @param array $params los pares nombre-valor adicionales dados en la regla
      */
     public function validatePassword($attribute, $params) {
         if (!$this->hasErrors()) {
@@ -59,22 +57,24 @@ class LoginForm extends Model {
     }
 
     /**
-     * Logs in a user using the provided username and password.
-     * @return bool whether the user is logged in successfully
+     * Inicia sesión un usuario usando el nombre de usuario y la contraseña proporcionados.
+     * @return bool si el usuario se ha registrado con éxito
      */
     public function login() {
+        // Valida los datos de entrada y, si son correctos, inicia sesión al usuario
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0); // Duración de la sesión: 30 días si "Recuérdame" está marcado, 0 si no
         }
         return false;
     }
 
     /**
-     * Finds user by [[username]]
+     * Encuentra un usuario por [[username]]
      *
      * @return User|null
      */
     public function getUser() {
+        // Si no se ha cargado el usuario aún, lo busca por nombre de usuario
         if ($this->_user === false) {
             $this->_user = User::findByUsername($this->username);
         }

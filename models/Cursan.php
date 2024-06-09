@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "cursan".
+ * Esta es la clase modelo para la tabla "cursan".
  *
  * @property int $id_cursa
  * @property string $curso_academico
@@ -28,6 +28,7 @@ class Cursan extends \yii\db\ActiveRecord {
      * {@inheritdoc}
      */
     public function rules() {
+        // Reglas de validación para los atributos del modelo
         return [
             [['curso_academico'], 'required', 'message' => '⚠️ Este campo es obligatorio'],
             [['id_alumno', 'id_curso'], 'integer'],
@@ -52,7 +53,7 @@ class Cursan extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Alumno]].
+     * Obtiene la consulta para [[Alumno]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -61,7 +62,7 @@ class Cursan extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Curso]].
+     * Obtiene la consulta para [[Curso]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -77,39 +78,46 @@ class Cursan extends \yii\db\ActiveRecord {
      * @return string El año académico actual en el formato "aaaa/aa".
      */
     public static function getCursoActual() {
-        
+
         // Año actual
         $anoActual = date('Y');
-        
+
         // Verificar si la fecha actual está después de septiembre
         if (date('n') > 8) {
             // Si es después de septiembre, el año actual y el siguiente se consideran como el año académico actual
-            $cursoEscolarActual = $anoActual . '/' . substr($anoActual, 2, 2);
+            $cursoEscolarActual = $anoActual . '/' . substr($anoActual + 1, 2, 2);
         } else {
             // Si es antes de septiembre, el año anterior y el actual se consideran como el año académico actual
             $cursoEscolarActual = ($anoActual - 1) . '/' . substr($anoActual, 2, 2);
         }
-        
-        // Devolver el año académico actual
+
         return $cursoEscolarActual;
 
     }
 
+    /**
+     * Sincroniza los registros de la tabla "cursan".
+     */
     public static function sincronizarCursan() {
 
         // Matriculaciones de alumnos ya no matriculados
         $cursanNoMatriculados = Cursan::find()->innerJoin('alumnos', 'cursan.id_alumno = alumnos.id_alumno')->where(['estado_matricula' => 'No matriculado'])->all();
-        // Alumnos que estan matriculados en varios cursos con mismo turno y curso academico
+
+        // Alumnos que están matriculados en varios cursos con el mismo turno y curso académico
         $amvc = Cursan::find()->select('id_alumno')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->groupBy(['id_alumno', 'curso_academico', 'cursos.turno'])->having('COUNT(*) > 1');
-        // Ultimos cursos en los que se han matriculado
+
+        // Últimos cursos en los que se han matriculado
         $ucm = Cursan::find()->select('MAX(id_cursa)')->innerJoin('cursos', 'cursan.id_curso = cursos.id_curso')->where('id_alumno = cursan.id_alumno')->groupBy(['id_alumno', 'curso_academico', 'cursos.turno']);
+
         // Antiguas matriculaciones
         $am = Cursan::find()->where(['id_alumno' => $amvc])->andWhere(['not in', 'id_cursa', $ucm])->all();
 
+        // Elimina las matriculaciones de alumnos ya no matriculados
         foreach ($cursanNoMatriculados as $cursa) {
             $cursa->delete();
         }
 
+        // Elimina las antiguas matriculaciones
         foreach ($am as $model) {
             $model->delete();
         }

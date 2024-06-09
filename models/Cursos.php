@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "cursos".
+ * Esta es la clase modelo para la tabla "cursos".
  *
  * @property int $id_curso
  * @property string $nombre
@@ -67,7 +67,7 @@ class Cursos extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Alumnos]].
+     * Obtiene la consulta para [[Alumnos]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -76,7 +76,7 @@ class Cursos extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Cursans]].
+     * Obtiene la consulta para [[Cursans]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -84,30 +84,51 @@ class Cursos extends \yii\db\ActiveRecord {
         return $this->hasMany(Cursan::class, ['id_curso' => 'id_curso']);
     }
 
+    /**
+     * Obtiene una lista de cursos en turno de mañana.
+     *
+     * @return array Lista de cursos en turno de mañana.
+     */
     public static function getListaCursosManana() {
-        return ArrayHelper::map(Cursos::find()->where(['turno' => 'Mañana'])->all(), 'id_curso', function($model) {
+        $lista = ArrayHelper::map(Cursos::find()->where(['turno' => 'Mañana'])->all(), 'id_curso', function($model) {
             return (($model->curso == 'Primer curso') ? '1º ' : '2º ') . $model->nombre;
         });
+        asort($lista);
+        return $lista;
     }
 
+    /**
+     * Obtiene una lista de cursos en turno de tarde.
+     *
+     * @return array Lista de cursos en turno de tarde.
+     */
     public static function getListaCursosTarde() {
-        return ArrayHelper::map(Cursos::find()->where(['turno' => 'Tarde'])->all(), 'id_curso', function($model) {
+        $lista = ArrayHelper::map(Cursos::find()->where(['turno' => 'Tarde'])->all(), 'id_curso', function($model) {
             return (($model->curso == 'Primer curso') ? '1º ' : '2º ') . $model->nombre;
         });
+        asort($lista);
+        return $lista;
     }
 
+    /**
+     * Genera la sigla del curso a partir de su nombre.
+     *
+     * @param object $model El modelo de curso.
+     */
     public static function setSigla($model) {
 
         $nombreCurso = $model->nombre;
         $nombreCurso = str_replace(['Á', 'á', 'É', 'é', 'Í', 'í', 'Ó', 'ó', 'Ú', 'ú', 'Ñ'], ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'U', 'u', 'N'], $nombreCurso);
         $sigla = '';
 
+        // Extrae las letras mayúsculas para formar la sigla
         foreach (str_split($nombreCurso) as $letra) {
             if (ctype_upper($letra)) {
                 $sigla .= $letra;
             }
         }
 
+        // Limita la sigla a 8 caracteres y la guarda en el modelo
         $model->sigla = substr($sigla, 0, 8);
         $model->save();
 

@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 use yii\validators\NumberValidator;
 
 /**
- * This is the model class for table "portatiles".
+ * Esta es la clase modelo para la tabla "portatiles".
  *
  * @property int $id_portatil
  * @property string $codigo
@@ -39,6 +39,7 @@ class Portatiles extends \yii\db\ActiveRecord {
      * {@inheritdoc}
      */
     public function rules() {
+        // Define las reglas de validación para los atributos del modelo
         return [
             [['codigo', 'estado'], 'required', 'message' => '⚠️ Campo obligatorio'],
             [['memoria_ram', 'capacidad', 'id_almacen'], 'integer', 'message' => '⚠️ Formato incorrecto'],
@@ -74,7 +75,7 @@ class Portatiles extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Almacen]].
+     * Obtiene la relación con [[Almacen]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -83,7 +84,7 @@ class Portatiles extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Alumnos]].
+     * Obtiene la relación con [[Alumnos]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -92,7 +93,7 @@ class Portatiles extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Aplicaciones]].
+     * Obtiene la relación con [[Aplicaciones]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -101,7 +102,7 @@ class Portatiles extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Cargadors]].
+     * Obtiene la relación con [[Cargadors]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -110,7 +111,7 @@ class Portatiles extends \yii\db\ActiveRecord {
     }
 
     /**
-     * Gets query for [[Cargan]].
+     * Obtiene la relación con [[Cargan]].
      *
      * @return \yii\db\ActiveQuery
      */
@@ -118,33 +119,53 @@ class Portatiles extends \yii\db\ActiveRecord {
         return $this->hasOne(Cargan::class, ['id_portatil' => 'id_portatil']);
     }
 
+    /**
+     * Obtiene una lista de portátiles disponibles.
+     *
+     * @return array
+     */
     public static function getPortatilesDisponibles() {
-        return ArrayHelper::map(Portatiles::find()->where(['estado' => 'Disponible'])->andWhere(['alumnos.id_alumno' => null])->leftJoin('alumnos', 'portatiles.id_portatil = alumnos.id_portatil')->all(), 'id_portatil', 'codigo');
+        $portatiles = ArrayHelper::map(Portatiles::find()->where(['estado' => 'Disponible'])->andWhere(['alumnos.id_alumno' => null])->leftJoin('alumnos', 'portatiles.id_portatil = alumnos.id_portatil')->all(), 'id_portatil', 'codigo');
+        asort($portatiles);
+        return $portatiles;
     }
 
-    public static function getCargadoresLibresmpa($idPortatil) {
-        return ArrayHelper::map(Portatiles::find()->leftJoin('alumnos', 'portatiles.id_portatil = alumnos.id_portatil')->where(['estado' => 'Disponible', 'alumnos.id_alumno' => null])->orWhere(['portatiles.id_portatil' => $idPortatil])->all(), 'id_portatil', 'codigo');
+    /**
+     * Obtiene una lista de portátiles disponibles, incluyendo uno específico.
+     *
+     * @param int $idPortatil
+     * @return array
+     */
+    public static function getPortatilesLibresmpa($idPortatil) {
+        $portatiles = ArrayHelper::map(Portatiles::find()->leftJoin('alumnos', 'portatiles.id_portatil = alumnos.id_portatil')->where(['estado' => 'Disponible', 'alumnos.id_alumno' => null])->orWhere(['portatiles.id_portatil' => $idPortatil])->all(), 'id_portatil', 'codigo');
+        asort($portatiles);
+        return $portatiles;
     }
 
-    // Portátiles sin cargador
+    /**
+     * Obtiene una lista de portátiles sin cargador.
+     *
+     * @return array
+     */
     public static function getListaPortatilesSinCargador() {
-        return ArrayHelper::map(Portatiles::find()->leftJoin('cargan', 'portatiles.id_portatil = cargan.id_portatil')->where(['cargan.id_carga' => null])->andWhere(['!=', 'portatiles.estado', 'Averiado'])->all(), 'id_portatil', 'codigo');
+        $portatiles = ArrayHelper::map(Portatiles::find()->leftJoin('cargan', 'portatiles.id_portatil = cargan.id_portatil')->where(['cargan.id_carga' => null])->andWhere(['!=', 'portatiles.estado', 'Averiado'])->all(), 'id_portatil', 'codigo');
+        asort($portatiles);
+        return $portatiles;
     }
 
+    /**
+     * Sincroniza el estado de todos los portátiles según el turno y disponibilidad.
+     */
     public static function sincronizarPortatiles() {
-
         $portatiles = Portatiles::find()->all();
         $hora = date('H:i:s');
         $horaInicioTurnoManana = '07:00:00';
         $horaFinTurnoManana = '15:00:00';
         $horaInicioTurnoTarde = '15:00:01';
         $horaFinTurnoTarde = '22:00:00';
-
         foreach ($portatiles as $portatil) {
-
             $alumnoManana = Portatiles::find()->select('alumno')->innerJoin(['am' => Alumnos::getAlumnosManana()], 'am.id_portatil = portatiles.id_portatil')->where(['codigo' => $portatil->codigo])->one();
             $alumnoTarde = Portatiles::find()->select('alumno')->innerJoin(['at' => Alumnos::getAlumnosTarde()], 'at.id_portatil = portatiles.id_portatil')->where(['codigo' => $portatil->codigo])->one();
-
             if ($portatil->estado !== 'Averiado') {
                 if ($hora >= $horaInicioTurnoManana && $hora <= $horaFinTurnoManana) {
                     $portatil->estado = ($alumnoManana !== null) ? 'No disponible' : 'Disponible';
@@ -155,24 +176,23 @@ class Portatiles extends \yii\db\ActiveRecord {
                 }
                 $portatil->save();
             }
-
         }
-
     }
 
+    /**
+     * Sincroniza el estado de un portátil específico según el turno y disponibilidad.
+     *
+     * @param string $codigo
+     */
     public static function sincronizarPortatil($codigo) {
-
         $portatil = Portatiles::find()->where(['codigo' => $codigo])->one();
-
         $hora = date('H:i:s');
         $horaInicioTurnoManana = '07:00:00';
         $horaFinTurnoManana = '15:00:00';
         $horaInicioTurnoTarde = '15:00:01';
         $horaFinTurnoTarde = '22:00:00';
-    
         $alumnoManana = Portatiles::find()->select('alumno')->innerJoin(['am' => Alumnos::getAlumnosManana()], 'am.id_portatil = portatiles.id_portatil')->where(['codigo' => $codigo])->one();
         $alumnoTarde = Portatiles::find()->select('alumno')->innerJoin(['at' => Alumnos::getAlumnosTarde()], 'at.id_portatil = portatiles.id_portatil')->where(['codigo' => $codigo])->one();
-
         if ($portatil !== null && $portatil->estado !== 'Averiado') {
             if ($hora >= $horaInicioTurnoManana && $hora <= $horaFinTurnoManana) {
                 $portatil->estado = ($alumnoManana !== null) ? 'No disponible' : 'Disponible';
@@ -183,7 +203,6 @@ class Portatiles extends \yii\db\ActiveRecord {
             }
             $portatil->save();
         }
-
     }
 
 }

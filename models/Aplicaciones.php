@@ -56,44 +56,38 @@ class Aplicaciones extends \yii\db\ActiveRecord {
         return $this->hasOne(Portatiles::class, ['id_portatil' => 'id_portatil']);
     }
 
+    // Devuelve la lista de aplicaciones
     public static function getListaAplicaciones() {
         $aplicaciones = array_unique(array_column(Aplicaciones::find()->where(['id_portatil' => null])->orderBy(['aplicacion' => SORT_ASC])->asArray()->all(), 'aplicacion'));
         return (empty($aplicaciones)) ? [] : array_chunk($aplicaciones, ceil(count($aplicaciones) / 3));
     }
 
+    // Sincroniza las aplicaciones
     public static function sincronizarAplicaciones() {
 
         // Obtener todas las aplicaciones con id_portatil = null
         $aplicaciones = Aplicaciones::find()->where(['id_portatil' => null])->all();
-    
+
         foreach ($aplicaciones as $app) {
-
-            // Contar el número de registros por aplicación
+            // Número de registros por aplicación
             $nr = Aplicaciones::find()->where(['aplicacion' => $app->aplicacion, 'id_portatil' => null])->count();
-    
             if ($nr > 1) {
-
                 // Encontrar la primera (más antigua) aplicación del grupo
                 $primeraAplicacion = Aplicaciones::find()->where(['aplicacion' => $app->aplicacion])->andWhere(['id_portatil' => null])->orderBy(['id_aplicacion' => SORT_ASC])->one();
-    
                 if ($primeraAplicacion) {
-
                     // Encontrar todas las aplicaciones posteriores a la primera
                     $aplicacionesPosteriores = Aplicaciones::find()->where(['aplicacion' => $app->aplicacion])->andWhere(['id_portatil' => null])->andWhere(['>', 'id_aplicacion', $primeraAplicacion->id_aplicacion])->all();
-    
                     // Borrar todas las aplicaciones posteriores
                     foreach ($aplicacionesPosteriores as $duplicada) {
                         $duplicada->delete();
                     }
-
                 }
-
             }
 
         }
 
         $relaciones = Aplicaciones::find()->where(['not', ['id_portatil' => null]])->all();
-        
+
         foreach ($relaciones as $relacion) {
 
             $existe = false;
