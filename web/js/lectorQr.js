@@ -18445,8 +18445,7 @@ var __Html5QrcodeLibrary__;
             this.fileSelectionButton.innerText = i;
           }),
           (t.prototype.setInitialValueToButton = function () {
-            var t =
-              p.fileSelectionChooseImage();
+            var t = p.fileSelectionChooseImage();
             this.fileSelectionButton.innerText = t;
           }),
           (t.prototype.getFileScanInputId = function () {
@@ -19005,7 +19004,7 @@ var __Html5QrcodeLibrary__;
           o.style.textAlign = "center";
           var s = rt.createElement("a", this.getDashboardSectionSwapLinkId());
           (s.style.textDecoration = "underline"),
-          (s.style.cursor = "pointer"),
+            (s.style.cursor = "pointer"),
             (s.innerText = tt.isCameraScanType(this.currentScanType) ? e : r),
             s.addEventListener("click", function () {
               t.sectionSwapAllowed
