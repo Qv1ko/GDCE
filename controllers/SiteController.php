@@ -155,10 +155,6 @@ class SiteController extends Controller {
      */
     public function actionPanel() {
 
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         Portatiles::sincronizarPortatiles();
         Cargan::sincronizarCargan();
         Cargadores::sincronizarCargadores();
