@@ -52,6 +52,7 @@
                             // Elementos del menú
                             $menuItems = [
                                 ['label' => 'INICIO', 'url' => ['/site/index']], // Página de inicio
+                                ['label' => 'PANEL', 'url' => ['/site/panel']], // Página de panel
                             ];
 
                             // Si el usuario no está autenticado, se muestra la opción de iniciar sesión
@@ -59,7 +60,6 @@
                                 $menuItems[] = ['label' => 'INICIAR SESIÓN', 'url' => ['/site/login']];
                             } else {
                                 // Si el usuario está autenticado, se muestran opciones adicionales
-                                $menuItems[] = ['label' => 'PANEL', 'url' => ['/site/panel']];
                                 $menuItems[] = ['label' => 'PORTÁTILES', 'url' => ['/portatiles/index']];
                                 $menuItems[] = ['label' => 'APLICACIONES', 'url' => ['/aplicaciones/index']];
                                 $menuItems[] = ['label' => 'CARGADORES', 'url' => ['/cargadores/index']];
